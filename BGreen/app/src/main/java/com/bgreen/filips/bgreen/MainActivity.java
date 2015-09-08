@@ -1,5 +1,9 @@
 package com.bgreen.filips.bgreen;
 
+import android.content.Context;
+import android.content.IntentFilter;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiManager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -12,6 +16,12 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        System.out.println("SKRIVER JAG!?!!*************************");
+
+        WifiManager wifi=(WifiManager)getSystemService(Context.WIFI_SERVICE);
+        wifi.startScan();
+            System.out.println(wifi.getScanResults().toString());
     }
 
 
@@ -19,6 +29,7 @@ public class MainActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
