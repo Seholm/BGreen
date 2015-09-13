@@ -1,9 +1,13 @@
 package com.bgreen.filips.bgreen;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -22,6 +26,14 @@ public class MainActivity extends ActionBarActivity {
         WifiManager wifi=(WifiManager)getSystemService(Context.WIFI_SERVICE);
         wifi.startScan();
             System.out.println(wifi.getScanResults().toString());
+        Intent serviceIntent = new Intent(this,MyService.class);
+        startService(serviceIntent);
+
+        AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(MainActivity.this, TestAlarm.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),15*1000, pendingIntent);
+
     }
 
 
