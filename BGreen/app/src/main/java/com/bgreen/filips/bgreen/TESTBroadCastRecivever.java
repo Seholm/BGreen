@@ -15,7 +15,6 @@ import java.util.List;
  */
 public class TESTBroadCastRecivever extends BroadcastReceiver {
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
 
