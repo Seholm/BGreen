@@ -1,9 +1,11 @@
 package com.bgreen.filips.bgreen;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
-import android.content.IntentFilter;
-import android.net.wifi.ScanResult;
+import android.content.Intent;
 import android.net.wifi.WifiManager;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,11 +19,12 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println("SKRIVER JAG!?!!*************************");
+        //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
+        AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(MainActivity.this, MinuteReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),1*60*1000, pendingIntent);
 
-        WifiManager wifi=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-        wifi.startScan();
-            System.out.println(wifi.getScanResults().toString());
     }
 
 
