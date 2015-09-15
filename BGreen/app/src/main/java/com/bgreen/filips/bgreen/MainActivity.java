@@ -4,8 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
@@ -21,18 +19,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        System.out.println("SKRIVER JAG!?!!*************************");
-
-        WifiManager wifi=(WifiManager)getSystemService(Context.WIFI_SERVICE);
-        wifi.startScan();
-            System.out.println(wifi.getScanResults().toString());
-        Intent serviceIntent = new Intent(this,MyService.class);
-        startService(serviceIntent);
-
+        //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
-        Intent intent = new Intent(MainActivity.this, TestAlarm.class);
+        Intent intent = new Intent(MainActivity.this, MinuteReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),15*1000, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),1*60*1000, pendingIntent);
 
     }
 

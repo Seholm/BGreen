@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-public class MyService extends Service {
-    public MyService() {
-        //System.out.println("I SERVICE");
-
+public class IdentifyTravelService extends Service {
+    public IdentifyTravelService() {
     }
 
     @Override

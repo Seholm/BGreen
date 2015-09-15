@@ -11,19 +11,18 @@ import java.util.List;
 /**
  * Created by Filip on 2015-09-13.
  */
-public class TestAlarm extends BroadcastReceiver {
+public class MinuteReciever extends BroadcastReceiver {
+    // the class works as a reciever which checks if a specific wifi is in the area
+
     @Override
     public void onReceive(Context context, Intent intent) {
-        System.out.println("I TESTALARM");
         WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> wifiScanList = wifiManager.getScanResults();
-        //System.out.println(wifiScanList.toString());
 
         for (ScanResult result:wifiScanList  ){
-            System.out.println(result.SSID);
-            if(result.SSID.equals("comhem_E6B448")){
-                System.out.println("I IF SATS***************************");
-                context.startService(new Intent(context, MyService.class));
+            if(result.SSID.equals("eduroam")){
+                //if there is a wifi in the area with the name eduroam
+                context.startService(new Intent(context, IdentifyTravelService.class));
             }
         }
 
