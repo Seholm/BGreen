@@ -22,6 +22,7 @@ public class MinuteReciever extends BroadcastReceiver {
         List<ScanResult> wifiScanList = wifiManager.getScanResults();
         List<String> bssid= new ArrayList<>(); // A list containing mac-adresses
         IBusses busses = new Busses();
+        System.out.println(wifiScanList.toString());
 
         for (ScanResult result:wifiScanList  ){
             //creates a list of all the MAC-adresses in the area
@@ -30,7 +31,8 @@ public class MinuteReciever extends BroadcastReceiver {
 
         if(busses.doesBusExist(bssid)){
             // if any of the MAC-adresses is a Electrycity MAC-adress, start service
-            context.startService(new Intent(context,IdentifyTravelService.class));
+            Intent serviceIntent = new Intent(context,IdentifyTravelService.class);
+            context.startService(serviceIntent);
         }
 
     }
