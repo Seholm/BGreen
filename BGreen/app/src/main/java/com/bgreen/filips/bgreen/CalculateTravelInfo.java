@@ -9,12 +9,20 @@ import java.util.List;
  */
 public class CalculateTravelInfo implements ICalculateTravelInfo {
 
+    //String for saving startpoint of the trip
     private String startPoint;
+    //String for saving the lateststop during the trip
     private String latestPoint;
+    //String for saving the lastpoint of the trip
     private String endPoint;
+    //List with all busstopps
     private List<String> busStops = new ArrayList<String>();
+    //List with all legths between bus stops. on index i is distance between busstop i-1 and i
     private List<Integer> busStopsLength = new ArrayList<Integer>();
+    //Integer for saving the total didstance of the trip
+    int totDistance;
 
+    //Method for setting bus stops if route is Chalmers-Lindholmen
     private void setBusStopsNorthRoute(){
         busStops.clear();
 
@@ -32,6 +40,8 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStops.add("Lindholmen");
         busStops.add("Teknikgatan");
     }
+
+    //Method for setting bus stops distances if route is Chalmers-Lindholmen
     private void setBusStopsNorthRouteDistances(){
         busStopsLength.clear();
 
@@ -49,6 +59,8 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStopsLength.add(10);
         busStopsLength.add(10);
     }
+
+    //Method for setting bus stops if route is Lindholmen-Chalmers
     private void setBusStopsSouthRoute(){
         busStops.clear();
 
@@ -67,8 +79,9 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStops.add("Ålandsgatan");
         busStops.add("Chalmers tvärgata");
         busStops.add("Sven Hultins plats");
-
     }
+
+    //Method for setting bus stops distances if route is Lindholmen-Chalmers
     private void setBusStopsSouthRouteDistance(){
         busStopsLength.clear();
 
@@ -87,9 +100,9 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStopsLength.add(10);
         busStopsLength.add(10);
         busStopsLength.add(10);
-
     }
-    //lägger till parameter för vilken rutt
+
+    //Method for setting a startpoint and route of the trip. Parameters i a point and a route.
     private void setStartPoint(String point, String route){
 
         if(route == "Lindholmen"){
@@ -101,6 +114,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         }
         for(int i=0; i<busStops.size(); i++){
 
+            //Startpoint is the stop before the point saying which is next stop
             if(busStops.get(i).equals(point)){
                 startPoint = busStops.get(i-1);
                 setLatestPoint(startPoint);
@@ -108,61 +122,94 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
             }
         }
     }
+
     private String getStartPoint(){
         return startPoint;
     }
+
+    //Method for setting which stop was the last one a user visited
     private void setLatestPoint(String point){
         latestPoint = point;
     }
-
+    private String getLatestPoint(){
+        return latestPoint;
+    }
     private void setEndPoint(){
         endPoint = latestPoint;
     }
     private String getEndPoint(){
         return endPoint;
     }
-    private Integer calcTotalDistance(){
+
+    //Method for calculation the total distance
+    private void calcTotalDistance(){
         String point = getStartPoint();
+        int numberOfStops=0;
         int totDistance = 0;
+
+        //Get the point after startpoint
         while(point.equals(getStartPoint())){
             for(int i=0; i<busStops.size()+1; i++){
                 if(point.equals(busStops.get(i))){
+
+                    //Set point to the one after the startpoint
                     point = busStops.get(i+1);
+                    System.out.println("Startpunkt "+busStops.get(i));
                     break;
+
                 }
             }
         }
+
+        //Add together all distances after startpoint until last stop
         while(point != getStartPoint()){
             for(int i=0; i<busStops.size()+1; i++){
                 if (point.equals(busStops.get(i))){
                     totDistance = totDistance + busStopsLength.get(i);
-                    System.out.println(totDistance);
+                    System.out.println("avstånd från " + busStops.get(i-1) + " till " + busStops.get(i) +": "+ busStopsLength.get(i));
                     point = busStops.get(i+1);
+                    numberOfStops = numberOfStops +1;
 
+                    //If point is lastpoint, break so totDistance is finished calculating
+                    if(point.equals(getEndPoint())){
+                        totDistance = totDistance + busStopsLength.get(i+1);
+                        System.out.println("avstånd från " + busStops.get(i) + " till " + busStops.get(i+1) +": "+ busStopsLength.get(i+1));
+                        numberOfStops = numberOfStops +1;
+                        break;
+                    }
                 }
-                if(point.equals(getEndPoint())){
-                    break;
-                }
+
             }
             break;
         }
-        System.out.println(totDistance);
-        return totDistance;
+        //Some prints for testing until we have real api and can do real testing
+        System.out.println("Antal stopp: " + numberOfStops);
+        System.out.println("Sista hållplats: " + getEndPoint());
+        System.out.println("totalt avstånd från " + getStartPoint() + " till " + getEndPoint() + ": " + totDistance);
+
     }
 
-    //Sätter en parameter för nästa stopp för att kunna testa
-    public void main(boolean lastStop, String nextStopTest, String route){
-        String nextStop = nextStopTest;
+    //The method the Service class calls to give information which this class can calculate
+    public void main(boolean lastStop, String nextStop, String route){
+
+        //Set startpoint if there is none else set nextStop as latestPoint
         if(startPoint==null){
             setStartPoint(nextStop, route);
-        }
-        else{
+        }else if(!getLatestPoint().equals(nextStop)){
             setLatestPoint(nextStop);
         }
+
+        //If wifi lost set nextStop as lastStop
         if(lastStop == true){
             setEndPoint();
             calcTotalDistance();
         }
+
+    }
+
+    //Method for returning the totaldistance. Only called when wifi is lost and calculation done
+    public int getFinalResult(){
+        return totDistance;
     }
 
 }
