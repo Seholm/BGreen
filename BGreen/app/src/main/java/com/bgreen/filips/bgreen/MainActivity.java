@@ -14,6 +14,7 @@ import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.model.people.Person;
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
@@ -95,8 +96,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Show the signed-in UI
         //showSignedInUI();
-        Intent intent = new Intent(this, TabActivity.class);
-        startActivity(intent);
+        getProfileInformation();
     }
 
     @Override
@@ -135,6 +135,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Show a message to the user that we are signing in.
         System.out.println("*******SIGNING IN*********");
+        //TODO;Toast to show user that we are signing in
     }
 
     @Override
@@ -157,10 +158,40 @@ public class MainActivity extends AppCompatActivity implements
             } else {
                 // Could not resolve the connection result, show the user an
                 // error dialog.
-                //showErrorDialog(connectionResult);
+                //TODO;showErrorDialog(connectionResult);
             }
         } else {
-            // Show the signed-out UI
+            //TODO;Show the signed-out UI
+        }
+    }
+
+    //TODO;SPARA PROFILEN I EN EGEN KLASS??
+
+    private void getProfileInformation(){
+        if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+            Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+            String personName = currentPerson.getDisplayName();
+            String personPhotoUrl = currentPerson.getImage().getUrl();
+            String personGooglePlusId = currentPerson.getId();
+            String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+
+            System.out.println("**!**!**!**!**!**!**!**!**");
+            System.out.println(personName);
+            System.out.println(personPhotoUrl);
+            System.out.println(personGooglePlusId);
+            System.out.println(email);
+            System.out.println("**!**!**!**!**!**!**!**!**");
+
+            Intent tabActivityIntent = new Intent(this, TabActivity.class);
+
+            tabActivityIntent.putExtra("PROFILE_NAME", personName);
+            tabActivityIntent.putExtra("PROFILE_MAIL", email);
+            tabActivityIntent.putExtra("PROFILE_IMAGE", personPhotoUrl);
+            tabActivityIntent.putExtra("PROFILE_ID", personGooglePlusId);
+            startActivity(tabActivityIntent);
+        }else{
+
+            System.out.println("****CURRENT PERSON IS NULL*****");
         }
     }
 }
