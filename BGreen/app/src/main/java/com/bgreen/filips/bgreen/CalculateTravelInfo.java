@@ -14,6 +14,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     private String endPoint;
     private List<String> busStops = new ArrayList<String>();
     private List<Integer> busStopsLength = new ArrayList<Integer>();
+    int totDistance;
 
     private void setBusStopsNorthRoute(){
         busStops.clear();
@@ -114,21 +115,26 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     private void setLatestPoint(String point){
         latestPoint = point;
     }
-
+    private String getLatestPoint(){
+        return latestPoint;
+    }
     private void setEndPoint(){
         endPoint = latestPoint;
     }
     private String getEndPoint(){
         return endPoint;
     }
-    private Integer calcTotalDistance(){
+    private void calcTotalDistance(){
         String point = getStartPoint();
+        int numberOfStops=0;
         int totDistance = 0;
         while(point.equals(getStartPoint())){
             for(int i=0; i<busStops.size()+1; i++){
                 if(point.equals(busStops.get(i))){
                     point = busStops.get(i+1);
+                    System.out.println("Startpunkt "+busStops.get(i));
                     break;
+
                 }
             }
         }
@@ -136,18 +142,24 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
             for(int i=0; i<busStops.size()+1; i++){
                 if (point.equals(busStops.get(i))){
                     totDistance = totDistance + busStopsLength.get(i);
-                    System.out.println(totDistance);
+                    System.out.println("avstånd från " + busStops.get(i-1) + " till " + busStops.get(i) +": "+ busStopsLength.get(i));
                     point = busStops.get(i+1);
+                    numberOfStops = numberOfStops +1;
+                    if(point.equals(getEndPoint())){
+                        totDistance = totDistance + busStopsLength.get(i+1);
+                        System.out.println("avstånd från " + busStops.get(i) + " till " + busStops.get(i+1) +": "+ busStopsLength.get(i+1));
+                        numberOfStops = numberOfStops +1;
+                        break;
+                    }
+                }
 
-                }
-                if(point.equals(getEndPoint())){
-                    break;
-                }
             }
             break;
         }
-        System.out.println(totDistance);
-        return totDistance;
+        System.out.println("Antal stopp: " + numberOfStops);
+        System.out.println("Sista hållplats: " + getEndPoint());
+        System.out.println("totalt avstånd från " + getStartPoint() + " till " + getEndPoint() + ": " + totDistance);
+
     }
 
     //Sätter en parameter för nästa stopp för att kunna testa
@@ -155,14 +167,19 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         String nextStop = nextStopTest;
         if(startPoint==null){
             setStartPoint(nextStop, route);
-        }
-        else{
+        }else if(!getLatestPoint().equals(nextStop)){
             setLatestPoint(nextStop);
         }
+
         if(lastStop == true){
             setEndPoint();
             calcTotalDistance();
         }
+
+    }
+
+    public int getFinalResult(){
+        return totDistance;
     }
 
 }
