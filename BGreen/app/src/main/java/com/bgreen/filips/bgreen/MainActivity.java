@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Build GoogleApiClient to request access to the basic user profile
+        // Build GoogleApiClient to request access to the basic user profile and email
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements
                 .addScope(new Scope(Scopes.EMAIL))
                 .build();
 
-        //OcClicklistner for the signInButton
+        //OnClicklistner for the signInButton
         findViewById(R.id.sign_in_button).setOnClickListener(this);
     }
 
@@ -82,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     protected void onStop() {
+        // Disconnect GoogleApiClient
         super.onStop();
         mGoogleApiClient.disconnect();
     }
@@ -91,17 +91,14 @@ public class MainActivity extends AppCompatActivity implements
         // onConnected indicates that an account was selected on the device, that the selected
         // account has granted any requested permissions to our app and that we were able to
         // establish a service connection to Google Play services.
-        //Log.d(TAG, "onConnected:" + bundle);
         mShouldResolve = false;
 
         // Show the signed-in UI
-        //showSignedInUI();
         getProfileInformation();
     }
 
     @Override
     public void onConnectionSuspended(int i) {
-
     }
 
     @Override
@@ -114,7 +111,6 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //Log.d(TAG, "onActivityResult:" + requestCode + ":" + resultCode + ":" + data);
 
         if (requestCode == RC_SIGN_IN) {
             // If the error resolution was not successful we should not resolve further.
@@ -143,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements
         // Could not connect to Google Play Services.  The user needs to select an account,
         // grant permissions or resolve an error in order to sign in. Refer to the javadoc for
         // ConnectionResult to see possible error codes.
-        //Log.d(TAG, "onConnectionFailed:" + connectionResult);
 
         if (!mIsResolving && mShouldResolve) {
             if (connectionResult.hasResolution()) {
@@ -151,7 +146,6 @@ public class MainActivity extends AppCompatActivity implements
                     connectionResult.startResolutionForResult(this, RC_SIGN_IN);
                     mIsResolving = true;
                 } catch (IntentSender.SendIntentException e) {
-                    //Log.e(TAG, "Could not resolve ConnectionResult.", e);
                     mIsResolving = false;
                     mGoogleApiClient.connect();
                 }
@@ -167,20 +161,15 @@ public class MainActivity extends AppCompatActivity implements
 
     //TODO;SPARA PROFILEN I EN EGEN KLASS??
 
+    //Gets the profileIno and put it on the TabActivity
     private void getProfileInformation(){
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+
             String personName = currentPerson.getDisplayName();
             String personPhotoUrl = currentPerson.getImage().getUrl();
             String personGooglePlusId = currentPerson.getId();
             String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-
-            System.out.println("**!**!**!**!**!**!**!**!**");
-            System.out.println(personName);
-            System.out.println(personPhotoUrl);
-            System.out.println(personGooglePlusId);
-            System.out.println(email);
-            System.out.println("**!**!**!**!**!**!**!**!**");
 
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
 

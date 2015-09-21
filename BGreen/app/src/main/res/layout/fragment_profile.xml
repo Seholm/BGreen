@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="PROFILE"
+            android:text="@string/textView_profileFragment_name"
             android:id="@+id/profile_textView"
             android:layout_gravity="center_horizontal|top"
             android:layout_marginTop="136dp" />
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="#22   Distance: 1056m"
+        android:text="@string/textView_profileFragment_distance_ranking"
         android:id="@+id/profile_Ranking_Distance_TextView"
         android:layout_gravity="center_horizontal|top"
         android:layout_marginTop="176dp"

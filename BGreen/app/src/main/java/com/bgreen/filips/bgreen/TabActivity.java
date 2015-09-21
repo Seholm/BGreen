@@ -41,17 +41,16 @@ public class TabActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        //addFrag sets a new fragment to the Tab
-
         Fragment profileFragment = new ProfileFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("PROFILE_NAME_TO_FRAGMENT", profileName.toString());
-        bundle.putString("PROFILE_EMAIL_TO_FRAGMENT", profileEmail.toString());
-        bundle.putString("PROFILE_IMG_URL_TO_FRAGMENT", profileImgURL.toString());
-        bundle.putString("PROFILE_ID_TO_FRAGMENT", profileID.toString());
+        bundle.putString("PROFILE_NAME_TO_FRAGMENT", profileName);
+        bundle.putString("PROFILE_EMAIL_TO_FRAGMENT", profileEmail);
+        bundle.putString("PROFILE_IMG_URL_TO_FRAGMENT", profileImgURL);
+        bundle.putString("PROFILE_ID_TO_FRAGMENT", profileID);
 
         profileFragment.setArguments(bundle);
 
+        //addFrag sets a new fragment to the Tab
         adapter.addFrag(profileFragment, "PROFILE");
         adapter.addFrag(new TestFragment(), "TEST");
         viewPager.setAdapter(adapter);
