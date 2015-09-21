@@ -24,7 +24,7 @@ public class IdentifyTravelService extends Service {
     private IBusses busses;
     private Handler handler;
     private Runnable onBusTask;
-    private CalculateTravelInfo calculator;
+    private ICalculateTravelInfo calculator;
 
     public IdentifyTravelService() {
     }
