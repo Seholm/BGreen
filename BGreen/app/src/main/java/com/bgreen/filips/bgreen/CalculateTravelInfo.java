@@ -102,6 +102,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStopsLength.add(10);
     }
 
+
     //Method for setting a startpoint and route of the trip. Parameters i a point and a route.
     private void setStartPoint(String point, String route){
 
@@ -123,7 +124,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         }
     }
 
-    private String getStartPoint(){
+    public String getStartPoint(){
         return startPoint;
     }
 
