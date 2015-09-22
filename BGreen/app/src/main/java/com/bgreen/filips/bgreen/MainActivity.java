@@ -1,5 +1,9 @@
 package com.bgreen.filips.bgreen;
 
+import android.content.Intent;
+import android.content.IntentSender;
+import android.support.v7.app.AppCompatActivity;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -15,7 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
-
+    
     /* Request code used to invoke sign in user interactions. */
     private static final int RC_SIGN_IN = 0;
 
