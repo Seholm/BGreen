@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBarActivity;
 
-import android.content.Intent;
 import android.content.IntentSender;
 import android.support.v7.app.AppCompatActivity;
 
@@ -17,12 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+
 
 public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,

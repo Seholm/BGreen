@@ -3,8 +3,7 @@
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
-<<<<<<< HEAD
-=======
+
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -12,7 +11,7 @@
       </MavenImportingSettings>
     </option>
   </component>
->>>>>>> loggin-development
+
   <component name="NullableNotNullManager">
     <option name="myDefaultNullable" value="android.support.annotation.Nullable" />
     <option name="myDefaultNotNull" value="android.support.annotation.NonNull" />
@@ -52,8 +51,7 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
-<<<<<<< HEAD
-=======
+
   </component>
   <component name="masterDetails">
     <states>
@@ -70,6 +68,6 @@
         </settings>
       </state>
     </states>
->>>>>>> loggin-development
+
   </component>
 </project>
