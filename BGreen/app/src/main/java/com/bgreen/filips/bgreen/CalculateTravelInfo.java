@@ -177,7 +177,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
                     //If point is lastpoint, break so totDistance is finished calculating
                     if(busStops.get(i).equals(getEndPoint())){
                         setTotalDistance(totDistance);
-                        
+
                         break;
                     }
                     point = busStops.get(i+1);
@@ -195,21 +195,23 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
     //The method the Service class calls to give information which this class can calculate
     public void main(boolean lastStop, String nextStop, String route){
+        if(nextStop!=null && route!=null){
+            //Set startpoint if there is none else set nextStop as latestPoint
+            if(startPoint==null){
+                setStartPoint(nextStop, route);
 
-        //Set startpoint if there is none else set nextStop as latestPoint
-        if(startPoint==null){
-            setStartPoint(nextStop, route);
+            }else if(!getLatestPoint().equals(nextStop)){
+                setLatestPoint(nextStop);
+            }
 
-        }else if(!getLatestPoint().equals(nextStop)){
-            setLatestPoint(nextStop);
+            //If wifi lost set nextStop as lastStop
+            if(lastStop == true){
+                setLatestPoint(nextStop);
+                setEndPoint();
+                calcTotalDistance();
+            }
         }
 
-        //If wifi lost set nextStop as lastStop
-        if(lastStop == true){
-            setLatestPoint(nextStop);
-            setEndPoint();
-            calcTotalDistance();
-        }
 
     }
 
