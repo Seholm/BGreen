@@ -34,16 +34,11 @@ public class MainActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
 
-<<<<<<< HEAD
-import java.io.UnsupportedEncodingException;
-
-=======
     private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
     private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
     
     /* Request code used to invoke sign in user interactions. */
     private static final int RC_SIGN_IN = 0;
->>>>>>> master
 
     /* Client used to interact with Google APIs. */
     private GoogleApiClient mGoogleApiClient;
@@ -59,14 +54,9 @@ import java.io.UnsupportedEncodingException;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
-
-        tempFilipMethod();
-=======
         // Enable Local Datastore, and Parse DB services.
         Parse.enableLocalDatastore(this);
         Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
->>>>>>> master
 
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
@@ -74,41 +64,16 @@ import java.io.UnsupportedEncodingException;
         PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, intent, 0);
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),1*60*1000, pendingIntent);
 
-<<<<<<< HEAD
-                // String to be encoded with Base64
-                String text = "grp20:yxY7OD4aQ2";
-// Sending side
-                byte[] data = null;
-                try {
-                    data = text.getBytes("UTF-8");
-                } catch (UnsupportedEncodingException e1) {
-                    e1.printStackTrace();
-                }
-                String base64 = Base64.encodeToString(data, Base64.DEFAULT);
-        System.out.println(base64);
+    
 
-// Receiving side
-                byte[] data1 = Base64.decode(base64, Base64.DEFAULT);
-                String text1 = null;
-                try {
-                    text1 = new String(data1, "UTF-8");
-                    System.out.println(text1);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-=======
         // Build GoogleApiClient to request access to the basic user profile and email
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
+                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
                 .addScope(new Scope(Scopes.EMAIL))
                 .build();
->>>>>>> master
 
         //OnClicklistner for the signInButton
         findViewById(R.id.sign_in_button).setOnClickListener(this);
@@ -136,11 +101,6 @@ import java.io.UnsupportedEncodingException;
 
         return super.onOptionsItemSelected(item);
     }
-<<<<<<< HEAD
-    public void tempFilipMethod(){
-        new RetrieveBusData().execute();
-
-=======
 
     @Override
     protected void onStart(){
@@ -252,7 +212,6 @@ import java.io.UnsupportedEncodingException;
 
             System.out.println("****CURRENT PERSON IS NULL*****");
         }
->>>>>>> master
     }
 }
 
