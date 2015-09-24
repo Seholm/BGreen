@@ -5,8 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -30,7 +29,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".MinuteReciever">
+        <receiver android:name=".MinuteReciever" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -45,6 +44,10 @@
         <activity
             android:name=".TabActivity"
             android:label="@string/title_activity_tab" >
+        </activity>
+        <activity
+            android:name=".DetailedAchievementActivity"
+            android:label="@string/title_activity_detailed_achievement" >
         </activity>
     </application>
 
