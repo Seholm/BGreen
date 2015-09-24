@@ -43,6 +43,5 @@
         android:background="@color/primary"
         android:elevation="8dp">
     </FrameLayout>
-
-
+    
 </FrameLayout>
