@@ -9,8 +9,6 @@ import java.util.List;
  */
 public class CalculateTravelInfo implements ICalculateTravelInfo {
 
-    //TODO: fix correct busstops + busstoplengths
-
 
     //String for saving startpoint of the trip
     private String startPoint;
@@ -22,7 +20,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     private List<String> busStops = new ArrayList<String>();
     //List with all legths between bus stops. on index i is distance between busstop i-1 and i
     private List<Integer> busStopsLength = new ArrayList<Integer>();
-    //Integer for saving the total didstance of the trip
+    //Integer for saving the total distance of the trip
     int totDistance;
 
     //Method for setting bus stops if route is Chalmers-Lindholmen
@@ -34,11 +32,11 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStops.add("KapellplatsenE");
         busStops.add("GötaplatsenA");
         busStops.add("ValandC");
-        busStops.add("KungsportsplC");//klar
+        busStops.add("KungsportsplC");
         busStops.add("BrunnsparkenB");
-        busStops.add("Lilla BommenB");//klar
+        busStops.add("Lilla BommenB");
         busStops.add("FrihamnsportenB");
-        busStops.add("PumpgatanB");//klar
+        busStops.add("PumpgatanB");
         busStops.add("RegnbågsgatanD");
         busStops.add("LindholmenD");
         busStops.add("TeknikgatanA");
@@ -51,7 +49,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStopsLength.add(0);
         busStopsLength.add(450);
         busStopsLength.add(550);
-        busStopsLength.add(600);//600+400+500+350=1850
+        busStopsLength.add(600);
         busStopsLength.add(400);
         busStopsLength.add(500);
         busStopsLength.add(350);
@@ -92,13 +90,13 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStopsLength.add(550);
         busStopsLength.add(300);
         busStopsLength.add(1200);
-        busStopsLength.add(2200);//lilla bommen
-        busStopsLength.add(280);//280+350+500+400=1530
-        busStopsLength.add(350);//kungsports
+        busStopsLength.add(2200);
+        busStopsLength.add(280);
+        busStopsLength.add(350);
         busStopsLength.add(500);
-        busStopsLength.add(400);//götaplatsen
+        busStopsLength.add(400);
         busStopsLength.add(550);
-        busStopsLength.add(200);//tvärgatan
+        busStopsLength.add(200);
         busStopsLength.add(1100);
     }
 
@@ -193,7 +191,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         System.out.println("Antal stopp: " + numberOfStops);
         System.out.println("Sista hållplats: " + getEndPoint());
         System.out.println("totalt avstånd från " + getStartPoint() + " till " + getEndPoint() + ": " + totDistance);
-        return totDistance;
+        return getFinalResult();
     }
 
     //The method the Service class calls to give information which this class can calculate
