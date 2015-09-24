@@ -18,6 +18,7 @@ public class IdentifyTravelService extends Service {
     private Handler handler;
     private Runnable onBusTask;
     private ICalculateTravelInfo calculator;
+    int count;
 
     public IdentifyTravelService() {
     }
@@ -29,6 +30,7 @@ public class IdentifyTravelService extends Service {
         wifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
         busses = new Busses();
         calculator = new CalculateTravelInfo();
+        count =0;
 
         runTask();
 
@@ -52,8 +54,24 @@ public class IdentifyTravelService extends Service {
             @Override
             public void run() {
                 List<String> macAdresses = getMacAdress(wifiManager.getScanResults());
-                if (busses.doesBusExist(macAdresses)) {
+                if (busses.doesBusExist(macAdresses) && count < 30) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
+                    String nextStop = null;
+                    String rutt = null;
+                    count++;
+                    try {
+                        nextStop =new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Next_Stop").get();
+                    }catch (Exception e){}
+                    try {
+                        rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
+                    }catch (Exception e){}
+                    calculator.main(false,nextStop,rutt);
+                    System.out.println(count);
+                    System.out.println(nextStop);
+
+                    //calculator.main(true,nextStop(),getRutt());
+                    handler.postDelayed(this, 10000); //loops run method every 10 seconds
+                } else { //if there is no busWifi nearby the process is done and data is sent to
                     String nextStop = null;
                     String rutt = null;
                     try {
@@ -62,12 +80,9 @@ public class IdentifyTravelService extends Service {
                     try {
                         rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
                     }catch (Exception e){}
-                    System.out.println(rutt);
                     System.out.println(nextStop);
-
-                    //calculator.main(true,nextStop(),getRutt());
-                    handler.postDelayed(this, 10000); //loops run method every 10 seconds
-                } else { //if there is no busWifi nearby the process is done and data is sent to
+                    calculator.main(true,nextStop,rutt);
+                    System.out.println("DET ÄR OMÖJLIGT:" +calculator.getFinalResult());
                         // database and the service is finished
                     //calculator.main(false,nextStop(),getRutt());
                     //calculator.getFinalResult();
