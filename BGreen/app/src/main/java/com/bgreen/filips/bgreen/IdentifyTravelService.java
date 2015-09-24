@@ -10,6 +10,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -17,6 +21,8 @@ import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class IdentifyTravelService extends Service {
 
@@ -36,6 +42,7 @@ public class IdentifyTravelService extends Service {
         wifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
         busses = new Busses();
         calculator = new CalculateTravelInfo();
+
         runTask();
 
     }
@@ -61,6 +68,8 @@ public class IdentifyTravelService extends Service {
                 if (busses.doesBusExist(getMacAdress(wifiManager.getScanResults()))) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
                     System.out.println("I RETUUUURN");
+                    new RetrieveBusData().execute();
+
                     //calculator.main(true,nextStop(),getRutt());
                     handler.postDelayed(this, 10000); //loops run method every 10 seconds
                 } else { //if there is no busWifi nearby the process is done and data is sent to
