@@ -34,4 +34,14 @@
         android:layout_marginTop="176dp"
         android:textStyle="bold" />
 
+    <FrameLayout
+        android:id="@+id/achivement_fragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="256dp"
+        android:background="@color/primary"
+        android:elevation="8dp">
+    </FrameLayout>
+
 </FrameLayout>
