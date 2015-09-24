@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -18,12 +20,19 @@ public class MinuteReciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> wifiScanList = wifiManager.getScanResults();
+        List<String> bssid= new ArrayList<>(); // A list containing mac-adresses
+        IBusses busses = new Busses();
+        System.out.println(wifiScanList.toString());
 
         for (ScanResult result:wifiScanList  ){
-            if(result.SSID.equals("eduroam")){
-                //if there is a wifi in the area with the name eduroam
-                context.startService(new Intent(context, IdentifyTravelService.class));
-            }
+            //creates a list of all the MAC-adresses in the area
+            bssid.add(result.BSSID);
+        }
+
+        if(busses.doesBusExist(bssid)){
+            // if any of the MAC-adresses is a Electrycity MAC-adress, start service
+            Intent serviceIntent = new Intent(context,IdentifyTravelService.class);
+            context.startService(serviceIntent);
         }
 
     }

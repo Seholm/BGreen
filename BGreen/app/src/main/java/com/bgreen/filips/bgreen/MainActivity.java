@@ -15,6 +15,7 @@ import android.content.IntentSender;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -74,6 +75,12 @@ public class MainActivity extends AppCompatActivity implements
 
         //OnClicklistner for the signInButton
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+    }
+
+    public void hermanTest(View v) {
+        Intent myIntent = new Intent(MainActivity.this, DetailedAchievementActivity.class);
+        //myIntent.putExtra("key", value); //Optional parameters
+        MainActivity.this.startActivity(myIntent);
     }
 
     @Override
@@ -147,6 +154,9 @@ public class MainActivity extends AppCompatActivity implements
 
             mIsResolving = false;
             mGoogleApiClient.connect();
+
+            getProfileInformation();
+
         }
     }
 
@@ -155,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements
         // attempt to resolve any errors that occur.
         mShouldResolve = true;
         mGoogleApiClient.connect();
+
 
         // Show a message to the user that we are signing in.
         System.out.println("*******SIGNING IN*********");
@@ -175,6 +186,7 @@ public class MainActivity extends AppCompatActivity implements
                 } catch (IntentSender.SendIntentException e) {
                     mIsResolving = false;
                     mGoogleApiClient.connect();
+
                     getProfileInformation();
                 }
             } else {
