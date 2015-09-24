@@ -9,5 +9,8 @@ public interface ICalculateTravelInfo {
     public int getFinalResult();
     //Method which Service class calls to give info for calculating the distance
     public void main(boolean lastStop, String nextStopTest, String route);
+    public String getStartPoint();
+    public String getEndPoint();
+    public String getLatestPoint();
 
 }

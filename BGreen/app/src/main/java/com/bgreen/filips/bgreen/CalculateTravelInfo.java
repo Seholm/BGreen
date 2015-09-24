@@ -9,6 +9,9 @@ import java.util.List;
  */
 public class CalculateTravelInfo implements ICalculateTravelInfo {
 
+    //TODO: fix correct busstops + busstoplengths
+
+
     //String for saving startpoint of the trip
     private String startPoint;
     //String for saving the lateststop during the trip
@@ -103,47 +106,52 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     }
 
 
-    //Method for setting a startpoint and route of the trip. Parameters i a point and a route.
+    //Method for setting a startpoint and route of the trip. Parameters is a point and a route.
     private void setStartPoint(String point, String route){
 
-        if(route == "Lindholmen"){
+        if(route.equals("Lindholmen")){
             setBusStopsNorthRoute();
             setBusStopsNorthRouteDistances();
         }else{
             setBusStopsSouthRoute();
             setBusStopsSouthRouteDistance();
         }
-        for(int i=0; i<busStops.size(); i++){
+        for(int i=0; i<busStops.size()+1; i++){
 
             //Startpoint is the stop before the point saying which is next stop
             if(busStops.get(i).equals(point)){
                 startPoint = busStops.get(i-1);
-                setLatestPoint(startPoint);
+                setLatestPoint(busStops.get(i));
                 break;
             }
         }
     }
-
     public String getStartPoint(){
         return startPoint;
     }
+
 
     //Method for setting which stop was the last one a user visited
     private void setLatestPoint(String point){
         latestPoint = point;
     }
-    private String getLatestPoint(){
+    public String getLatestPoint(){
         return latestPoint;
     }
+
     private void setEndPoint(){
-        endPoint = latestPoint;
+        endPoint = getLatestPoint();
     }
-    private String getEndPoint(){
+    public String getEndPoint(){
         return endPoint;
     }
 
+    private void setTotalDistance(int distance){
+        totDistance = distance;
+    }
+
     //Method for calculation the total distance
-    private void calcTotalDistance(){
+    private Integer calcTotalDistance(){
         String point = getStartPoint();
         int numberOfStops=0;
         int totDistance = 0;
@@ -163,21 +171,22 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         }
 
         //Add together all distances after startpoint until last stop
-        while(point != getStartPoint()){
-            for(int i=0; i<busStops.size()+1; i++){
+        while(!point.equals(getStartPoint())){
+            for(int i=0; i<busStops.size(); i++){
                 if (point.equals(busStops.get(i))){
                     totDistance = totDistance + busStopsLength.get(i);
                     System.out.println("avstånd från " + busStops.get(i-1) + " till " + busStops.get(i) +": "+ busStopsLength.get(i));
-                    point = busStops.get(i+1);
+
                     numberOfStops = numberOfStops +1;
 
                     //If point is lastpoint, break so totDistance is finished calculating
-                    if(point.equals(getEndPoint())){
-                        totDistance = totDistance + busStopsLength.get(i+1);
+                    if(busStops.get(i).equals(getEndPoint())){
+                        setTotalDistance(totDistance);
                         System.out.println("avstånd från " + busStops.get(i) + " till " + busStops.get(i+1) +": "+ busStopsLength.get(i+1));
                         numberOfStops = numberOfStops +1;
                         break;
                     }
+                    point = busStops.get(i+1);
                 }
 
             }
@@ -187,7 +196,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         System.out.println("Antal stopp: " + numberOfStops);
         System.out.println("Sista hållplats: " + getEndPoint());
         System.out.println("totalt avstånd från " + getStartPoint() + " till " + getEndPoint() + ": " + totDistance);
-
+        return totDistance;
     }
 
     //The method the Service class calls to give information which this class can calculate
@@ -196,12 +205,14 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         //Set startpoint if there is none else set nextStop as latestPoint
         if(startPoint==null){
             setStartPoint(nextStop, route);
+
         }else if(!getLatestPoint().equals(nextStop)){
             setLatestPoint(nextStop);
         }
 
         //If wifi lost set nextStop as lastStop
         if(lastStop == true){
+            setLatestPoint(nextStop);
             setEndPoint();
             calcTotalDistance();
         }
