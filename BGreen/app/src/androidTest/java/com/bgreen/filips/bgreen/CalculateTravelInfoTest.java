@@ -9,11 +9,11 @@ import static junit.framework.Assert.*;
  */
 public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
-    
+
     //Test correct startpoint with one stop in total
     public void testStartPoint1(){
-        String startPoint = "Götaplatsen";
-        String nextStop = "Valand";
+        String startPoint = "GötaplatsenA";
+        String nextStop = "ValandC";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false,nextStop,"Lindholmen");
         assertEquals(startPoint,calc.getStartPoint());
@@ -21,11 +21,11 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
     //Test correct startpoint with multiple stops
     public void testStartPoint2(){
-        String startPoint = "Götaplatsen";
-        String nextStop1 = "Valand";
-        String nextStop2 = "Kungsportsplatsen";
-        String nextStop3 = "Brunnsparken";
-        String nextStop4 = "Lilla Bommen";
+        String startPoint = "GötaplatsenA";
+        String nextStop1 = "ValandC";
+        String nextStop2 = "KungsportsplatsenC";
+        String nextStop3 = "BrunnsparkenB";
+        String nextStop4 = "Lilla BommenB";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false,nextStop1,"Lindholmen");
         calc.main(false,nextStop1,"Lindholmen");
@@ -40,21 +40,21 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
     //Test correct endpoint with one stop in total
     public void testEndPoint1(){
-        String endPoint = "Valand";
-        String nextStop = "Valand";
+        String endPoint = "ValandC";
+        String nextStop = "ValandC";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false, nextStop, "Lindholmen");
         calc.main(true, nextStop, "Lindholmen");
-        assertTrue(endPoint.equals("Valand"));
+        assertTrue(endPoint.equals(calc.getEndPoint()));
     }
 
     //Test correct endpoint with multiple stops in total
     public void testEndPoint2(){
-        String endPoint = "Lilla Bommen";
-        String nextStop1 = "Valand";
-        String nextStop2 = "Kungsportsplatsen";
-        String nextStop3 = "Brunnsparken";
-        String nextStop4 = "Lilla Bommen";
+        String endPoint = "Lilla BommenB";
+        String nextStop1 = "ValandC";
+        String nextStop2 = "KungsportsplatsenC";
+        String nextStop3 = "BrunnsparkenB";
+        String nextStop4 = "Lilla BommenB";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false,nextStop1, "Lindholmen");
         calc.main(false,nextStop1, "Lindholmen");
@@ -69,8 +69,8 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
     //Test correct endpoint with one stop in total
     public void testLatestPoint1(){
-        String latestPoint = "Valand";
-        String nextStop1 = "Valand";
+        String latestPoint = "ValandC";
+        String nextStop1 = "ValandC";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false, nextStop1, "Lindholmen");
         assertTrue(latestPoint.equals(calc.getLatestPoint()));
@@ -78,11 +78,11 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
     //Test correct endpoint with multiple stops in total
     public void testLatestPoint2(){
-        String latestPoint = "Brunnsparken";
-        String nextStop1 = "Götaplatsen";
-        String nextStop2 = "Valand";
-        String nextStop3 = "Kungsportsplatsen";
-        String nextStop4 = "Brunnsparken";
+        String latestPoint = "BrunnsparkenB";
+        String nextStop1 = "GötaplatsenA";
+        String nextStop2 = "ValandC";
+        String nextStop3 = "KungsportsplatsenC";
+        String nextStop4 = "BrunnsparkenB";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false, nextStop1, "Lindholmen");
         calc.main(false, nextStop1, "Lindholmen");
@@ -95,10 +95,10 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
         assertTrue(latestPoint.equals(calc.getLatestPoint()));
     }
 
-    //Test correct distance calculation with one stop
+    //Test correct distance calculation with one stop. Between götaplatsen and valand
     public void testCalcTotalDistance1(){
-        int totDistance = 10;
-        String nextStop1 = "Valand";
+        int totDistance = 400;
+        String nextStop1 = "ValandC";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false, nextStop1, "Lindholmen");
         calc.main(true, nextStop1, "Lindholmen");
@@ -106,13 +106,13 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
     }
 
-    //Test correct distance calculation with multiple stops
+    //Test correct distance calculation with multiple stops between kapell and brunns
     public void testCalcTotalDistance2(){
-        int totDistance = 40;
-        String nextStop1 = "Götaplatsen";
-        String nextStop2 = "Valand";
-        String nextStop3 = "Kungsportsplatsen";
-        String nextStop4 = "Brunnsparken";
+        int totDistance = 1850;
+        String nextStop1 = "GötaplatsenA";
+        String nextStop2 = "ValandC";
+        String nextStop3 = "KungsportsplatsenC";
+        String nextStop4 = "BrunnsparkenB";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false, nextStop1, "Lindholmen");
         calc.main(false, nextStop1, "Lindholmen");
@@ -126,13 +126,13 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
     }
 
-    //Test correct distance calculation with multiple stops and other route
+    //Test correct distance calculation with multiple stops and other route brunns to götapl
     public void testCalcTotalDistance3(){
-        int totDistance = 40;
-        String nextStop1 = "Brunnsparken";
-        String nextStop2 = "Kungsportsplatsen";
-        String nextStop3 = "Valand";
-        String nextStop4 = "Götaplatsen";
+        int totDistance = 1530;
+        String nextStop1 = "BrunnsparkenA";
+        String nextStop2 = "KungsportsplD";
+        String nextStop3 = "ValandD";
+        String nextStop4 = "GötaplatsenB";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
         calc.main(false, nextStop1, "Chalmers");
         calc.main(false, nextStop1, "Chalmers");

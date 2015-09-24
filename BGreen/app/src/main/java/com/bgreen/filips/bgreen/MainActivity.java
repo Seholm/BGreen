@@ -22,6 +22,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        tempFilipMethod();
+
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(MainActivity.this, MinuteReciever.class);
@@ -75,5 +78,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+    public void tempFilipMethod(){
+        new RetrieveBusData().execute();
+
     }
 }
