@@ -77,6 +77,12 @@ public class MainActivity extends AppCompatActivity implements
         findViewById(R.id.sign_in_button).setOnClickListener(this);
     }
 
+    public void hermanTest(View v) {
+        Intent myIntent = new Intent(MainActivity.this, DetailedAchievementActivity.class);
+        //myIntent.putExtra("key", value); //Optional parameters
+        MainActivity.this.startActivity(myIntent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
