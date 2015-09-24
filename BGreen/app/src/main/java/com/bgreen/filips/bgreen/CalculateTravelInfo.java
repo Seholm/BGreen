@@ -29,19 +29,19 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     private void setBusStopsNorthRoute(){
         busStops.clear();
 
-        busStops.add("Sven Hultins plats");
-        busStops.add("Chalmersplatsen");
-        busStops.add("Kapellplatsen");
-        busStops.add("Götaplatsen");
-        busStops.add("Valand");
-        busStops.add("Kungsportsplatsen");
-        busStops.add("Brunnsparken");
-        busStops.add("Lilla Bommen");
-        busStops.add("Frihamnsporten");
-        busStops.add("Pumpgatan");
-        busStops.add("Regnbågsgatan");
-        busStops.add("Lindholmen");
-        busStops.add("Teknikgatan");
+        busStops.add("Sven Hultins pl.A");
+        busStops.add("ChalmersplatsenA");
+        busStops.add("KapellplatsenE");
+        busStops.add("GötaplatsenA");
+        busStops.add("ValandC");
+        busStops.add("KungsportsplC");//klar
+        busStops.add("BrunnsparkenB");
+        busStops.add("Lilla BommenB");//klar
+        busStops.add("FrihamnsportenB");
+        busStops.add("PumpgatanB");//klar
+        busStops.add("RegnbågsgatanD");
+        busStops.add("LindholmenD");
+        busStops.add("TeknikgatanA");
     }
 
     //Method for setting bus stops distances if route is Chalmers-Lindholmen
@@ -49,60 +49,57 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         busStopsLength.clear();
 
         busStopsLength.add(0);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
+        busStopsLength.add(450);
+        busStopsLength.add(550);
+        busStopsLength.add(600);//600+400+500+350=1850
+        busStopsLength.add(400);
+        busStopsLength.add(500);
+        busStopsLength.add(350);
+        busStopsLength.add(280);
+        busStopsLength.add(2200);
+        busStopsLength.add(1200);
+        busStopsLength.add(300);
+        busStopsLength.add(400);
+        busStopsLength.add(550);
+
     }
 
     //Method for setting bus stops if route is Lindholmen-Chalmers
-    private void setBusStopsSouthRoute(){
+    private void setBusStopsSouthRoute() {
         busStops.clear();
 
-        busStops.add("Lindholmen");
-        busStops.add("Teknikgatan");
-        busStops.add("Lindholmsplatsen");
-        busStops.add("Lindholmen");
-        busStops.add("Regnbågsgatan");
-        busStops.add("Pumpgatan");
-        busStops.add("Frihamnsporten");
-        busStops.add("Lilla Bommen");
-        busStops.add("Brunnsparken");
-        busStops.add("Kungsportsplatsen");
-        busStops.add("Valand");
-        busStops.add("Götaplatsen");
-        busStops.add("Ålandsgatan");
-        busStops.add("Chalmers tvärgata");
-        busStops.add("Sven Hultins plats");
+        busStops.add("TeknikgatanA");
+        busStops.add("LindholmsplatsenA");
+        busStops.add("RegnbågsgatanB");
+        busStops.add("PumpgatanA");
+        busStops.add("FrihamnsportenA");
+        busStops.add("Lilla BommenA");
+        busStops.add("BrunnsparkenA");
+        busStops.add("KungsportsplD");
+        busStops.add("ValandD");
+        busStops.add("GötaplatsenB");
+        busStops.add("ÅlandsgatanB");
+        busStops.add("Chalmers TvärgB");
+        busStops.add("Sven Hultins pl.A");
     }
 
-    //Method for setting bus stops distances if route is Lindholmen-Chalmers
+    //Method for setting bus stops distances if route is johanneberg
     private void setBusStopsSouthRouteDistance(){
         busStopsLength.clear();
 
         busStopsLength.add(0);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
-        busStopsLength.add(10);
+        busStopsLength.add(52);
+        busStopsLength.add(550);
+        busStopsLength.add(300);
+        busStopsLength.add(1200);
+        busStopsLength.add(2200);//lilla bommen
+        busStopsLength.add(280);//280+350+500+400=1530
+        busStopsLength.add(350);//kungsports
+        busStopsLength.add(500);
+        busStopsLength.add(400);//götaplatsen
+        busStopsLength.add(550);
+        busStopsLength.add(200);//tvärgatan
+        busStopsLength.add(1100);
     }
 
 
@@ -171,7 +168,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         }
 
         //Add together all distances after startpoint until last stop
-        while(!point.equals(getStartPoint())){
+        while (!point.equals(getStartPoint())){
             for(int i=0; i<busStops.size(); i++){
                 if (point.equals(busStops.get(i))){
                     totDistance = totDistance + busStopsLength.get(i);
