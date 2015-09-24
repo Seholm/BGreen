@@ -177,8 +177,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
                     //If point is lastpoint, break so totDistance is finished calculating
                     if(busStops.get(i).equals(getEndPoint())){
                         setTotalDistance(totDistance);
-                        System.out.println("avstånd från " + busStops.get(i) + " till " + busStops.get(i+1) +": "+ busStopsLength.get(i+1));
-                        numberOfStops = numberOfStops +1;
+                        
                         break;
                     }
                     point = busStops.get(i+1);
