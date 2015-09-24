@@ -15,19 +15,20 @@ public class Busses implements IBusses {
 
         busses = new HashMap<String,String>();
         // a Map with id and mac adresses of al the busses
-        busses.put("00:13:95:13:49:f5","Ericsson$100020");
-        busses.put("00:13:95:13:4b:be","Ericsson$100021");
-        busses.put("00:13:95:14:3b:f0","Ericsson$100022");
-        busses.put("00:13:95:14:69:8a","Ericsson$171164");
-        busses.put("00:13:95:13:49:f7","Ericsson$171234");
-        busses.put("00:13:95:0f:92:a4","Ericsson$171235");
-        busses.put("00:13:95:13:62:96","Ericsson$171327");
-        busses.put("00:13:95:13:4b:bc","Ericsson$171328");
-        busses.put("00:13:95:14:3b:f2","Ericsson$171329");
-        busses.put("00:13:95:13:5f:20","Ericsson$171330");
+        busses.put("00:13:95:13:49:f5","100020");
+        busses.put("00:13:95:13:4b:be","100021");
+        busses.put("00:13:95:14:3b:f0","100022");
+        busses.put("00:13:95:14:69:8a","171164");
+        busses.put("00:13:95:13:49:f7","171234");
+        busses.put("00:13:95:0f:92:a4","171235");
+        busses.put("00:13:95:13:62:96","171327");
+        busses.put("00:13:95:13:4b:bc","171328");
+        busses.put("00:13:95:14:3b:f2","171329");
+        busses.put("00:13:95:13:5f:20","171330");
         busses.put("04:f0:21:10:09:e8","TEST");
-        busses.put("74:a0:2f:e0:e4:6e","dummydata");
+        busses.put("74:a0:2f:e0:e4:6e","100021");
         busses.put("5c:35:3b:e8:8a:fb","hemma");
+        busses.put("88:1d:fc:30:a1:4f","100021");
 
         // [SSID: Vasttrafik, BSSID: f2:21:10:09:53:00, capabilities: [ESS], level: -41, frequency: 2462, timestamp: 96795888626, distance: ?(cm), distanceSd: ?(cm),
         // SSID: ElectriCity, BSSID: 04:f0:21:10:09:53, capabilities: [ESS], level: -42, frequency: 2462, timestamp: 96795888613, distance: ?(cm), distanceSd: ?(cm),

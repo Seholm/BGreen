@@ -5,24 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class IdentifyTravelService extends Service {
 
@@ -65,10 +53,19 @@ public class IdentifyTravelService extends Service {
 
             @Override
             public void run() {
-                if (busses.doesBusExist(getMacAdress(wifiManager.getScanResults()))) {
+                List<String> macAdresses = getMacAdress(wifiManager.getScanResults());
+                if (busses.doesBusExist(macAdresses)) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
-                    System.out.println("I RETUUUURN");
-                    new RetrieveBusData().execute();
+                    String nextStop = null;
+                    String rutt = null;
+                    try {
+                        nextStop =new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Next_Stop").get();
+                    }catch (Exception e){}
+                    try {
+                        rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
+                    }catch (Exception e){}
+                    System.out.println(rutt);
+                    System.out.println(nextStop);
 
                     //calculator.main(true,nextStop(),getRutt());
                     handler.postDelayed(this, 10000); //loops run method every 10 seconds
@@ -95,12 +92,5 @@ public class IdentifyTravelService extends Service {
             bssid.add(result.BSSID);
         }
         return bssid;
-    }
-
-    private String nextStop(){
-        return null;
-    }
-    private String getRutt(){
-        return null;
     }
 }
