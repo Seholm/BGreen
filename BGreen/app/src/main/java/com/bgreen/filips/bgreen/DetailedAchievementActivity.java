@@ -30,7 +30,7 @@ public class DetailedAchievementActivity extends AppCompatActivity {
         String txtReader = "";
         String subTxtReader = "";
         StringBuffer sbuffer = new StringBuffer();
-        InputStream is = this.getResources().openRawResource(R.raw.achievementlist);
+        InputStream is = this.getResources().openRawResource(R.raw.achievementlist0);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         if (is != null) {
             try {
