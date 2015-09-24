@@ -139,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements
 
             mIsResolving = false;
             mGoogleApiClient.connect();
+            getProfileInformation();
         }
     }
 
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements
         // attempt to resolve any errors that occur.
         mShouldResolve = true;
         mGoogleApiClient.connect();
+        getProfileInformation();
 
         // Show a message to the user that we are signing in.
         System.out.println("*******SIGNING IN*********");
@@ -167,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements
                 } catch (IntentSender.SendIntentException e) {
                     mIsResolving = false;
                     mGoogleApiClient.connect();
+                    getProfileInformation();
                 }
             } else {
                 // Could not resolve the connection result, show the user an
