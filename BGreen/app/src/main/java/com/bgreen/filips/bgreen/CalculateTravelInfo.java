@@ -21,7 +21,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     //List with all legths between bus stops. on index i is distance between busstop i-1 and i
     private List<Integer> busStopsLength = new ArrayList<Integer>();
     //Integer for saving the total distance of the trip
-    int totDistance;
+    int totDistance=0;
 
     //Method for setting bus stops if route is Chalmers-Lindholmen
     private void setBusStopsNorthRoute(){
@@ -103,7 +103,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
     //Method for setting a startpoint and route of the trip. Parameters is a point and a route.
     private void setStartPoint(String point, String route){
-
+        setTotalDistance(0);
         if(route.equals("Lindholmen")){
             setBusStopsNorthRoute();
             setBusStopsNorthRouteDistances();
@@ -195,6 +195,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
     //The method the Service class calls to give information which this class can calculate
     public void main(boolean lastStop, String nextStop, String route){
+        //method doesn't set any values when nextStop in null
         if(nextStop!=null && route!=null){
             //Set startpoint if there is none else set nextStop as latestPoint
             if(startPoint==null){
@@ -211,7 +212,11 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
                 calcTotalDistance();
             }
         }
-
+        //If lastStop and nextStop is null, set endPoint and calc with old values
+        if(lastStop==true && nextStop==null && getStartPoint()!=null){
+            setEndPoint();
+            calcTotalDistance();
+        }
 
     }
 
@@ -221,3 +226,13 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
