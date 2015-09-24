@@ -8,6 +8,7 @@
 
         <option name="gradleHome" value="C:\Program Files\Android\Android Studio\gradle\gradle-2.2.1" />
 
+
         <option name="gradleJvm" value="1.8" />
 
         <option name="modules">
@@ -20,4 +21,3 @@
     </option>
   </component>
 </project>
-
