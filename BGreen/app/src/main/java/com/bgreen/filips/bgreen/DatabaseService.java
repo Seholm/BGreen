@@ -14,23 +14,22 @@ import java.util.List;
 public class DatabaseService implements IDatabaseService{
 
     @Override
-    public void saveBusTrip(int distance, String userEmail) {
+    public void saveBusTrip(int distance, String userID) {
         ParseObject busTrip = new ParseObject("busTrip");
         busTrip.put("distance", distance);
-        saveBusTripOfUser(busTrip, userEmail, distance);
+        saveBusTripOfUser(busTrip, userID, distance);
     }
 
-    private void saveBusTripOfUser(final ParseObject busTrip, final String userEmail, final int distance) {
+    private void saveBusTripOfUser(final ParseObject busTrip, final String userID, final int distance) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.whereEqualTo("email", userEmail);
-        query.findInBackground(new FindCallback<ParseObject>() {
+        query.getInBackground(userID, new GetCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> list, ParseException e) {
-                if (e==null){
-                    busTrip.put("parent", list.get(0));
+            public void done(ParseObject parseObject, ParseException e) {
+                if (e == null){
+                    busTrip.put("parent", parseObject);
                     busTrip.saveInBackground();
-                    updateProfileStats(list.get(0), distance);
-                }else {
+                    updateProfileStats(parseObject, distance);
+                }else{
                     e.printStackTrace();
                 }
             }
