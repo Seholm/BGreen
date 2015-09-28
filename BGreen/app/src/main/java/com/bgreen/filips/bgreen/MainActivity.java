@@ -171,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements
 
 
 
+
         // Show a message to the user that we are signing in.
         System.out.println("*******SIGNING IN*********");
         //TODO;Toast to show user that we are signing in

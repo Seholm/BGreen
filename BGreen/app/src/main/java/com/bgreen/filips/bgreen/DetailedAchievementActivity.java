@@ -32,7 +32,6 @@ public class DetailedAchievementActivity extends AppCompatActivity {
         setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
         StringBuffer sbuffer = new StringBuffer();
         InputStream is = this.getResources().openRawResource(R.raw.achievementlist + i);
-
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         if (is != null) {
             try {
