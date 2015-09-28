@@ -5,6 +5,6 @@ package com.bgreen.filips.bgreen;
  */
 public interface IDatabaseService {
 
-    public void saveBusTrip(int distance, String userEmail);
+    public void saveBusTrip(int distance, String userID);
 
 }
