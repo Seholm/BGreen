@@ -55,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         // Enable Local Datastore, and Parse DB services.
-        Parse.enableLocalDatastore(this);
-        Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
+        //Parse.enableLocalDatastore(this);
+        //Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
 
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements
         // account has granted any requested permissions to our app and that we were able to
         // establish a service connection to Google Play services.
         mShouldResolve = false;
+        System.out.println("*!*!*!*!*!*!*!*! ONCONECTED METHOD !*!*!*!*!*!*!*!*!*!*!*!*!*!");
 
         // Show the signed-in UI
         getProfileInformation();
@@ -155,7 +156,10 @@ public class MainActivity extends AppCompatActivity implements
             mIsResolving = false;
             mGoogleApiClient.connect();
 
+            System.out.println("*!*!*!*!*!*!*!*! OnActivitResault METHOD !*!*!*!*!*!*!*!*!*!*!*!*!*!");
+
             getProfileInformation();
+
         }
     }
 
@@ -164,7 +168,8 @@ public class MainActivity extends AppCompatActivity implements
         // attempt to resolve any errors that occur.
         mShouldResolve = true;
         mGoogleApiClient.connect();
-        getProfileInformation();
+
+
 
 
         // Show a message to the user that we are signing in.
