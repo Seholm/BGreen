@@ -13,6 +13,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class DetailedAchievementActivity extends AppCompatActivity {
+    private TextView setAchievementHeadline;
+    private TextView setAchievmentDescText;
+    private String txtReader = "";
+    private String subTxtReader = "";
+    private int i = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +28,11 @@ public class DetailedAchievementActivity extends AppCompatActivity {
 
     public void displayAchievmentDetails() {
         ReadTextForAchievement r = new ReadTextForAchievement();
-        TextView setAchievementHeadline;
-        TextView setAchievmentDescText;
         setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
-        String txtReader = "";
-        String subTxtReader = "";
         StringBuffer sbuffer = new StringBuffer();
-        InputStream is = this.getResources().openRawResource(R.raw.achievementlist0);
+        InputStream is = this.getResources().openRawResource(R.raw.achievementlist + i);
+
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         if (is != null) {
             try {

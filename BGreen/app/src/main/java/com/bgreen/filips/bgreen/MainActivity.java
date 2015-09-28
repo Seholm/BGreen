@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity implements
         mGoogleApiClient.connect();
 
 
+
         // Show a message to the user that we are signing in.
         System.out.println("*******SIGNING IN*********");
         //TODO;Toast to show user that we are signing in
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements
                     mIsResolving = false;
                     mGoogleApiClient.connect();
 
-                    //getProfileInformation();
+                    getProfileInformation();
                 }
             } else {
                 // Could not resolve the connection result, show the user an
