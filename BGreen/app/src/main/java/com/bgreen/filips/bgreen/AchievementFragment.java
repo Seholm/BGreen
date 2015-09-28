@@ -47,8 +47,6 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                 Picasso.with(this.getContext()).load(imageList.get(i)).into(circleImageViewList.get(i));
             }
         }
-
-
         return myInflatedView;
     }
 
@@ -69,13 +67,20 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         if (circleImageViewList.get(0).getId() == v.getId()) {
             //System.out.println("************!!!!!!!!!!!*****0101010101010*******!!!!!!!!!!!!!!*************");
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            intent.putExtra("ACHIEVMENT_01", 1);
             startActivity(intent);
         }
         if (circleImageViewList.get(1).getId() == v.getId()) {
-            System.out.println("************!!!!!!!!!!!*****0202020202******!!!!!!!!!!!!!!*************");
+            //System.out.println("************!!!!!!!!!!!*****0202020202******!!!!!!!!!!!!!!*************");
+            Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            intent.putExtra("ACHIEVMENT_02", 2);
+            startActivity(intent);
         }
         if (circleImageViewList.get(2).getId() == v.getId()) {
-            System.out.println("************!!!!!!!!!!!*****0303030303******!!!!!!!!!!!!!!*************");
+            //System.out.println("************!!!!!!!!!!!*****0303030303******!!!!!!!!!!!!!!*************");
+            Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            intent.putExtra("ACHIEVMENT_03", 3);
+            startActivity(intent);
         }
     }
 }
