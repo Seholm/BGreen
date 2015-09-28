@@ -17,6 +17,7 @@ public class DetailedAchievementActivity extends AppCompatActivity {
     private TextView setAchievmentDescText;
     private String txtReader = "";
     private String subTxtReader = "";
+    private int i = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class DetailedAchievementActivity extends AppCompatActivity {
         setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
         StringBuffer sbuffer = new StringBuffer();
-        InputStream is = this.getResources().openRawResource(R.raw.achievementlist0);
+        InputStream is = this.getResources().openRawResource(R.raw.achievementlist + i);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         if (is != null) {
             try {
