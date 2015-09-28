@@ -1,6 +1,7 @@
 package com.bgreen.filips.bgreen;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -66,7 +67,9 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if (circleImageViewList.get(0).getId() == v.getId()) {
-            System.out.println("************!!!!!!!!!!!*****0101010101010*******!!!!!!!!!!!!!!*************");
+            //System.out.println("************!!!!!!!!!!!*****0101010101010*******!!!!!!!!!!!!!!*************");
+            Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            startActivity(intent);
         }
         if (circleImageViewList.get(1).getId() == v.getId()) {
             System.out.println("************!!!!!!!!!!!*****0202020202******!!!!!!!!!!!!!!*************");

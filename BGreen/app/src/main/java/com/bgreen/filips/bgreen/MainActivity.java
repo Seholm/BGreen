@@ -126,6 +126,7 @@ public class MainActivity extends AppCompatActivity implements
         // account has granted any requested permissions to our app and that we were able to
         // establish a service connection to Google Play services.
         mShouldResolve = false;
+        System.out.println("*!*!*!*!*!*!*!*! ONCONECTED METHOD !*!*!*!*!*!*!*!*!*!*!*!*!*!");
 
         // Show the signed-in UI
         getProfileInformation();
@@ -154,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements
 
             mIsResolving = false;
             mGoogleApiClient.connect();
+
+            System.out.println("*!*!*!*!*!*!*!*! OnActivitResault METHOD !*!*!*!*!*!*!*!*!*!*!*!*!*!");
 
             getProfileInformation();
 
@@ -187,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements
                     mIsResolving = false;
                     mGoogleApiClient.connect();
 
-                    getProfileInformation();
+                    //getProfileInformation();
                 }
             } else {
                 // Could not resolve the connection result, show the user an
