@@ -1,6 +1,7 @@
 package com.bgreen.filips.bgreen;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -17,7 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AchievementFragment extends Fragment {
+public class AchievementFragment extends Fragment implements View.OnClickListener {
 
     View myInflatedView;
     List<CircleImageView> circleImageViewList;
@@ -41,11 +42,11 @@ public class AchievementFragment extends Fragment {
 
         if(circleImageViewList != null && imageList != null){
             for(int i = 0; i < circleImageViewList.size(); i++){
+                circleImageViewList.get(i).setClickable(true);
+                circleImageViewList.get(i).setOnClickListener(this);
                 Picasso.with(this.getContext()).load(imageList.get(i)).into(circleImageViewList.get(i));
             }
         }
-
-
         return myInflatedView;
     }
 
@@ -61,4 +62,25 @@ public class AchievementFragment extends Fragment {
         imageList.add(R.drawable.achievements);
     }
 
+    @Override
+    public void onClick(View v) {
+        if (circleImageViewList.get(0).getId() == v.getId()) {
+            //System.out.println("************!!!!!!!!!!!*****0101010101010*******!!!!!!!!!!!!!!*************");
+            Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            intent.putExtra("ACHIEVMENT", 1);
+            startActivity(intent);
+        }
+        if (circleImageViewList.get(1).getId() == v.getId()) {
+            //System.out.println("************!!!!!!!!!!!*****0202020202******!!!!!!!!!!!!!!*************");
+            Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            intent.putExtra("ACHIEVMENT", 2);
+            startActivity(intent);
+        }
+        if (circleImageViewList.get(2).getId() == v.getId()) {
+            //System.out.println("************!!!!!!!!!!!*****0303030303******!!!!!!!!!!!!!!*************");
+            Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            intent.putExtra("ACHIEVMENT", 3);
+            startActivity(intent);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.bgreen.filips.bgreen;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -7,30 +8,39 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class DetailedAchievementActivity extends AppCompatActivity {
+    private TextView setAchievementHeadline;
+    private TextView setAchievmentDescText;
+    private CircleImageView circleImageView;
+    private String txtReader = "";
+    private String subTxtReader = "";
+    private Bundle bundle;
+    int i = bundle.getInt("ACHIEVMENT");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_achievement);
+        bundle = getIntent().getExtras();
         displayAchievmentDetails();
     }
 
     public void displayAchievmentDetails() {
         ReadTextForAchievement r = new ReadTextForAchievement();
-        TextView setAchievementHeadline;
-        TextView setAchievmentDescText;
         setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
-        String txtReader = "";
-        String subTxtReader = "";
+        circleImageView = (CircleImageView) findViewById(R.id.achievment_detailed_image);
         StringBuffer sbuffer = new StringBuffer();
-        InputStream is = this.getResources().openRawResource(R.raw.achievementlist0);
+        InputStream is = this.getResources().openRawResource(R.raw.achievementlist + i);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         if (is != null) {
             try {
@@ -38,20 +48,22 @@ public class DetailedAchievementActivity extends AppCompatActivity {
                     sbuffer.append(txtReader + "\n");
                     subTxtReader = txtReader;
                 }
+                Picasso.with(this).load(R.drawable.ment_01 + i).into(circleImageView);
                 setAchievementHeadline.setText(r.parseHeadline(subTxtReader));
                 setAchievmentDescText.setText(r.parseDescText(subTxtReader));
                 is.close();
-
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
-
     }
 
     public void getAchievementReward (View view) {
         System.out.println("Display possible rewards");
+        //made for the availability to get possible rewards;
+        //not yet implemented as it needs cooperation with interested
+        //financiers.
     }
 
     @Override
