@@ -20,6 +20,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.IProfileService;
+import com.bgreen.filips.bgreen.profile.Profile;
+import com.bgreen.filips.bgreen.profile.ProfileService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -54,9 +58,9 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Enable Local Datastore, and Parse DB services.
+        //Enable Local Datastore, and Parse DB services.
         //Parse.enableLocalDatastore(this);
-        //Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
+        Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
 
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager=(AlarmManager) getSystemService(ALARM_SERVICE);
