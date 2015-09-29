@@ -1,22 +1,19 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.buslogging;
 
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.util.List;
-
 /**
  * Created by medioloco on 2015-09-15.
  */
-public class DatabaseService implements IDatabaseService{
+public class DatabaseService implements IDatabaseService {
 
     @Override
     public void saveBusTrip(int distance, String userID) {
-        ParseObject busTrip = new ParseObject("busTrip");
-        busTrip.put("distance", distance);
+        ParseObject busTrip = new ParseObject("BusTrip");
+        busTrip.put("TotalDistance", distance);
         saveBusTripOfUser(busTrip, userID, distance);
     }
 
@@ -36,8 +33,8 @@ public class DatabaseService implements IDatabaseService{
         });
     }
 
-    private void updateProfileStats(ParseObject user, int distance) {
-        user.increment("totaldistance", distance);
-        user.increment("bustTrips");
+    private void updateProfileStats(ParseObject userProfile, int distance) {
+        userProfile.increment("TotalDistance", distance);
+        userProfile.increment("bustTrips");
     }
 }

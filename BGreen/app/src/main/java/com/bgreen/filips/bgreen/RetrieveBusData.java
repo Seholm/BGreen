@@ -41,6 +41,7 @@ public class RetrieveBusData extends AsyncTask <String,Void,String> {
             in.close();
             return parseRespnos(response.toString());
         }catch(IOException e ){
+            //TODO NÅGOT
             e.printStackTrace();
         }
         return null;
