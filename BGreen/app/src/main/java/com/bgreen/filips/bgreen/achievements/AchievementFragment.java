@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.achievements;
 
 
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bgreen.filips.bgreen.DetailedAchievementActivity;
+import com.bgreen.filips.bgreen.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
