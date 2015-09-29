@@ -1,6 +1,5 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.achievements;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.achievements.ReadTextForAchievement;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
