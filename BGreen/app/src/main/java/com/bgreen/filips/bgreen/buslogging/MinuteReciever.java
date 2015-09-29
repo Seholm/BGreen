@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.buslogging;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**

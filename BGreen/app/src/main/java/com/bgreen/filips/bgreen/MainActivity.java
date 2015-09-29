@@ -6,24 +6,14 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.SystemClock;
 
-import android.content.IntentSender;
-import android.support.v7.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.IProfileService;
-import com.bgreen.filips.bgreen.profile.Profile;
-import com.bgreen.filips.bgreen.profile.ProfileService;
+import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -59,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         //Enable Local Datastore, and Parse DB services.
-        //Parse.enableLocalDatastore(this);
+        Parse.enableLocalDatastore(this);
         Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
 
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
@@ -162,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements
 
             System.out.println("*!*!*!*!*!*!*!*! OnActivitResault METHOD !*!*!*!*!*!*!*!*!*!*!*!*!*!");
 
-            getProfileInformation();
+            //getProfileInformation();
 
         }
     }

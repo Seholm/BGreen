@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.buslogging;
 
 import android.app.Service;
 import android.content.Context;
@@ -8,14 +8,15 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.IBinder;
 
+import com.bgreen.filips.bgreen.CalculateTravelInfo;
+import com.bgreen.filips.bgreen.ICalculateTravelInfo;
+import com.bgreen.filips.bgreen.buslogging.Busses;
 import com.bgreen.filips.bgreen.buslogging.DatabaseService;
+import com.bgreen.filips.bgreen.buslogging.IBusses;
 import com.bgreen.filips.bgreen.buslogging.IDatabaseService;
-import com.parse.GetCallback;
+import com.bgreen.filips.bgreen.buslogging.RetrieveBusData;
 import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,10 +124,5 @@ public class IdentifyTravelService extends Service {
             bssid.add(result.BSSID);
         }
         return bssid;
-    }
-
-    private void updateProfileStats(ParseObject user, int distance) {
-        user.increment("totaldistance", distance);
-        user.increment("bustTrips");
     }
 }

@@ -1,6 +1,5 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.buslogging;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

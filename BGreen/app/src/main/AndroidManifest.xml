@@ -31,14 +31,14 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".MinuteReciever" >
+        <receiver android:name=".buslogging.MinuteReciever" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <service
-            android:name=".IdentifyTravelService"
+            android:name=".buslogging.IdentifyTravelService"
             android:enabled="true"
             android:exported="true" >
         </service>

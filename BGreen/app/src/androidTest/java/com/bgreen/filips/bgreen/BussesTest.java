@@ -2,6 +2,9 @@ package com.bgreen.filips.bgreen;
 
 import android.test.InstrumentationTestCase;
 
+import com.bgreen.filips.bgreen.buslogging.Busses;
+import com.bgreen.filips.bgreen.buslogging.IBusses;
+
 import java.util.ArrayList;
 import java.util.List;
 
