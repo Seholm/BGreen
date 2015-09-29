@@ -24,7 +24,7 @@ public class DetailedAchievementActivity extends AppCompatActivity {
     private String txtReader = "";
     private String subTxtReader = "";
     private Bundle bundle;
-    int i = bundle.getInt("ACHIEVMENT");
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +35,7 @@ public class DetailedAchievementActivity extends AppCompatActivity {
     }
 
     public void displayAchievmentDetails() {
+        int i = bundle.getInt("ACHIEVMENT");
         ReadTextForAchievement r = new ReadTextForAchievement();
         setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);

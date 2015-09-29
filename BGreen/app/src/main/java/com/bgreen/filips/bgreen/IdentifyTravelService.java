@@ -12,10 +12,10 @@ import com.bgreen.filips.bgreen.buslogging.DatabaseService;
 import com.bgreen.filips.bgreen.buslogging.IDatabaseService;
 import com.parse.GetCallback;
 import com.parse.Parse;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,28 +123,6 @@ public class IdentifyTravelService extends Service {
             bssid.add(result.BSSID);
         }
         return bssid;
-    }
-
-    public void saveBusTrip(int distance, String userID) {
-        ParseObject busTrip = new ParseObject("busTrip");
-        busTrip.put("distance", distance);
-        saveBusTripOfUser(busTrip, userID, distance);
-    }
-
-    private void saveBusTripOfUser(final ParseObject busTrip, final String userID, final int distance) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.getInBackground(userID, new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject parseObject, ParseException e) {
-                if (e == null){
-                    busTrip.put("parent", parseObject);
-                    busTrip.saveInBackground();
-                    updateProfileStats(parseObject, distance);
-                }else{
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     private void updateProfileStats(ParseObject user, int distance) {
