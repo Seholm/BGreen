@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.main;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -8,6 +8,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.bgreen.filips.bgreen.profile.ProfileFragment;
+import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.TestFragment;
 
 public class TabActivity extends AppCompatActivity {
 

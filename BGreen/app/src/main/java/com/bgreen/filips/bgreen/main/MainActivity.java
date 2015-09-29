@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.main;
 
 import android.content.Intent;
 import android.content.IntentSender;
@@ -12,8 +12,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
+import com.bgreen.filips.bgreen.DetailedAchievementActivity;
+import com.bgreen.filips.bgreen.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
