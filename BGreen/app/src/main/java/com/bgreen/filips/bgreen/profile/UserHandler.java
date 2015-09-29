@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.profile;
 
 import android.content.Context;
 import android.util.Log;

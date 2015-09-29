@@ -8,6 +8,8 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.IBinder;
 
+import com.bgreen.filips.bgreen.buslogging.DatabaseService;
+import com.bgreen.filips.bgreen.buslogging.IDatabaseService;
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -64,7 +66,7 @@ public class IdentifyTravelService extends Service {
             @Override
             public void run() {
                 List<String> macAdresses = getMacAdress(wifiManager.getScanResults());
-                if (busses.doesBusExist(macAdresses) && count <10) {
+                if (busses.doesBusExist(macAdresses)) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
                     String nextStop = null;
                     String rutt = null;
@@ -76,10 +78,17 @@ public class IdentifyTravelService extends Service {
                     try {
                         rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
                     }catch (Exception e){}
-                    System.out.println(count);
-                    System.out.println(nextStop);
-                    System.out.println(rutt);
-                    calculator.main(false,nextStop,rutt);
+                    if(rutt.equals("Ej i Trafik")){
+                        if(calculator.getFinalResult()>0){
+                            calculator.main(true,nextStop,rutt);
+                            service.saveBusTrip(calculator.getFinalResult(),"fbWLxk4f86");
+                        }
+                    }else {
+                        System.out.println(count);
+                        System.out.println(nextStop);
+                        System.out.println(rutt);
+                        calculator.main(false, nextStop, rutt);
+                    }
 
                     handler.postDelayed(this, 10000); //loops run method every 10 seconds
                 } else { //if there is no busWifi nearby the process is done and data is sent to
