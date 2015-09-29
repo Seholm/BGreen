@@ -82,7 +82,7 @@ public class IdentifyTravelService extends Service {
                     if(rutt.equals("Ej i Trafik")){
                         if(calculator.getFinalResult()>0){
                             calculator.main(true,nextStop,rutt);
-                            service.saveBusTrip(calculator.getFinalResult(),"fbWLxk4f86");
+                            service.saveBusTrip(calculator.getFinalResult(),"ws2NCMGYK8");
                         }
                     }else {
                         System.out.println(count);
@@ -105,7 +105,7 @@ public class IdentifyTravelService extends Service {
                     calculator.main(true,nextStop,rutt);
                     System.out.println("DET ÄR OMÖJLIGT:" +calculator.getFinalResult());
                     DatabaseService service = new DatabaseService();
-                    service.saveBusTrip(calculator.getFinalResult(),"fbWLxk4f86");
+                    service.saveBusTrip(calculator.getFinalResult(),"ws2NCMGYK8");
                     stopSelf();
                 }
             }
