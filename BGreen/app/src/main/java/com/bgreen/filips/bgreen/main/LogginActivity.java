@@ -171,6 +171,7 @@ public class LogginActivity extends AppCompatActivity implements
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
             String personName = currentPerson.getDisplayName();
+            System.out.println(currentPerson.getName());
             String personPhotoUrl = currentPerson.getImage().getUrl();
             String personGooglePlusId = currentPerson.getId();
             String email = Plus.AccountApi.getAccountName(mGoogleApiClient);

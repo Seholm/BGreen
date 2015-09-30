@@ -6,5 +6,5 @@ package com.bgreen.filips.bgreen.profile;
 public interface IProfileService {
     public void saveNewProfile(IProfile profile);
 
-    public void fetchProfileOfUser(final IProfile profile);
+    public void fetchProfileOfUser();
 }

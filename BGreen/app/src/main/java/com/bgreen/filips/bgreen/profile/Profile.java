@@ -4,7 +4,6 @@ package com.bgreen.filips.bgreen.profile;
  * Created by medioloco on 2015-09-28.
  */
 public class Profile implements IProfile{
-    private static Profile instance = null;
     private String firstName;
     private String lastName;
     private String email;
@@ -12,33 +11,18 @@ public class Profile implements IProfile{
     private int totalDistance;
     private int busTrips;
 
-    protected Profile() {
-        // Exists only to defeat instantiation.
-    }
-    public static Profile getInstance() {
-        if(instance == null) {
-            instance = new Profile();
-        }
-        return instance;
-    }
-
-    @Override
-    public void setProfile(String profileName, String email){
-        setFirstName(profileNameSplitter(profileName)[0]);
-        setLastName(profileNameSplitter(profileName)[1]);
-        setEmail(email);
-        setBusTrips(0);
-        setTotalDistance(0);
-    }
-
-    @Override
-    public void upDateProfile(String firstName, String lastName, String email,
+    public Profile(String firstName, String lastName, String email, String parseID,
                               int totalDistance, int busTrips){
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
+        setParseID(parseID);
         setTotalDistance(totalDistance);
         setBusTrips(busTrips);
+    }
+
+    protected Profile(){
+
     }
 
     @Override
@@ -101,8 +85,4 @@ public class Profile implements IProfile{
         this.totalDistance = totalDistance;
     }
 
-    private String[] profileNameSplitter(String profileName){
-        //är det verkligen mellanslag?
-        return profileName.split(" ");
-    }
 }
