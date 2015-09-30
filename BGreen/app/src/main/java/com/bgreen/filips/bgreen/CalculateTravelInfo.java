@@ -195,27 +195,41 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
     //The method the Service class calls to give information which this class can calculate
     public void main(boolean lastStop, String nextStop, String route){
-        //method doesn't set any values when nextStop in null
-        if(nextStop!=null && route!=null){
-            //Set startpoint if there is none else set nextStop as latestPoint
-            if(startPoint==null){
-                setStartPoint(nextStop, route);
+        //Om ej trafik och loopar flera ej trafik
+        //Om åkt och sen blir ej i trafik
 
-            }else if(!getLatestPoint().equals(nextStop)){
-                setLatestPoint(nextStop);
-            }
+        //Does calculation and sets points if route is correct
+        if(route.equals("Lindholmen") || route.equals("Johanneberg")){
+            //method doesn't set any values when nextStop in null
+            if(nextStop!=null && route!=null){
+                //Set startpoint if there is none else set nextStop as latestPoint
+                if(startPoint==null){
+                    setStartPoint(nextStop, route);
 
-            //If wifi lost set nextStop as lastStop
-            if(lastStop == true){
-                setLatestPoint(nextStop);
-                setEndPoint();
-                calcTotalDistance();
+                }else if(!getLatestPoint().equals(nextStop)){
+                    setLatestPoint(nextStop);
+                }
+
+                //If wifi lost set nextStop as lastStop
+                if(lastStop == true){
+                    setLatestPoint(nextStop);
+                    setEndPoint();
+                    calcTotalDistance();
+                }
             }
         }
-        //If lastStop and nextStop is null, set endPoint and calc with old values
+
+        //If lastStop is true and nextStop is null, set endPoint and calc with old values
         if(lastStop==true && nextStop==null && getStartPoint()!=null){
             setEndPoint();
             calcTotalDistance();
+        }
+        //If route isn't correct and have previous stops. Add previous stops together as totDistance
+        if(lastStop==true && !route.equals("Lindholmen") && !route.equals("Johanneberg") && getStartPoint()!=null){
+
+            setEndPoint();
+            calcTotalDistance();
+
         }
 
     }
