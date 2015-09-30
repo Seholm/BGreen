@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.achievements;
 
 import android.content.res.Resources;
 import android.widget.TextView;

@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.buslogging;
 
 import android.os.AsyncTask;
 

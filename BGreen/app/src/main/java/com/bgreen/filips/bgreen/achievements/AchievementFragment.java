@@ -8,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.bgreen.filips.bgreen.DetailedAchievementActivity;
 import com.bgreen.filips.bgreen.R;
 import com.squareup.picasso.Picasso;
 

@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.buslogging;
 
 import android.app.Service;
 import android.content.Context;
@@ -8,14 +8,15 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.IBinder;
 
+import com.bgreen.filips.bgreen.CalculateTravelInfo;
+import com.bgreen.filips.bgreen.ICalculateTravelInfo;
+import com.bgreen.filips.bgreen.buslogging.Busses;
 import com.bgreen.filips.bgreen.buslogging.DatabaseService;
+import com.bgreen.filips.bgreen.buslogging.IBusses;
 import com.bgreen.filips.bgreen.buslogging.IDatabaseService;
-import com.parse.GetCallback;
+import com.bgreen.filips.bgreen.buslogging.RetrieveBusData;
 import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,9 +37,12 @@ public class IdentifyTravelService extends Service {
     @Override
     public void onCreate(){
 
-        Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
+        try {
+            Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
+        }catch (Exception e){
+            //Parse already initialized
+        }
 
-        System.out.println("I on create");
         wifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
         busses = new Busses();
         calculator = new CalculateTravelInfo();
@@ -78,16 +82,22 @@ public class IdentifyTravelService extends Service {
                     try {
                         rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
                     }catch (Exception e){}
-                    if(rutt.equals("Ej i Trafik")){
-                        if(calculator.getFinalResult()>0){
-                            calculator.main(true,nextStop,rutt);
-                            service.saveBusTrip(calculator.getFinalResult(),"fbWLxk4f86");
+                    System.out.println("rutt:"+rutt);
+                    if(rutt!=null) {
+                        if (rutt.equals("Ej i trafik")) {
+                            System.out.println("finalresult:"+calculator.getFinalResult());
+                            //TODO: Händer inte för finalresult är 0!!
+                            System.out.println("III EJ I TRAFIK");
+                            calculator.main(true, nextStop, rutt);
+                            if(calculator.getFinalResult() >0) {
+                                service.saveBusTrip(calculator.getFinalResult(), "ws2NCMGYK8");
+                            }
+                        } else {
+                            System.out.println(count);
+                            System.out.println(nextStop);
+                            System.out.println(rutt);
+                            calculator.main(false, nextStop, rutt);
                         }
-                    }else {
-                        System.out.println(count);
-                        System.out.println(nextStop);
-                        System.out.println(rutt);
-                        calculator.main(false, nextStop, rutt);
                     }
 
                     handler.postDelayed(this, 10000); //loops run method every 10 seconds
@@ -104,7 +114,7 @@ public class IdentifyTravelService extends Service {
                     calculator.main(true,nextStop,rutt);
                     System.out.println("DET ÄR OMÖJLIGT:" +calculator.getFinalResult());
                     DatabaseService service = new DatabaseService();
-                    service.saveBusTrip(calculator.getFinalResult(),"fbWLxk4f86");
+                    service.saveBusTrip(calculator.getFinalResult(),"ws2NCMGYK8");
                     stopSelf();
                 }
             }
@@ -123,10 +133,5 @@ public class IdentifyTravelService extends Service {
             bssid.add(result.BSSID);
         }
         return bssid;
-    }
-
-    private void updateProfileStats(ParseObject user, int distance) {
-        user.increment("totaldistance", distance);
-        user.increment("bustTrips");
     }
 }
