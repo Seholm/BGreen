@@ -48,7 +48,7 @@
             android:label="@string/title_activity_tab" >
         </activity>
         <activity
-            android:name=".DetailedAchievementActivity"
+            android:name=".achievements.DetailedAchievementActivity"
             android:label="@string/title_activity_detailed_achievement" >
         </activity>
     </application>
