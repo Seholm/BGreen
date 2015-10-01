@@ -10,6 +10,8 @@ import com.parse.ParseQuery;
  */
 public class ProfileService implements IProfileService{
 
+    private User user = User.getInstance();
+
     @Override
     public void saveNewProfile(IProfile profile){
         ParseObject parseProfile = new ParseObject("User");
@@ -30,6 +32,7 @@ public class ProfileService implements IProfileService{
     //saves to Parse
     private void uploadToParse(ParseObject parseProfile){
         parseProfile.saveInBackground();
+        user.setParseID(parseProfile.getObjectId());
     }
 
     @Override
@@ -39,7 +42,7 @@ public class ProfileService implements IProfileService{
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
-                    writeToProfile(parseObject, profile);
+                    writeToProfile(parseObject);
                 } else {
                     e.printStackTrace();
                 }
@@ -47,13 +50,13 @@ public class ProfileService implements IProfileService{
         });
     }
 
-    private void writeToProfile(ParseObject parseObject, IProfile profile) {
-        profile.upDateProfile(parseObject.getString("FirstName"),
+    private void writeToProfile(ParseObject parseObject) {
+        user.setUser(parseObject.getString("FirstName"),
                 parseObject.getString("LastName"),
                 parseObject.getString("Email"),
                 parseObject.getInt("TotalDistance"),
                 parseObject.getInt("BusTrips"));
-        profile.setParseID(parseObject.getObjectId());
+        user.setParseID(parseObject.getObjectId());
     }
 
 }
