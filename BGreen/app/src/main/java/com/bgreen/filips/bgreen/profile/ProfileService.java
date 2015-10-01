@@ -4,6 +4,7 @@ import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.SaveCallback;
 
 /**
  * Created by medioloco on 2015-09-22.
@@ -13,10 +14,10 @@ public class ProfileService implements IProfileService{
     private User user = User.getInstance();
 
     @Override
-    public void saveNewProfile(IProfile profile){
+    public void saveNewProfile(IProfile profile, IUserHandler handler){
         ParseObject parseProfile = new ParseObject("User");
         setParseProfile(profile, parseProfile);
-        uploadToParse(parseProfile);
+        uploadToParse(parseProfile, handler);
     }
 
     //Parse cannot save own made classes like Profile, so we have to copy its content into
@@ -30,15 +31,24 @@ public class ProfileService implements IProfileService{
     }
 
     //saves to Parse
-    private void uploadToParse(ParseObject parseProfile){
-        parseProfile.saveInBackground();
-        user.setParseID(parseProfile.getObjectId());
+    private void uploadToParse(final ParseObject parseProfile, final IUserHandler handler){
+        parseProfile.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    user.setParseID(parseProfile.getObjectId());
+                    handler.writeToFile(user.getParseID());
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @Override
-    public void fetchProfileOfUser(final IProfile profile) {
+    public void fetchProfileOfUser(final String ID) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.getInBackground(profile.getParseID(), new GetCallback<ParseObject>() {
+        query.getInBackground(ID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {

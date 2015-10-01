@@ -9,6 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.IUserHandler;
+import com.bgreen.filips.bgreen.profile.ProfileService;
+import com.bgreen.filips.bgreen.profile.User;
+import com.bgreen.filips.bgreen.profile.UserHandler;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,6 +36,9 @@ public class LogginActivity extends AppCompatActivity implements
 
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = false;
+
+    private ProfileService pService= new ProfileService();
+    private IUserHandler handler = new UserHandler(LogginActivity.this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,7 +175,20 @@ public class LogginActivity extends AppCompatActivity implements
     //Gets the profileIno and put it on the TabActivity
     private void getProfileInformation(){
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+
+            if(handler.getUserID() != null){
+                System.out.println(handler.getUserID());
+                pService.fetchProfileOfUser(handler.getUserID());
+            }else {
+                User user = User.getInstance();
+                user.setUser(currentPerson.getName().getGivenName(),
+                        currentPerson.getName().getFamilyName(),
+                        Plus.AccountApi.getAccountName(mGoogleApiClient),
+                        0, 0);
+                pService.saveNewProfile(user, handler);
+            }
 
             String personName = currentPerson.getDisplayName();
             String personPhotoUrl = currentPerson.getImage().getUrl();

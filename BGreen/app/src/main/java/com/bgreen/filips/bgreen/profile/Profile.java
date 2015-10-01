@@ -85,8 +85,4 @@ public class Profile implements IProfile{
         this.totalDistance = totalDistance;
     }
 
-    private String[] profileNameSplitter(String profileName){
-        //är det verkligen mellanslag?
-        return profileName.split(" ");
-    }
 }

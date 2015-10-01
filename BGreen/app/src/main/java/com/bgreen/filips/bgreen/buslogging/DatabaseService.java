@@ -35,6 +35,6 @@ public class DatabaseService implements IDatabaseService {
 
     private void updateProfileStats(ParseObject userProfile, int distance) {
         userProfile.increment("TotalDistance", distance);
-        userProfile.increment("bustTrips");
+        userProfile.increment("BusTrips");
     }
 }
