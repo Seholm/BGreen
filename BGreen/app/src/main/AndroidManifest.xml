@@ -51,6 +51,10 @@
             android:name=".achievements.DetailedAchievementActivity"
             android:label="@string/title_activity_detailed_achievement" >
         </activity>
+        <activity
+            android:name=".main.LogginActivity"
+            android:label="@string/title_activity_loggin" >
+        </activity>
     </application>
 
 </manifest>

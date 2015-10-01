@@ -12,5 +12,6 @@
     <string name="textView_profileFragment_distance_ranking">#22   Distance: 1056m</string>
     <string name="textView_profileFragment_name">PROFILE</string>
     <string name="title_activity_detailed_achievement">DetailedAchievementActivity</string>
+    <string name="title_activity_loggin">LogginActivity</string>
 
 </resources>
