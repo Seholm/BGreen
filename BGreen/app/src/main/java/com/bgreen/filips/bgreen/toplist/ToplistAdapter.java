@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.Profile;
 import com.squareup.picasso.Picasso;
 
@@ -22,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListHolder> {
 
-    private List<Profile> profiles;
+    private List<IProfile> profiles;
     private Context context;
 
         public class TopListHolder extends RecyclerView.ViewHolder {
@@ -42,7 +43,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
             }
         }
 
-    public ToplistAdapter(List<Profile> profiles) {
+    public ToplistAdapter(List<IProfile> profiles) {
         this.profiles = profiles;
     }
 

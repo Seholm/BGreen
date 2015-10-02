@@ -40,6 +40,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Herman Carlström"
+            android:layout_toRightOf="@id/achievment_detailed_image"
             android:textSize="25dp"
             android:maxLines="2"
 

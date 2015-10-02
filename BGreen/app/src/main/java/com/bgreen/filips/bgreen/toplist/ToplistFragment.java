@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.Profile;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class ToplistFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
 
-    private List<Profile> profiles = new ArrayList<Profile>();
+    private List<IProfile> profiles = new ArrayList<IProfile>();
 
     public ToplistFragment() {
     }
