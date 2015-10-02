@@ -1,10 +1,14 @@
 package com.bgreen.filips.bgreen.profile;
 
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by medioloco on 2015-09-22.
@@ -59,7 +63,7 @@ public class ProfileService implements IProfileService{
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
-                    writeToProfile(parseObject);
+                    writeToUser(parseObject);
                 } else {
                     e.printStackTrace();
                 }
@@ -67,16 +71,38 @@ public class ProfileService implements IProfileService{
         });
     }
 
+    @Override
+    public void fetchAllProfiles() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> list, ParseException e) {
+                List<IProfile> profileList = new ArrayList<>();
+                for(ParseObject parseObject: list){
+                    IProfile p = new Profile(parseObject.getString(FIRST_NAME),
+                            parseObject.getString(LAST_NAME),
+                            parseObject.getString(EMAIL),
+                            parseObject.getObjectId(),
+                            parseObject.getInt(TOTAL_DISTANCE),
+                            parseObject.getInt(BUS_TRIPS),
+                            parseObject.getString(IMAGE_URL));
+                    profileList.add(p);
+                }
+                ProfileHolder.getInstance().setProfiles(profileList);
+            }
+        });
+    }
+
     public void startUpFetchOfUser(final String ID){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
         try {
-            writeToProfile(query.get(ID));
+            writeToUser(query.get(ID));
         } catch (ParseException e){
             e.printStackTrace();
         }
     }
 
-    private void writeToProfile(ParseObject parseObject) {
+    private void writeToUser(ParseObject parseObject) {
         user.setUser(parseObject.getString(FIRST_NAME),
                 parseObject.getString(LAST_NAME),
                 parseObject.getString(EMAIL),

@@ -7,10 +7,13 @@ import java.util.List;
  * Created by medioloco on 2015-10-02.
  */
 public class ProfileHolder {
-    private ProfileHolder instance = new ProfileHolder();
-    private List<Profile> profiles = new ArrayList<>();
+    private static ProfileHolder instance = null;
+    private List<IProfile> profiles = new ArrayList<>();
 
-    public ProfileHolder getInstance(){
+    public static ProfileHolder getInstance(){
+        if(instance == null){
+            instance = new ProfileHolder();
+        }
         return instance;
     }
 
@@ -18,12 +21,13 @@ public class ProfileHolder {
 
     }
 
-    public void setProfiles(List<Profile> list){
-        if(list != null){
-            profiles.addAll(list);
-        }else {
+    public void setProfiles(List<IProfile> list){
+        profiles.addAll(list);
+        System.out.println(profiles.size());
+    }
 
-        }
+    public List<IProfile> getProfiles() {
+        return this.profiles;
     }
 
 }

@@ -46,6 +46,8 @@ public class LogginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggin);
 
+        pService.fetchAllProfiles();
+
         // Build GoogleApiClient to request access to the basic user profile and email
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -190,7 +192,6 @@ public class LogginActivity extends AppCompatActivity implements
                 pService.saveNewProfile(user, handler);
             }
 
-            System.out.println();
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
             startActivity(tabActivityIntent);
             finish();
