@@ -59,7 +59,7 @@ public class DetailedAchievementActivity extends AppCompatActivity {
                 setAchievementHeadline.setText(r.parseHeadline(subTxtReader));
                 setAchievmentDescText.setText(r.parseDescText(subTxtReader));
                 detailedAchievementPBar.setProgress(progress);
-                System.out.println("--------------------" + progress);
+                
                 is.close();
             } catch (IOException e) {
                 // TODO Auto-generated catch block
