@@ -14,7 +14,6 @@
             android:src="@drawable/common_ic_googleplayservices"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/toplist_person_image"
-
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_margin="5dp"
@@ -29,6 +28,8 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="#"
             android:textSize="35dp"
+            android:layout_toEndOf="@id/achievment_detailed_image"
+            android:layout_toRightOf="@id/achievment_detailed_image"
             android:layout_marginTop="15dp"
             android:textColor="#010101"
             />

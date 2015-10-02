@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.bgreen.filips.bgreen.profile.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.TestFragment;
+import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
 public class TabActivity extends AppCompatActivity {
 
@@ -36,12 +37,13 @@ public class TabActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Fragment profileFragment = new ProfileFragment();
-
+        Fragment toplistFragment = new ToplistFragment();
 
 
         //addFrag sets a new fragment to the Tab
         adapter.addFrag(profileFragment, "PROFILE");
         adapter.addFrag(new TestFragment(), "TEST");
+        adapter.addFrag(toplistFragment, "TOPLIST");
         viewPager.setAdapter(adapter);
     }
 
