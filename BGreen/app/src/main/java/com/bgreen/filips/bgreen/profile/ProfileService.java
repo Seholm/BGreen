@@ -67,6 +67,15 @@ public class ProfileService implements IProfileService{
         });
     }
 
+    public void startUpFetchOfUser(final String ID){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+        try {
+            writeToProfile(query.get(ID));
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+    }
+
     private void writeToProfile(ParseObject parseObject) {
         user.setUser(parseObject.getString(FIRST_NAME),
                 parseObject.getString(LAST_NAME),

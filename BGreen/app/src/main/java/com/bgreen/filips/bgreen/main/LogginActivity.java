@@ -39,16 +39,12 @@ public class LogginActivity extends AppCompatActivity implements
 
     private ProfileService pService= new ProfileService();
     private IUserHandler handler = new UserHandler(LogginActivity.this);
+    private User user = User.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggin);
-
-        if(handler.getUserID() != null){
-            System.out.println(handler.getUserID());
-            pService.fetchProfileOfUser(handler.getUserID());
-        }
 
         // Build GoogleApiClient to request access to the basic user profile and email
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -183,10 +179,10 @@ public class LogginActivity extends AppCompatActivity implements
 
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-            if(User.getInstance() == null){
-                System.out.println("oj då, det far  åt helvete!");
+            if(handler.getUserID() != null){
+                System.out.println(handler.getUserID());
+                pService.startUpFetchOfUser(handler.getUserID());
             }else {
-                User user = User.getInstance();
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
