@@ -60,14 +60,13 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
     public void onBindViewHolder(TopListHolder holder, int position) {
         holder.personName.setText(profiles.get(position).getFirstName() + " " +
                 profiles.get(position).getLastName());
-        holder.personDistance.setText(Integer.toString(profiles.get(position).getTotalDistance()));
+        holder.personDistance.setText((Integer.toString(profiles.get(position).getTotalDistance())) + " m");
         Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
         //holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));
     }
 
     @Override
     public int getItemCount() {
-        //return 0;
         return profiles.size();
     }
 }
