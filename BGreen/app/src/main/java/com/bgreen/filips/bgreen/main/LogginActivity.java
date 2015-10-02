@@ -9,6 +9,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.IUserHandler;
+import com.bgreen.filips.bgreen.profile.ProfileService;
+import com.bgreen.filips.bgreen.profile.User;
+import com.bgreen.filips.bgreen.profile.UserHandler;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,6 +36,10 @@ public class LogginActivity extends AppCompatActivity implements
 
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = false;
+
+    private ProfileService pService= new ProfileService();
+    private IUserHandler handler = new UserHandler(LogginActivity.this);
+    private User user = User.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,21 +176,25 @@ public class LogginActivity extends AppCompatActivity implements
     //Gets the profileIno and put it on the TabActivity
     private void getProfileInformation(){
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-            String personName = currentPerson.getDisplayName();
-            String personPhotoUrl = currentPerson.getImage().getUrl();
-            String personGooglePlusId = currentPerson.getId();
-            String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
+            if(handler.getUserID() != null){
+                System.out.println(handler.getUserID());
+                pService.startUpFetchOfUser(handler.getUserID());
+            }else {
+                user.setUser(currentPerson.getName().getGivenName(),
+                        currentPerson.getName().getFamilyName(),
+                        Plus.AccountApi.getAccountName(mGoogleApiClient),
+                        0, 0, currentPerson.getImage().getUrl());
+                pService.saveNewProfile(user, handler);
+            }
 
+            System.out.println();
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
-
-            tabActivityIntent.putExtra("PROFILE_NAME", personName);
-            tabActivityIntent.putExtra("PROFILE_MAIL", email);
-            tabActivityIntent.putExtra("PROFILE_IMAGE", personPhotoUrl);
-            tabActivityIntent.putExtra("PROFILE_ID", personGooglePlusId);
             startActivity(tabActivityIntent);
             finish();
+
         }else{
 
             System.out.println("****CURRENT PERSON IS NULL*****");

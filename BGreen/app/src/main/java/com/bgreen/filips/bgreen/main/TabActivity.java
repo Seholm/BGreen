@@ -15,21 +15,11 @@ import com.bgreen.filips.bgreen.TestFragment;
 
 public class TabActivity extends AppCompatActivity {
 
-    String profileEmail;
-    String profileName;
-    String profileID;
-    String profileImgURL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tab);
-
-        Bundle extras = getIntent().getExtras();
-        profileName = extras.getString("PROFILE_NAME");
-        profileEmail = extras.getString("PROFILE_MAIL");
-        profileImgURL = extras.getString("PROFILE_IMAGE");
-        profileID = extras.getString("PROFILE_ID");
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.tab_toolbar);
         setSupportActionBar(toolbar);
@@ -46,13 +36,8 @@ public class TabActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Fragment profileFragment = new ProfileFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("PROFILE_NAME_TO_FRAGMENT", profileName);
-        bundle.putString("PROFILE_EMAIL_TO_FRAGMENT", profileEmail);
-        bundle.putString("PROFILE_IMG_URL_TO_FRAGMENT", profileImgURL);
-        bundle.putString("PROFILE_ID_TO_FRAGMENT", profileID);
 
-        profileFragment.setArguments(bundle);
+
 
         //addFrag sets a new fragment to the Tab
         adapter.addFrag(profileFragment, "PROFILE");

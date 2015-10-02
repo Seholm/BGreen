@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
@@ -26,7 +27,7 @@ public class DetailedAchievementActivity extends AppCompatActivity {
     private String subTxtReader = "";
     private Bundle bundle;
 
-
+    private ProgressBar detailedAchievementPBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,10 +38,14 @@ public class DetailedAchievementActivity extends AppCompatActivity {
 
     public void displayAchievmentDetails() {
         int i = bundle.getInt("ACHIEVMENT");
+        int progress = (int) bundle.getDouble("Progress");
+
         ReadTextForAchievement r = new ReadTextForAchievement();
         setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
         circleImageView = (CircleImageView) findViewById(R.id.achievment_detailed_image);
+        detailedAchievementPBar = (ProgressBar) findViewById(R.id.detailedAchievementProgressBar);
+
         StringBuffer sbuffer = new StringBuffer();
         InputStream is = this.getResources().openRawResource(R.raw.achievementlist + i);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
@@ -53,6 +58,8 @@ public class DetailedAchievementActivity extends AppCompatActivity {
                 Picasso.with(this).load(R.drawable.ment_01 + i).into(circleImageView);
                 setAchievementHeadline.setText(r.parseHeadline(subTxtReader));
                 setAchievmentDescText.setText(r.parseDescText(subTxtReader));
+                detailedAchievementPBar.setProgress(progress);
+                
                 is.close();
             } catch (IOException e) {
                 // TODO Auto-generated catch block

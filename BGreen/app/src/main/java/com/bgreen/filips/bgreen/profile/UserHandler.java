@@ -14,7 +14,7 @@ import java.io.OutputStreamWriter;
  * this class is intended to save a users ID as a string to a .txt file
  * Created by medioloco on 2015-09-22.
  */
-public class UserHandler {
+public class UserHandler implements IUserHandler{
 
     private Context context;
 
@@ -22,6 +22,7 @@ public class UserHandler {
         this.context = context;
     }
 
+    @Override
     public void writeToFile(String userID) {
         try {
             OutputStreamWriter outputStreamWriter =
@@ -34,9 +35,10 @@ public class UserHandler {
         }
     }
 
-    public String userID() {
+    @Override
+    public String getUserID() {
 
-        String ret = "";
+        String ret = null;
 
         try {
             InputStream inputStream = context.openFileInput("userData.txt");
