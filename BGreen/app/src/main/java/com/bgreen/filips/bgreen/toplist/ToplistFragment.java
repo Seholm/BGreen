@@ -26,9 +26,9 @@ public class ToplistFragment extends Fragment {
     private View myInflatedView;
 
     private List<Profile> profiles = new ArrayList<Profile>();
-    Profile test1 = new Profile("herman", "carlström", "herman@com", "", 5000, 5);
-    Profile test2 = new Profile("herman2", "carlström2", "herman@com", "", 5002, 4);
-    Profile test3 = new Profile("herman3", "carlström3", "herman@com", "", 5003, 5);
+    //Profile test1 = new Profile("herman", "carlström", "herman@com", "", 5000, 5);
+    //Profile test2 = new Profile("herman2", "carlström2", "herman@com", "", 5002, 4);
+    //Profile test3 = new Profile("herman3", "carlström3", "herman@com", "", 5003, 5);
 
     public ToplistFragment() {
         // Required empty public constructor
@@ -39,9 +39,9 @@ public class ToplistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         myInflatedView = inflater.inflate(R.layout.fragment_toplist, container, false);
-        profiles.add(test1);
-        profiles.add(test2);
-        profiles.add(test3);
+       // profiles.add(test1);
+        //profiles.add(test2);
+        //profiles.add(test3);
 
         mRecyclerView = (RecyclerView) myInflatedView.findViewById(R.id.toplist_fragment1);
             // Inflate the layout for this fragment
