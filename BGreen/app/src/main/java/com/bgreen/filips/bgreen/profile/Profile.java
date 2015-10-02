@@ -10,19 +10,21 @@ public class Profile implements IProfile{
     private String parseID;
     private int totalDistance;
     private int busTrips;
+    private String imageURL;
 
     protected Profile() {
 
     }
 
     public Profile(String firstName, String lastName, String email, String parseID,
-                              int totalDistance, int busTrips){
+                              int totalDistance, int busTrips, String imageURL){
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setParseID(parseID);
         setTotalDistance(totalDistance);
         setBusTrips(busTrips);
+        setImageURL(imageURL);
     }
 
     @Override
@@ -31,8 +33,18 @@ public class Profile implements IProfile{
     }
 
     @Override
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    @Override
     public void setBusTrips(int busTrips) {
         this.busTrips = busTrips;
+    }
+
+    @Override
+    public void setImageURL(String url) {
+        this.imageURL = url;
     }
 
     @Override

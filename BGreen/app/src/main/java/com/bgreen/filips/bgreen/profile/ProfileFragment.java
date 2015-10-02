@@ -20,13 +20,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileFragment extends Fragment{
 
-    private String profileName;
-    private String profileEmail;
-    private String profileImgURL;
-    private String profileID;
-
+    private User user = User.getInstance();
     private String profileRanking = "22";
-    private String profileDistance = "1056";
 
     private CircleImageView circleImageView;
     private TextView profileRankingAndDistance;
@@ -41,25 +36,19 @@ public class ProfileFragment extends Fragment{
         // Inflate the layout for this fragment
         View myInflatedView = inflater.inflate(R.layout.fragment_profile, container,false);
 
-        Bundle bundle = this.getArguments();
-        this.profileName = bundle.getString("PROFILE_NAME_TO_FRAGMENT");
-        this.profileEmail = bundle.getString("PROFILE_EMAIL_TO_FRAGMENT");
-        this.profileImgURL = bundle.getString("PROFILE_IMG_URL_TO_FRAGMENT");
-        this.profileID = bundle.getString("PROFILE_ID_TO_FRAGMENT");
-
         profileRankingAndDistance = (TextView) myInflatedView.findViewById(R.id.profile_Ranking_Distance_TextView);
 
-        profileRankingAndDistance.setText("#" + profileRanking + "   Distance: "+ profileDistance + "m");
+        profileRankingAndDistance.setText("#" + profileRanking + "   Distance: "+ user.getTotalDistance() + "m");
 
         circleImageView = (CircleImageView) myInflatedView.findViewById(R.id.profile_image);
 
         //Picasso library loads the image URL and put it into circleImageView
         Picasso.with(this.getActivity())
-                .load(changeSizeOnURLImage(profileImgURL))
+                .load(changeSizeOnURLImage(user.getImageURL()))
                 .into(circleImageView);
 
         TextView nameTextView = (TextView) myInflatedView.findViewById(R.id.profile_textView);
-        nameTextView.setText(profileName);
+        nameTextView.setText(user.getFirstName() + " " + user.getLastName());
 
         Fragment achievementFragment = new AchievementFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();

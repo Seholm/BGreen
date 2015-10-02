@@ -19,11 +19,12 @@ public class User extends Profile {
     }
 
     public void setUser(String firstName, String lastName, String email,
-                        int totalDistance, int busTrips) {
+                        int totalDistance, int busTrips, String imageURL) {
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
         setTotalDistance(totalDistance);
         setBusTrips(busTrips);
+        setImageURL(imageURL);
     }
 }

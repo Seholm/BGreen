@@ -45,6 +45,11 @@ public class LogginActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggin);
 
+        if(handler.getUserID() != null){
+            System.out.println(handler.getUserID());
+            pService.fetchProfileOfUser(handler.getUserID());
+        }
+
         // Build GoogleApiClient to request access to the basic user profile and email
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -178,31 +183,22 @@ public class LogginActivity extends AppCompatActivity implements
 
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
-            if(handler.getUserID() != null){
-                System.out.println(handler.getUserID());
-                pService.fetchProfileOfUser(handler.getUserID());
+            if(User.getInstance() == null){
+                System.out.println("oj då, det far  åt helvete!");
             }else {
                 User user = User.getInstance();
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
-                        0, 0);
+                        0, 0, currentPerson.getImage().getUrl());
                 pService.saveNewProfile(user, handler);
             }
 
-            String personName = currentPerson.getDisplayName();
-            String personPhotoUrl = currentPerson.getImage().getUrl();
-            String personGooglePlusId = currentPerson.getId();
-            String email = Plus.AccountApi.getAccountName(mGoogleApiClient);
-
+            System.out.println();
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
-
-            tabActivityIntent.putExtra("PROFILE_NAME", personName);
-            tabActivityIntent.putExtra("PROFILE_MAIL", email);
-            tabActivityIntent.putExtra("PROFILE_IMAGE", personPhotoUrl);
-            tabActivityIntent.putExtra("PROFILE_ID", personGooglePlusId);
             startActivity(tabActivityIntent);
             finish();
+
         }else{
 
             System.out.println("****CURRENT PERSON IS NULL*****");
