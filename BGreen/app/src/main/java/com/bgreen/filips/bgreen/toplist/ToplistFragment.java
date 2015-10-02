@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.Profile;
+import com.bgreen.filips.bgreen.profile.ProfileHolder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class ToplistFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
 
-    private List<IProfile> profiles = new ArrayList<IProfile>();
+    private List<IProfile> profiles = new ArrayList<>();
 
     public ToplistFragment() {
     }
@@ -32,7 +34,7 @@ public class ToplistFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ToplistAdapter(profiles);
+        mAdapter = new ToplistAdapter(ProfileHolder.getInstance().getProfiles());
         mRecyclerView.setAdapter(mAdapter);
         return myInflatedView;
     }
