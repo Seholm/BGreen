@@ -62,6 +62,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         if(circleImageViewList != null && imageList != null){
             //Se profiles achievements
             aModel.checkUnlockedAchievements(User.getInstance());
+            aModel.checkProgressAchievements(User.getInstance());
             //Map with unlocked and locked achievement
             unlockedAchievements = aModel.getAchievementsUnlocked();
             //Map with progress for achievements

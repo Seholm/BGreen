@@ -47,6 +47,11 @@
             android:name=".main.TabActivity"
             android:label="@string/title_activity_tab" >
         </activity>
+
+        <activity
+            android:name=".toplist.TopListActivity"
+            android:label="TopListActivity" >
+        </activity>
         <activity
             android:name=".achievements.DetailedAchievementActivity"
             android:label="@string/title_activity_detailed_achievement" >
