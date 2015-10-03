@@ -2,25 +2,14 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="8dp"
-    android:orientation="horizontal">
+    android:layout_margin="3dp"
+    android:orientation="horizontal"
+    >
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#b9ffe5">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:src="@drawable/common_ic_googleplayservices"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/toplist_person_image"
-
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_margin="5dp"
-            app:border_width="4dp"
-            app:border_color="#FF000000"
-            />
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/toplist_hashtag"
@@ -28,21 +17,37 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="#"
-            android:textSize="35dp"
-            android:layout_marginTop="15dp"
+            android:textSize="20sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="10dp"
             android:textColor="#010101"
+            />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:src="@drawable/common_ic_googleplayservices"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toplist_person_image"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:layout_toEndOf="@id/toplist_hashtag"
+            android:layout_marginLeft="13dp"
+            app:border_width="1dp"
+            app:border_color="#FF000000"
             />
 
         <TextView
             android:id="@+id/toplist_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Herman Carlström"
-            android:textSize="25dp"
-            android:maxLines="2"
-
-            android:layout_marginLeft="3dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Filip Slottner Seholm111"
+            android:textSize="18sp"
+            android:layout_toEndOf="@id/toplist_person_image"
+            android:layout_marginLeft="13dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:textColor="#010101" />
 
         <TextView
@@ -51,8 +56,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="10 000"
-            android:textSize="25dp"
             android:layout_below="@id/toplist_name"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"
             android:textColor="#010101"
             />
 
@@ -61,9 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text=" m"
-            android:textSize="25dp"
-            android:layout_below="@id/toplist_name"
+            android:text=""
+            android:textSize="25sp"
             android:layout_marginRight="5dp"
             android:textColor="#010101"
             />

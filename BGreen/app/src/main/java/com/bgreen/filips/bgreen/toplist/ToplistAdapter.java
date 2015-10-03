@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.Profile;
 import com.squareup.picasso.Picasso;
 
@@ -22,7 +23,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListHolder> {
 
-    private List<Profile> profiles;
+    private List<IProfile> profiles;
     private Context context;
 
         public class TopListHolder extends RecyclerView.ViewHolder {
@@ -42,7 +43,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
             }
         }
 
-    public ToplistAdapter(List<Profile> profiles) {
+    public ToplistAdapter(List<IProfile> profiles) {
         this.profiles = profiles;
     }
 
@@ -57,20 +58,27 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
 
     @Override
     public void onBindViewHolder(TopListHolder holder, int position) {
-        //holder.personName.setText(profiles.get(position).getFirstName() + " " +
-        //        profiles.get(position).getLastName());
-        //holder.personDistance.setText(profiles.get(position).getTotalDistance();
-        //Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
-        //holder.personPlacement.setText("#" + profiles.get(position).;
-        holder.personName.setText("hej");
-        holder.personDistance.setText("55");
+        /*if ((profiles.get(position).getFirstName().length() +
+                profiles.get(position).getLastName().length()) > 19) {
+            System.out.println((profiles.get(position).getFirstName().length() +
+                    profiles.get(position).getLastName().length()));
+            String str = (profiles.get(position).getFirstName()) + " " +
+                    (profiles.get(position).getLastName());
+            System.out.println(str);
+            String substr = str.substring(0,16) + "...";
+            System.out.println(substr);
+            holder.personName.setText(substr);
+        } else { */
+            holder.personName.setText(profiles.get(position).getFirstName() + " " +
+                    profiles.get(position).getLastName());
+        //}
+            holder.personDistance.setText((Integer.toString(profiles.get(position).getTotalDistance())) + " m");
+        Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
+        holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));
     }
 
     @Override
     public int getItemCount() {
-        //return 0;
         return profiles.size();
     }
-
-
 }

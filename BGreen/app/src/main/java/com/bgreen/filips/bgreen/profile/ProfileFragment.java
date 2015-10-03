@@ -21,7 +21,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment{
 
     private User user = User.getInstance();
-    private String profileRanking = "22";
 
     private CircleImageView circleImageView;
     private TextView profileRankingAndDistance;
@@ -38,7 +37,7 @@ public class ProfileFragment extends Fragment{
 
         profileRankingAndDistance = (TextView) myInflatedView.findViewById(R.id.profile_Ranking_Distance_TextView);
 
-        profileRankingAndDistance.setText("#" + profileRanking + "   Distance: "+ user.getTotalDistance() + "m");
+        profileRankingAndDistance.setText("#" + user.getPlacement() + "   Distance: "+ user.getTotalDistance() + "m");
 
         circleImageView = (CircleImageView) myInflatedView.findViewById(R.id.profile_image);
 

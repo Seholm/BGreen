@@ -11,6 +11,7 @@ public class Profile implements IProfile{
     private int totalDistance;
     private int busTrips;
     private String imageURL;
+    private int placement;
 
     protected Profile() {
 
@@ -97,4 +98,11 @@ public class Profile implements IProfile{
         this.totalDistance = totalDistance;
     }
 
+    public int getPlacement() {
+        return placement;
+    }
+
+    public void setPlacement(int placement) {
+        this.placement = placement;
+    }
 }
