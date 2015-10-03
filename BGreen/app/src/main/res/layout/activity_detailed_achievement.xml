@@ -6,8 +6,7 @@
     android:padding="10dp"
     tools:context="com.bgreen.filips.bgreen.achievements.DetailedAchievementActivity">
 
-
-    <LinearLayout
+   <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -36,13 +35,29 @@
             android:layout_marginBottom="20dp"
             android:id="@+id/detailedAchievmentHeadText" />
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/detailedAchievementProgressBar" />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:textAppearance="?android:attr/textAppearanceSmall"
+           android:text="Pr"
+           android:id="@+id/achievment_progressbar_percentage"
+           android:layout_gravity="center_horizontal" />
 
-        <TextView
+       <ProgressBar
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:id="@+id/detailedAchievementProgressBar"
+            android:minHeight="20dp"
+            android:maxHeight="20dp"
+            android:progressTint="#10ff00" />
+
+
+
+
+       <TextView
             android:textSize="18sp"
             android:layout_margin="10sp"
             android:layout_width="wrap_content"
@@ -57,9 +72,8 @@
             android:layout_margin="50dp"
             android:text="Claim reward"
             android:background="@color/primary"
-            android:id="@+id/button"
+            android:id="@+id/achievment_reward_button"
             android:onClick="getAchievementReward"
-
             style="?android:attr/borderlessButtonStyle"
             android:foregroundGravity="bottom|right">
         </Button>

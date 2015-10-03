@@ -11,6 +11,7 @@ public interface IProfile {
     public void setTotalDistance(int totalDistance);
     public void setBusTrips(int busTrips);
     public void setImageURL(String url);
+    public void  setPlacement(int placement);
 
     public String getFirstName();
     public String getLastName();
@@ -19,4 +20,5 @@ public interface IProfile {
     public int getTotalDistance();
     public int getBusTrips();
     public String getImageURL();
+    public int getPlacement();
 }
