@@ -1,5 +1,6 @@
 package com.bgreen.filips.bgreen.toplist;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,7 +21,6 @@ public class ToplistFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
-
     private List<IProfile> profiles = new ArrayList<>();
 
     public ToplistFragment() {
