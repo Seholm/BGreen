@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,8 +27,9 @@ public class DetailedAchievementActivity extends AppCompatActivity {
     private String txtReader = "";
     private String subTxtReader = "";
     private Bundle bundle;
-
     private ProgressBar detailedAchievementPBar;
+    private TextView setProgressPercentage;
+    private Button getRewardButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +47,9 @@ public class DetailedAchievementActivity extends AppCompatActivity {
         setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
         circleImageView = (CircleImageView) findViewById(R.id.achievment_detailed_image);
         detailedAchievementPBar = (ProgressBar) findViewById(R.id.detailedAchievementProgressBar);
+        setProgressPercentage = (TextView) findViewById(R.id.achievment_progressbar_percentage);
+        getRewardButton = (Button) findViewById(R.id.achievment_reward_button);
+
 
         StringBuffer sbuffer = new StringBuffer();
         InputStream is = this.getResources().openRawResource(R.raw.achievementlist + i);
@@ -59,6 +64,8 @@ public class DetailedAchievementActivity extends AppCompatActivity {
                 setAchievementHeadline.setText(r.parseHeadline(subTxtReader));
                 setAchievmentDescText.setText(r.parseDescText(subTxtReader));
                 detailedAchievementPBar.setProgress(progress);
+                setProgressPercentage.setText((Integer.toString(progress)) + "%");
+                getRewardButton.setVisibility(View.GONE);
                 
                 is.close();
             } catch (IOException e) {
