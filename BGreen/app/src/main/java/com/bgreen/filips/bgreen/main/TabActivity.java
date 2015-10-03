@@ -8,13 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.FrameLayout;
 
 import com.bgreen.filips.bgreen.profile.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.TestFragment;
 import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
-public class TabActivity extends AppCompatActivity {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 
 
     @Override
@@ -68,5 +72,15 @@ public class TabActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == findViewById(R.id.delete_button)){
+            FrameLayout achivmentContainer = (FrameLayout) findViewById(R.id.popup_achivments);
+            achivmentContainer.setVisibility(View.GONE);
+            CircleImageView button = (CircleImageView) findViewById(R.id.delete_button);
+            button.setVisibility(View.GONE);
+        }
     }
 }
