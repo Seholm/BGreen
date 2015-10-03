@@ -7,7 +7,7 @@
         android:id="@+id/toplist_fragment1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:clickable="false" />
 
 
 </FrameLayout>

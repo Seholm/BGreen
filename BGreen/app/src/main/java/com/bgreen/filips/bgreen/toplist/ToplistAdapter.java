@@ -2,11 +2,13 @@ package com.bgreen.filips.bgreen.toplist;
 
 import android.app.Application;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bgreen.filips.bgreen.R;
@@ -25,6 +27,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
 
     private List<IProfile> profiles;
     private Context context;
+    //OnItemClickListener clickListener;
 
         public class TopListHolder extends RecyclerView.ViewHolder {
             CardView cv;
@@ -32,16 +35,37 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
             TextView personDistance;
             TextView personPlacement;
             CircleImageView personPicture;
+            CardView cvtest;
+
 
             public TopListHolder(View itemView) {
                 super(itemView);
-                cv = (CardView)itemView.findViewById(R.id.toplist_fragment1);
-                personName = (TextView)itemView.findViewById(R.id.toplist_name);
-                personDistance = (TextView)itemView.findViewById(R.id.toplist_meter_traveled);
-                personPlacement = (TextView)itemView.findViewById(R.id.toplist_hashtag);
-                personPicture = (CircleImageView)itemView.findViewById(R.id.toplist_person_image);
+                cv = (CardView) itemView.findViewById(R.id.toplist_fragment1);
+                cvtest = (CardView) itemView.findViewById(R.id.card_view);
+                personName = (TextView) itemView.findViewById(R.id.toplist_name);
+                personDistance = (TextView) itemView.findViewById(R.id.toplist_meter_traveled);
+                personPlacement = (TextView) itemView.findViewById(R.id.toplist_hashtag);
+                personPicture = (CircleImageView) itemView.findViewById(R.id.toplist_person_image);
+                //cvtest.setOnClickListener(this);
             }
+
+            /*@Override
+            public void onClick(View v) {
+            if (clickListener != null) {
+                clickListener.onItemClick(v);
+                System.out.println("hejhej");
+            }
+            } */
         }
+
+    /*public interface OnItemClickListener {
+        void onItemClick(View v);
+    } */
+
+    /*public void setOnClickListener(OnItemClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+    */
 
     public ToplistAdapter(List<IProfile> profiles) {
         this.profiles = profiles;
@@ -52,27 +76,22 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_toplist_profile,
                 parent, false); //sista som var tom
         TopListHolder vh = new TopListHolder(v);
+        //vh.onClick(v);
         context = parent.getContext();
         return vh;
     }
 
     @Override
-    public void onBindViewHolder(TopListHolder holder, int position) {
-        /*if ((profiles.get(position).getFirstName().length() +
-                profiles.get(position).getLastName().length()) > 19) {
-            System.out.println((profiles.get(position).getFirstName().length() +
-                    profiles.get(position).getLastName().length()));
-            String str = (profiles.get(position).getFirstName()) + " " +
-                    (profiles.get(position).getLastName());
-            System.out.println(str);
-            String substr = str.substring(0,16) + "...";
-            System.out.println(substr);
-            holder.personName.setText(substr);
-        } else { */
-            holder.personName.setText(profiles.get(position).getFirstName() + " " +
+    public void onBindViewHolder(TopListHolder holder, final int position) {
+        holder.cvtest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("hejhej ********************" + Integer.toString(position));
+            }
+        });
+        holder.personName.setText(profiles.get(position).getFirstName() + " " +
                     profiles.get(position).getLastName());
-        //}
-            holder.personDistance.setText((Integer.toString(profiles.get(position).getTotalDistance())) + " m");
+        holder.personDistance.setText((Integer.toString(profiles.get(position).getTotalDistance())) + " m");
         Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
         holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));
     }
