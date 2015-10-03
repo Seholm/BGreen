@@ -38,12 +38,16 @@ public class ProfileHolder {
         Collections.sort(profiles, new Comparator<IProfile>() {
             @Override
             public int compare(IProfile p1, IProfile p2) {
-                return p1.getTotalDistance() - p2.getTotalDistance(); // Ascending
+                int compare = p1.getTotalDistance() - p2.getTotalDistance();
+                return (-1)*compare;
             }
         });
-        
+
         int i = 1;
         for(IProfile p: profiles){
+            if(p.getParseID().equals(User.getInstance().getParseID())){
+                User.getInstance().setPlacement(i);
+            }
             p.setPlacement(i);
             i++;
         }
