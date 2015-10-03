@@ -1,14 +1,19 @@
 package com.bgreen.filips.bgreen.main;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
 import com.bgreen.filips.bgreen.profile.IUserHandler;
 import com.bgreen.filips.bgreen.profile.ProfileService;
 import com.bgreen.filips.bgreen.profile.User;
@@ -19,11 +24,15 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
+import com.parse.Parse;
 
 public class LogginActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener {
+
+    private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
+    private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
 
     /* Request code used to invoke sign in user interactions. */
     private static final int RC_SIGN_IN = 0;
@@ -40,12 +49,28 @@ public class LogginActivity extends AppCompatActivity implements
     private ProfileService pService= new ProfileService();
     private IUserHandler handler = new UserHandler(LogginActivity.this);
     private User user = User.getInstance();
+    private ProgressBar progresSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("*****I LOGGINACTIVITY********************");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggin);
+        System.out.println("*****I LOGGINACTIVITY********************");
 
+        //Enable Local Datastore, and Parse DB services.
+        try {
+            Parse.enableLocalDatastore(this);
+            Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
+        }catch (Exception e){}
+
+        //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        Intent intent = new Intent(LogginActivity.this, MinuteReciever.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(LogginActivity.this, 0, intent, 0);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 1 * 60 * 1000, pendingIntent);
+
+        progresSpinner = (ProgressBar)findViewById(R.id.progressBar);
         pService.fetchAllProfiles();
 
         // Build GoogleApiClient to request access to the basic user profile and email
@@ -129,10 +154,12 @@ public class LogginActivity extends AppCompatActivity implements
         // User clicked the sign-in button, so begin the sign-in process and automatically
         // attempt to resolve any errors that occur.
         mShouldResolve = true;
+        //TODO: STARTA PROGRESS GREJ
+        progresSpinner.setVisibility(View.VISIBLE);
+
         mGoogleApiClient.connect();
 
         // Show a message to the user that we are signing in.
-        //TODO;Toast to show user that we are signing in
     }
 
     @Override
@@ -192,6 +219,7 @@ public class LogginActivity extends AppCompatActivity implements
                 pService.saveNewProfile(user, handler);
             }
 
+            progresSpinner.setVisibility(View.GONE);
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
             startActivity(tabActivityIntent);
             finish();

@@ -83,4 +83,13 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             button.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        FrameLayout achivmentContainer = (FrameLayout) findViewById(R.id.popup_achivments);
+        achivmentContainer.setVisibility(View.VISIBLE);
+        CircleImageView button = (CircleImageView) findViewById(R.id.delete_button);
+        button.setVisibility(View.VISIBLE);
+    }
 }
