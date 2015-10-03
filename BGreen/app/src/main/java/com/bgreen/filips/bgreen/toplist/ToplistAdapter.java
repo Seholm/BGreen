@@ -1,5 +1,6 @@
 package com.bgreen.filips.bgreen.toplist;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +29,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
     private List<IProfile> profiles;
     private Context context;
     //OnItemClickListener clickListener;
+    private IFlipcard flipper;
 
         public class TopListHolder extends RecyclerView.ViewHolder {
             CardView cv;
@@ -67,8 +69,9 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
     }
     */
 
-    public ToplistAdapter(List<IProfile> profiles) {
+    public ToplistAdapter(List<IProfile> profiles, IFlipcard flipper) {
         this.profiles = profiles;
+        this.flipper = flipper;
     }
 
     @Override
@@ -87,6 +90,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
             @Override
             public void onClick(View v) {
                 System.out.println("hejhej ********************" + Integer.toString(position));
+                flipper.flipCard(position);
             }
         });
         holder.personName.setText(profiles.get(position).getFirstName() + " " +
