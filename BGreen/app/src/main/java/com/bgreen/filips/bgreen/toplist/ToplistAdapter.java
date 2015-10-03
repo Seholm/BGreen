@@ -69,7 +69,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
     }
     */
 
-    public ToplistAdapter(List<IProfile> profiles,IFlipcard flipper) {
+    public ToplistAdapter(List<IProfile> profiles, IFlipcard flipper) {
         this.profiles = profiles;
         this.flipper = flipper;
     }
