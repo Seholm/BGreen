@@ -184,6 +184,7 @@ public class LogginActivity extends AppCompatActivity implements
             if(handler.getUserID() != null){
                 System.out.println(handler.getUserID());
                 pService.startUpFetchOfUser(handler.getUserID());
+
             }else {
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),

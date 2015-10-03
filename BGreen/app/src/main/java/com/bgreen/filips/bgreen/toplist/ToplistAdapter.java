@@ -62,7 +62,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
                 profiles.get(position).getLastName());
         holder.personDistance.setText((Integer.toString(profiles.get(position).getTotalDistance())) + " m");
         Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
-        //holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));
+        holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));
     }
 
     @Override
