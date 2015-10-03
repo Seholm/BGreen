@@ -26,9 +26,9 @@ public class ToplistFragment extends Fragment {
     private View myInflatedView;
 
     private List<Profile> profiles = new ArrayList<Profile>();
-    Profile test1 = new Profile("herman", "carlström", "herman@com", "", 5000, 5);
-    Profile test2 = new Profile("herman2", "carlström2", "herman@com", "", 5002, 4);
-    Profile test3 = new Profile("herman3", "carlström3", "herman@com", "", 5003, 5);
+    Profile test1 = new Profile("herman", "carlström", "herman@com", "", 5000, 5, "https://scontent-bru2-1.xx.fbcdn.net/hphotos-xap1/t31.0-8/q82/p960x960/12045382_10207506978943258_4685874949428967569_o.jpg");
+    Profile test2 = new Profile("herman2", "carlström2", "herman@com", "", 5002, 4, "https://scontent-bru2-1.xx.fbcdn.net/hphotos-xap1/t31.0-8/q82/p960x960/12045382_10207506978943258_4685874949428967569_o.jpg");
+    Profile test3 = new Profile("herman3", "carlström3", "herman@com", "", 5003, 5, "https://scontent-bru2-1.xx.fbcdn.net/hphotos-xap1/t31.0-8/q82/p960x960/12045382_10207506978943258_4685874949428967569_o.jpg");
 
     public ToplistFragment() {
         // Required empty public constructor
