@@ -101,8 +101,8 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     }
 
     private void addToImageList(){
-        imageList.add(R.drawable.ment_01);
-        imageList.add(R.drawable.emblem);
+        imageList.add(R.drawable.achivement01);
+        imageList.add(R.drawable.achivement02);
         imageList.add(R.drawable.achievements);
     }
 

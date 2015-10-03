@@ -1,13 +1,55 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:id="@+id/toplist_top_container"
     android:layout_height="match_parent"
     tools:context="com.bgreen.filips.bgreen.toplist.ToplistFragment">
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/targetprofile_framelayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.bgreen.filips.bgreen.profile.ProfileFragment"
+        android:background="@drawable/ecodriving03"
+        android:visibility="gone">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/targetprofile_image"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/common_ic_googleplayservices"
+            app:border_width="2dp"
+            app:border_color="@color/background_stripe"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/textView_profileFragment_name"
+            android:id="@+id/targetprofile_name_textView"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="136dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/textView_profileFragment_distance_ranking"
+            android:id="@+id/targetprofile_Ranking_Distance_TextView"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="176dp"
+            android:textStyle="bold" />
+
+    </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/toplist_fragment1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:clickable="false" />
 
 
 </FrameLayout>

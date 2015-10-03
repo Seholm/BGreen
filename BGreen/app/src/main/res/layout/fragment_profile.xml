@@ -1,9 +1,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/profile_framelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.bgreen.filips.bgreen.profile.ProfileFragment"
-    android:background="@drawable/ecodriving01">
+    android:background="@drawable/ecodriving03">
 
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -12,7 +13,7 @@
             android:layout_height="96dp"
             android:src="@drawable/common_ic_googleplayservices"
             app:border_width="2dp"
-            app:border_color="#FF000000"
+            app:border_color="@color/background_stripe"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp" />
 
@@ -25,24 +26,23 @@
             android:layout_gravity="center_horizontal|top"
             android:layout_marginTop="136dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/textView_profileFragment_distance_ranking"
-        android:id="@+id/profile_Ranking_Distance_TextView"
-        android:layout_gravity="center_horizontal|top"
-        android:layout_marginTop="176dp"
-        android:textStyle="bold" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/textView_profileFragment_distance_ranking"
+            android:id="@+id/profile_Ranking_Distance_TextView"
+            android:layout_gravity="center_horizontal|top"
+            android:layout_marginTop="176dp"
+            android:textStyle="bold" />
 
-    <FrameLayout
-        android:id="@+id/achivement_fragment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="100dp"
-        android:background="@color/primary"
-        android:elevation="8dp">
-    </FrameLayout>
-    
+        <FrameLayout
+            android:id="@+id/achivement_fragment"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="55dp"
+            android:background="@color/background_stripe">
+        </FrameLayout>
+
 </FrameLayout>
