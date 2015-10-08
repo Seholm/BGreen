@@ -239,6 +239,11 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         return totDistance;
     }
 
+    @Override
+    public void resetTotalDistance(){
+        setTotalDistance(0);
+    }
+
 }
 
 

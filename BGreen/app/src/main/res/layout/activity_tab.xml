@@ -19,9 +19,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/primary"
-            app:layout_scrollFlags="scroll|enterAlways"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+        <!--app:layout_scrollFlags="scroll|enterAlways"-->
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_tabs"
@@ -38,7 +38,7 @@
         android:id="@+id/tab_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" >
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     </android.support.v4.view.ViewPager>
 
@@ -49,42 +49,52 @@
         android:id="@+id/popup_achivments"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="30dp"
         android:layout_marginTop="60dp"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:layout_gravity="center_horizontal"
-        android:background="@color/white"
+        android:background="@drawable/layout_border"
         android:clickable="true">
 
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:text="Exklusiva belöningar"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_vertical|center_horizontal"
-            android:textSize="25dp">
+        <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-        </TextView>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="50dp"
+                android:text="Exklusiva belöningar"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="25sp"
+                android:id="@+id/popup_achivments_header"
+                android:textColor="@color/primary_text">
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="199dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginBottom="2dp"
-            android:id="@+id/imageView" />
+            </TextView>
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:id="@+id/imageView2"
-            android:layout_marginTop="251dp"
-            android:layout_marginLeft="2dp"
-            android:layout_marginRight="2dp"
-            android:layout_marginBottom="2dp"
-            android:layout_gravity="center_horizontal|bottom" />
+            <ImageView
+                android:layout_width="236dp"
+                android:layout_height="190dp"
+                android:id="@+id/imageView_popup_01"
+                android:src="@drawable/popup_01"
+                android:layout_below="@+id/popup_achivments_header"
+                android:layout_centerHorizontal="true"
+                android:background="@color/popup_border"
+                android:padding="4dp"
+                android:layout_marginTop="4dp" />
+
+            <ImageView
+                android:layout_width="236dp"
+                android:layout_height="190dp"
+                android:id="@+id/imageView_popup_02"
+                android:src="@drawable/popup_02"
+                android:layout_below="@+id/imageView_popup_01"
+                android:layout_centerHorizontal="true"
+                android:background="@color/popup_border"
+                android:padding="4dp"
+                android:layout_marginTop="8dp"/>
+
+        </RelativeLayout>
 
     </FrameLayout>
 
@@ -98,7 +108,9 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="45dp"
         android:clickable="true"
-        android:onClick="onClick"/>
+        android:onClick="onClick"
+        app:border_width="3dp"
+        app:border_color="#000000"/>
 
 </FrameLayout>
 

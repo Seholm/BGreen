@@ -14,16 +14,18 @@ public class Busses implements IBusses {
 
         busses = new HashMap<String,String>();
         // a Map with id and mac adresses of al the busses
+
+        busses.put("04:f0:21:10:09:df","100021");//reg.no: EPO 136
+        busses.put("04:f0:21:10:09:e8","100022");//reg.no: EPO 143
+        busses.put("04:f0:21:10:09:53","171327");//reg.no: EOG 622
+        busses.put("04:f0:21:10:09:b7","171330");//reg.no: EOG 634
+        //reg.no: EPO 131
+        //reg.no: EOG 606
+
         busses.put("00:13:95:13:49:f5","100020");
         busses.put("00:13:95:13:4b:be","100021");
         busses.put("00:13:95:14:3b:f0","100022");
         busses.put("00:13:95:14:69:8a","171164");
-        busses.put("00:13:95:13:49:f7","171234");
-        busses.put("00:13:95:0f:92:a4","171235");
-        busses.put("00:13:95:13:62:96","171327");
-        busses.put("00:13:95:13:4b:bc","171328");
-        busses.put("00:13:95:14:3b:f2","171329");
-        busses.put("00:13:95:13:5f:20","171330");
         busses.put("04:f0:21:10:09:e8","TEST");
         busses.put("74:a0:2f:e0:e4:6e","100021");
         busses.put("5c:35:3b:e8:8a:fb","100021");

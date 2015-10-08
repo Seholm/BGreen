@@ -16,6 +16,7 @@
     <color name="white">#FFFFFF</color>
 
     <color name="background_stripe">#EFEEF3</color>
+    <color name="popup_border">#ffd700</color>
 
 
 </resources>

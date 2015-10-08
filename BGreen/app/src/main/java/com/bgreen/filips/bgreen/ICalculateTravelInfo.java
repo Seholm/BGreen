@@ -12,5 +12,6 @@ public interface ICalculateTravelInfo {
     public String getStartPoint();
     public String getEndPoint();
     public String getLatestPoint();
+    public void resetTotalDistance();
 
 }
