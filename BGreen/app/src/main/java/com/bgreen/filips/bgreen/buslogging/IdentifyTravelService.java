@@ -74,7 +74,7 @@ public class IdentifyTravelService extends Service {
             @Override
             public void run() {
                 List<String> macAdresses = getMacAdress(wifiManager.getScanResults());
-                if (busses.doesBusExist(macAdresses) && count <10) {
+                if (busses.doesBusExist(macAdresses)) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
                     String nextStop = null;
                     String rutt = null;
