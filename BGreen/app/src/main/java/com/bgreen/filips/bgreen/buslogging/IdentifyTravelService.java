@@ -74,7 +74,7 @@ public class IdentifyTravelService extends Service {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
                     String nextStop = null;
                     String rutt = null;
-                    //count++;
+                    count++;
                     IDatabaseService service = new DatabaseService();
                     try {
                         nextStop =new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Next_Stop").get();
@@ -90,7 +90,8 @@ public class IdentifyTravelService extends Service {
                             System.out.println("III EJ I TRAFIK");
                             calculator.main(true, nextStop, rutt);
                             if(calculator.getFinalResult() >0) {
-                                service.saveBusTrip(calculator.getFinalResult(), "ws2NCMGYK8");
+                                service.saveBusTrip(calculator.getFinalResult(), "q1Oci345gu");
+                                stopSelf();
                             }
                         } else {
                             System.out.println(count);
@@ -114,7 +115,7 @@ public class IdentifyTravelService extends Service {
                     calculator.main(true,nextStop,rutt);
                     System.out.println("DET ÄR OMÖJLIGT:" +calculator.getFinalResult());
                     DatabaseService service = new DatabaseService();
-                    service.saveBusTrip(calculator.getFinalResult(),"ws2NCMGYK8");
+                    service.saveBusTrip(calculator.getFinalResult(),"q1Oci345gu");
                     stopSelf();
                 }
             }

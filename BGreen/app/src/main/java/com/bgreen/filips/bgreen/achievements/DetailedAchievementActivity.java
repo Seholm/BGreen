@@ -30,6 +30,7 @@ public class DetailedAchievementActivity extends AppCompatActivity {
     private ProgressBar detailedAchievementPBar;
     private TextView setProgressPercentage;
     private Button getRewardButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,5 +101,13 @@ public class DetailedAchievementActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed(){
+        setResult(10);
+        finish();
+        //super.onBackPressed();
+        //closePopUpAchivment.shouldPopupAchivmentBeClosed(true);
     }
 }

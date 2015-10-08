@@ -31,6 +31,7 @@ public class Busses implements IBusses {
         busses.put("0c:27:24:6d:48:0e","100021");
         busses.put("74:a0:2f:a8:32:7e","100021");
         busses.put("6c:19:8f:bf:a1:22","100021");
+        busses.put("22:a2:e4:7a:65:51","100021");
 
         // [SSID: Vasttrafik, BSSID: f2:21:10:09:53:00, capabilities: [ESS], level: -41, frequency: 2462, timestamp: 96795888626, distance: ?(cm), distanceSd: ?(cm),
         // SSID: ElectriCity, BSSID: 04:f0:21:10:09:53, capabilities: [ESS], level: -42, frequency: 2462, timestamp: 96795888613, distance: ?(cm), distanceSd: ?(cm),
