@@ -72,8 +72,6 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                 circleImageViewList.get(i).setClickable(true);
                 circleImageViewList.get(i).setOnClickListener(this);
 
-
-
                 String achievement = "Achievement" + (i+1);
 
                 //if there is no more achievements don't load an image
@@ -87,8 +85,6 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                         Picasso.with(this.getContext()).load(imageListLocked.get(i)).into(circleImageViewList.get(i));
                     }
                 }
-
-
             }
         }
         return myInflatedView;
@@ -98,31 +94,35 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         circleImageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_01));
         circleImageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_02));
         circleImageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_03));
+        circleImageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_04));
+        circleImageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_05));
     }
 
     private void addToImageList(){
         imageList.add(R.drawable.achivement01);
         imageList.add(R.drawable.achivement02);
+        imageList.add(R.drawable.achivement03);
         imageList.add(R.drawable.achievements);
+        imageList.add(R.drawable.ment_01);
     }
 
     private void addToImageListLocked(){
-        imageListLocked.add(R.drawable.ment_01_locked);
-        imageListLocked.add(R.drawable.emblem_locked);
+        imageListLocked.add(R.drawable.achivement_opac_01);
+        imageListLocked.add(R.drawable.achivement_opac_02);
+        imageListLocked.add(R.drawable.achivement_opac_03);
         imageListLocked.add(R.drawable.achievements_locked);
+        imageListLocked.add(R.drawable.ment_01_locked);
     }
 
     @Override
     public void onClick(View v) {
         if (circleImageViewList.get(0).getId() == v.getId()) {
-            //System.out.println("************!!!!!!!!!!!*****0101010101010*******!!!!!!!!!!!!!!*************");
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
             intent.putExtra("ACHIEVMENT", 1);
             intent.putExtra("Progress", achievementProgress.get("Achievement1"));
             startActivity(intent);
         }
         if (circleImageViewList.get(1).getId() == v.getId()) {
-            //System.out.println("************!!!!!!!!!!!*****0202020202******!!!!!!!!!!!!!!*************");
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
             intent.putExtra("ACHIEVMENT", 2);
             intent.putExtra("Progress", achievementProgress.get("Achievement2"));
@@ -130,10 +130,21 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
             startActivity(intent);
         }
         if (circleImageViewList.get(2).getId() == v.getId()) {
-            //System.out.println("************!!!!!!!!!!!*****0303030303******!!!!!!!!!!!!!!*************");
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
             intent.putExtra("ACHIEVMENT", 3);
             intent.putExtra("Progress", achievementProgress.get("Achievement3"));
+            startActivity(intent);
+        }
+        if (circleImageViewList.get(3).getId() == v.getId()) {
+            Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            intent.putExtra("ACHIEVMENT", 4);
+            intent.putExtra("Progress", achievementProgress.get("Achievement4"));
+            startActivity(intent);
+        }
+        if (circleImageViewList.get(4).getId() == v.getId()) {
+            Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+            intent.putExtra("ACHIEVMENT", 5);
+            intent.putExtra("Progress", achievementProgress.get("Achievement5"));
             startActivity(intent);
         }
     }

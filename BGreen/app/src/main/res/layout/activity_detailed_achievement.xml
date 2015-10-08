@@ -1,19 +1,15 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    tools:context="com.bgreen.filips.bgreen.achievements.DetailedAchievementActivity">
+    tools:context="com.bgreen.filips.bgreen.achievements.DetailedAchievementActivity"
+    android:background="@color/primary_light"
+    android:foregroundGravity="right"
+    style="@style/Base.TextAppearance.AppCompat.Display1">
 
-   <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:foregroundGravity="right"
-        style="@style/Base.TextAppearance.AppCompat.Display1">
 
-        <de.hdodenhof.circleimageview.CircleImageView
+    <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/achievment_detailed_image"
             android:layout_width="96dp"
@@ -25,57 +21,53 @@
             android:layout_marginTop="70dp"
             android:layout_marginBottom="70dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_horizontal"
-            android:textSize="40sp"
-            android:text="Lorem Ipsum"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/detailedAchievmentHeadText" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center_horizontal"
+        android:textSize="40sp"
+        android:text="Lorem Ipsum"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/detailedAchievmentHeadText" />
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:textAppearance="?android:attr/textAppearanceSmall"
-           android:text="Pr"
-           android:id="@+id/achievment_progressbar_percentage"
-           android:layout_gravity="center_horizontal" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Pr"
+        android:id="@+id/achievment_progressbar_percentage"
+        android:layout_gravity="center_horizontal" />
 
-       <ProgressBar
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/detailedAchievementProgressBar"
-            android:minHeight="20dp"
-            android:maxHeight="20dp"
-            android:progressTint="#10ff00" />
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/detailedAchievementProgressBar"
+        android:minHeight="20dp"
+        android:maxHeight="20dp"
+        android:progressTint="#10ff00" />
 
+    <TextView
+        android:textSize="18sp"
+        android:layout_margin="10sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+        android:id="@+id/detailedAchievmentText" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:text="Claim reward"
+        android:id="@+id/achievment_reward_button"
+        android:onClick="getAchievementReward"
+        android:background="@drawable/layout_border_button"
+        android:clickable="true"
+        android:enabled="true"
+        android:visibility="visible" />
 
-
-       <TextView
-            android:textSize="18sp"
-            android:layout_margin="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
-            android:id="@+id/detailedAchievmentText" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="50dp"
-            android:text="Claim reward"
-            android:background="@color/primary"
-            android:id="@+id/achievment_reward_button"
-            android:onClick="getAchievementReward"
-            style="?android:attr/borderlessButtonStyle"
-            android:foregroundGravity="bottom|right">
-        </Button>
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>
