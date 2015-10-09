@@ -81,8 +81,6 @@ public class LogginActivity extends AppCompatActivity implements
             Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
         }catch (Exception e){}
 
-        pService.fetchAllProfiles();
-
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(LogginActivity.this, MinuteReciever.class);
@@ -243,7 +241,7 @@ public class LogginActivity extends AppCompatActivity implements
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
 
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-
+            pService.fetchAllProfiles();
             if(handler.getUserID() != null){
                 System.out.println("*********************" + handler.getUserID());
                 pService.startUpFetchOfUser(handler.getUserID(), handler);
@@ -256,8 +254,8 @@ public class LogginActivity extends AppCompatActivity implements
                         0, 0, currentPerson.getImage().getUrl());
                 pService.saveProfileIfNew(handler);
             }
-            pService.fetchAllProfiles();
-
+            System.out.println("loadingDone ==" + loadingDone);
+            System.out.println(User.getInstance().getPlacement());
             if(loadingDone) {
                 Intent tabActivityIntent = new Intent(this, TabActivity.class);
                 startActivity(tabActivityIntent);
@@ -280,7 +278,7 @@ public class LogginActivity extends AppCompatActivity implements
 
                 // request the permission.
                 ActivityCompat.requestPermissions(this,
-                        new String[]{permission},0);
+                        new String[]{permission}, 0);
 
         }
 
@@ -289,10 +287,12 @@ public class LogginActivity extends AppCompatActivity implements
     @Override
     public void update(Observable observable, Object data) {
         if(loadingDone) {
+            System.out.println("2");
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
             startActivity(tabActivityIntent);
             finish();
         }else {
+            System.out.println("1");
             loadingDone = true;
         }
     }

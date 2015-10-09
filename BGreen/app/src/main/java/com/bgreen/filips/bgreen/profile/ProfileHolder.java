@@ -12,6 +12,7 @@ import java.util.Observable;
 public class ProfileHolder extends Observable {
     private static ProfileHolder instance = null;
     private List<IProfile> profiles = new ArrayList<>();
+    private boolean startUp = true;
 
     public static ProfileHolder getInstance(){
         if(instance == null){
@@ -28,9 +29,13 @@ public class ProfileHolder extends Observable {
         profiles.clear();
         profiles.addAll(list);
         sortTopList();
-        System.out.println(profiles.size());
-        setChanged();
-        notifyObservers();
+        System.out.println(User.getInstance().getPlacement());
+        if(startUp){
+            System.out.println("STARTUP");
+            setChanged();
+            notifyObservers();
+            startUp = false;
+        }
     }
 
     public List<IProfile> getProfiles() {
