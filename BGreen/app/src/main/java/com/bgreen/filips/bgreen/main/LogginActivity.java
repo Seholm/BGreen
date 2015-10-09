@@ -1,10 +1,14 @@
 package com.bgreen.filips.bgreen.main;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -53,6 +57,12 @@ public class LogginActivity extends AppCompatActivity implements
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //checks permission which is required for android 6.0+
+        checkPermissions(Manifest.permission.GET_ACCOUNTS);
+        checkPermissions(Manifest.permission.ACCESS_COARSE_LOCATION);
+        checkPermissions(Manifest.permission.ACCESS_FINE_LOCATION);
+
         System.out.println("*****I LOGGINACTIVITY********************");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggin);
@@ -229,5 +239,19 @@ public class LogginActivity extends AppCompatActivity implements
 
             System.out.println("****CURRENT PERSON IS NULL*****");
         }
+    }
+
+    private void checkPermissions(String permission){
+
+        if (ContextCompat.checkSelfPermission(this,
+                permission)
+                != PackageManager.PERMISSION_GRANTED){
+
+                // request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{permission},0);
+
+        }
+
     }
 }
