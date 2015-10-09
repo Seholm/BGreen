@@ -92,7 +92,7 @@ public class SearchModel {
                 for(int j=0; j<lastNameResultList.size(); j++){
                     if(firstNameResultList.get(i).equals(lastNameResultList.get(j))){
                         resultList.add(firstNameResultList.get(i));
-                        System.out.println("kuken1 "+i);
+
                     }
                 }
             }
@@ -114,14 +114,14 @@ public class SearchModel {
         if(firstNameResultList.size()!=0 && lastNameResultList.size()==0){
             for(int i=0; i<firstNameResultList.size(); i++){
                 resultList.add(firstNameResultList.get(i));
-                System.out.println("kuken2 " + i);
+
             }
         }
         //If only matches on lastname add all lastname-profiles to result
         if(firstNameResultList.size()==0 && lastNameResultList.size()!=0){
             for(int i=0; i<lastNameResultList.size(); i++){
                 resultList.add(lastNameResultList.get(i));
-                System.out.println("kuken3 " + i);
+
             }
         }
     }
