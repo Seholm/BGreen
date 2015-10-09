@@ -45,11 +45,18 @@
 
     </FrameLayout>
 
+    <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toplist_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/toplist_fragment1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clickable="false" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 
 </FrameLayout>

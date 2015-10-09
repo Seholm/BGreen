@@ -1,9 +1,8 @@
 package com.bgreen.filips.bgreen.toplist;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.CardView;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,24 +12,26 @@ import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.Profile;
-import com.bgreen.filips.bgreen.profile.ProfileFragment;
 import com.bgreen.filips.bgreen.profile.ProfileHolder;
-import com.google.android.gms.maps.model.Circle;
+import com.bgreen.filips.bgreen.profile.ProfileService;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ToplistFragment extends Fragment implements IFlipcard {
+public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView mRecyclerView;
+    private SwipeRefreshLayout mswipeRefresh;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
     private List<IProfile> profiles = new ArrayList<>();
     View cardBack;
+
+
 
     public ToplistFragment() {
     }
@@ -38,18 +39,27 @@ public class ToplistFragment extends Fragment implements IFlipcard {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        profiles = ProfileHolder.getInstance().getProfiles();
+        setToplist();
+        // profiles = ProfileHolder.getInstance().getProfiles();
         myInflatedView = inflater.inflate(R.layout.fragment_toplist, container, false);
         mRecyclerView = (RecyclerView) myInflatedView.findViewById(R.id.toplist_fragment1);
+        mswipeRefresh = (SwipeRefreshLayout) myInflatedView.findViewById
+                (R.id.toplist_swipe_refresh);
+        mswipeRefresh.setOnRefreshListener(this);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(getContext());
+
+
+        return myInflatedView;
+    }
+
+    private void setToplist() {
+        profiles = ProfileHolder.getInstance().getProfiles();
         mRecyclerView.setLayoutManager(mLayoutManager);
         mAdapter = new ToplistAdapter(profiles,this);
         mRecyclerView.setAdapter(mAdapter);
 
 
-        return myInflatedView;
     }
 
     @Override
@@ -68,6 +78,8 @@ public class ToplistFragment extends Fragment implements IFlipcard {
                     + "   Distance: " + profiles.get(position).getTotalDistance() + "m");
             targetProfileName.setText(profiles.get(position).getFirstName() + " " +
                     profiles.get(position).getLastName());
+            mswipeRefresh.setEnabled(false);
+
 
         }
 
@@ -78,6 +90,7 @@ public class ToplistFragment extends Fragment implements IFlipcard {
             @Override
             public void onClick(View v) {
                 flipCard(-1);
+                mswipeRefresh.setEnabled(true);
             }
         });
 
@@ -90,4 +103,15 @@ public class ToplistFragment extends Fragment implements IFlipcard {
         }
         rootLayout.startAnimation(flipAnimation);
     }
+
+    @Override
+    public void onRefresh() {
+        if ( getActivity().findViewById(R.id.toplist_fragment1).getVisibility() == View.VISIBLE) {
+            ProfileService profileService = new ProfileService();
+            profileService.fetchAllProfiles();
+            profiles.clear();
+            mswipeRefresh.setRefreshing(false);
+        }
+    }
+
 }
