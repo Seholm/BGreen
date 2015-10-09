@@ -131,6 +131,7 @@ public class LogginActivity extends AppCompatActivity implements
         // Connect GoogleApiClient
         super.onStart();
         mGoogleApiClient.connect();
+        findViewById(R.id.sign_in_button).setVisibility(View.GONE);
     }
 
     @Override
@@ -169,6 +170,7 @@ public class LogginActivity extends AppCompatActivity implements
             }
 
             mIsResolving = false;
+            findViewById(R.id.loading_textview).setVisibility(View.VISIBLE);
             mGoogleApiClient.connect();
 
         }
@@ -182,6 +184,7 @@ public class LogginActivity extends AppCompatActivity implements
         // Show the dialog as we are now signing in.
         mConnectionProgressDialog.show();
 
+        findViewById(R.id.loading_textview).setVisibility(View.VISIBLE);
         mGoogleApiClient.connect();
 
         // Show a message to the user that we are signing in.
@@ -204,6 +207,8 @@ public class LogginActivity extends AppCompatActivity implements
         // Could not connect to Google Play Services.  The user needs to select an account,
         // grant permissions or resolve an error in order to sign in. Refer to the javadoc for
         // ConnectionResult to see possible error codes.
+        findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.loading_textview).setVisibility(View.GONE);
 
         if (!mIsResolving && mShouldResolve) {
             if (connectionResult.hasResolution()) {
@@ -212,6 +217,7 @@ public class LogginActivity extends AppCompatActivity implements
                     mIsResolving = true;
                 } catch (IntentSender.SendIntentException e) {
                     mIsResolving = false;
+                    findViewById(R.id.loading_textview).setVisibility(View.VISIBLE);
                     mGoogleApiClient.connect();
 
                 }
