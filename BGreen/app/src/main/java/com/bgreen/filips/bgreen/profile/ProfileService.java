@@ -22,12 +22,29 @@ public class ProfileService implements IProfileService{
     private final String TOTAL_DISTANCE = "TotalDistance";
     private final String BUS_TRIPS = "BusTrips";
     private final String IMAGE_URL = "ImageURL";
+    private final String USER = "User";
+
+    private void saveNewProfile(IUserHandler handler){
+        ParseObject parseProfile = new ParseObject(USER);
+        setParseProfile(user, parseProfile);
+        uploadToParse(parseProfile, handler);
+    }
 
     @Override
-    public void saveNewProfile(IProfile profile, IUserHandler handler){
-        ParseObject parseProfile = new ParseObject("User");
-        setParseProfile(profile, parseProfile);
-        uploadToParse(parseProfile, handler);
+    public void saveProfileIfNew(final IUserHandler handler){
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(USER);
+        query.whereEqualTo(EMAIL, user.getEmail());
+        try {
+            ParseObject p = query.getFirst();
+            if(p != null){
+                startUpFetchOfUser(p.getObjectId(), handler);
+            }else {
+                saveNewProfile(handler);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
     }
 
     //Parse cannot save own made classes like Profile, so we have to copy its content into
@@ -57,13 +74,13 @@ public class ProfileService implements IProfileService{
     }
 
     @Override
-    public void fetchProfileOfUser(final String ID) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+    public void fetchProfileOfUser(final String ID, final IUserHandler handler) {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(USER);
         query.getInBackground(ID, new GetCallback<ParseObject>() {
             @Override
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
-                    writeToUser(parseObject);
+                    writeToUser(parseObject, handler);
                 } else {
                     e.printStackTrace();
                 }
@@ -73,7 +90,7 @@ public class ProfileService implements IProfileService{
 
     @Override
     public void fetchAllProfiles() {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(USER);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> list, ParseException e) {
@@ -93,16 +110,16 @@ public class ProfileService implements IProfileService{
         });
     }
 
-    public void startUpFetchOfUser(final String ID){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+    public void startUpFetchOfUser(final String ID, IUserHandler handler){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery(USER);
         try {
-            writeToUser(query.get(ID));
+            writeToUser(query.get(ID), handler);
         } catch (ParseException e){
             e.printStackTrace();
         }
     }
 
-    private void writeToUser(ParseObject parseObject) {
+    private void writeToUser(ParseObject parseObject, IUserHandler handler) {
         user.setUser(parseObject.getString(FIRST_NAME),
                 parseObject.getString(LAST_NAME),
                 parseObject.getString(EMAIL),
@@ -110,6 +127,7 @@ public class ProfileService implements IProfileService{
                 parseObject.getInt(BUS_TRIPS),
                 parseObject.getString(IMAGE_URL));
         user.setParseID(parseObject.getObjectId());
+        handler.writeToFile(user.getParseID());
     }
 
 }

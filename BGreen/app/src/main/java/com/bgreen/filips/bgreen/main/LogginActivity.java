@@ -2,6 +2,7 @@ package com.bgreen.filips.bgreen.main;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.os.SystemClock;
@@ -46,17 +47,18 @@ public class LogginActivity extends AppCompatActivity implements
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = false;
 
+    // A progress dialog to display when the user is connecting in
+    // case there is a delay in any of the dialogs being ready.
+    private ProgressDialog mConnectionProgressDialog;
+
     private ProfileService pService= new ProfileService();
     private IUserHandler handler = new UserHandler(LogginActivity.this);
     private User user = User.getInstance();
-    private ProgressBar progresSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("*****I LOGGINACTIVITY********************");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggin);
-        System.out.println("*****I LOGGINACTIVITY********************");
 
         //Enable Local Datastore, and Parse DB services.
         try {
@@ -68,9 +70,9 @@ public class LogginActivity extends AppCompatActivity implements
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(LogginActivity.this, MinuteReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(LogginActivity.this, 0, intent, 0);
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 1 * 60 * 1000, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),
+                60 * 1000, pendingIntent);
 
-        progresSpinner = (ProgressBar)findViewById(R.id.progressBar);
         pService.fetchAllProfiles();
 
         // Build GoogleApiClient to request access to the basic user profile and email
@@ -84,6 +86,11 @@ public class LogginActivity extends AppCompatActivity implements
 
         //OnClicklistner for the signInButton
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+
+        // Configure the ProgressDialog that will be shown if there is a
+        // delay in presenting the user with the next sign in step.
+        mConnectionProgressDialog = new ProgressDialog(this);
+        mConnectionProgressDialog.setMessage("Connecting...");
     }
 
     @Override
@@ -130,6 +137,9 @@ public class LogginActivity extends AppCompatActivity implements
         // establish a service connection to Google Play services.
         mShouldResolve = false;
 
+        // Hide the progress dialog if its showing.
+        mConnectionProgressDialog.dismiss();
+
         // Show the signed-in UI
         getProfileInformation();
     }
@@ -142,6 +152,10 @@ public class LogginActivity extends AppCompatActivity implements
             // If the error resolution was not successful we should not resolve further.
             if (resultCode != RESULT_OK) {
                 mShouldResolve = false;
+                // If we've got an error we can't resolve, we're no
+                // longer in the midst of signing in, so we can stop
+                // the progress spinner.
+                mConnectionProgressDialog.dismiss();
             }
 
             mIsResolving = false;
@@ -154,8 +168,9 @@ public class LogginActivity extends AppCompatActivity implements
         // User clicked the sign-in button, so begin the sign-in process and automatically
         // attempt to resolve any errors that occur.
         mShouldResolve = true;
-        //TODO: STARTA PROGRESS GREJ
-        progresSpinner.setVisibility(View.VISIBLE);
+
+        // Show the dialog as we are now signing in.
+        mConnectionProgressDialog.show();
 
         mGoogleApiClient.connect();
 
@@ -200,8 +215,6 @@ public class LogginActivity extends AppCompatActivity implements
         }
     }
 
-    //TODO;SPARA PROFILEN I EN EGEN KLASS??
-
     //Gets the profileIno and put it on the TabActivity
     private void getProfileInformation(){
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
@@ -209,18 +222,18 @@ public class LogginActivity extends AppCompatActivity implements
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
 
             if(handler.getUserID() != null){
-                System.out.println(handler.getUserID());
-                pService.startUpFetchOfUser(handler.getUserID());
+                System.out.println("*********************" + handler.getUserID());
+                pService.startUpFetchOfUser(handler.getUserID(), handler);
 
             }else {
+                System.out.println("handler.getUserID == null");
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
                         0, 0, currentPerson.getImage().getUrl());
-                pService.saveNewProfile(user, handler);
+                pService.saveProfileIfNew(handler);
             }
 
-            progresSpinner.setVisibility(View.GONE);
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
             startActivity(tabActivityIntent);
             finish();

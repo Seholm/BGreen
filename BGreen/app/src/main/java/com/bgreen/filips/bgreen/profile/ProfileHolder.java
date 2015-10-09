@@ -24,6 +24,7 @@ public class ProfileHolder {
     }
 
     public void setProfiles(List<IProfile> list){
+        profiles.clear();
         profiles.addAll(list);
         sortTopList();
         System.out.println(profiles.size());
