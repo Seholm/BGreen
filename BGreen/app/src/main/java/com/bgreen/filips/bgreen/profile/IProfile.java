@@ -1,9 +1,11 @@
 package com.bgreen.filips.bgreen.profile;
 
+import android.os.Parcelable;
+
 /**
  * Created by medioloco on 2015-09-29.
  */
-public interface IProfile {
+public interface IProfile extends Parcelable{
     public void setFirstName(String firstName);
     public void setLastName(String lastName);
     public void setEmail(String email);

@@ -142,6 +142,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     }
 
     private void setTotalDistance(int distance){
+
         totDistance = distance;
     }
 
@@ -233,11 +234,18 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
         }
 
+
     }
 
     //Method for returning the totaldistance. Only called when wifi is lost and calculation done
     public int getFinalResult(){
-        return totDistance;
+        int result = totDistance;
+        setTotalDistance(0);
+        setLatestPoint(null);
+        startPoint=null;
+        busStops.clear();
+        busStopsLength.clear();
+        return result;
     }
 
     @Override

@@ -1,8 +1,13 @@
 package com.bgreen.filips.bgreen.main;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
+
+import com.bgreen.filips.bgreen.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +39,12 @@ class ViewPagerAdapter extends FragmentPagerAdapter {
         mFragmentTitleList.add(title);
     }
 
+
     @Override
     public CharSequence getPageTitle(int position) {
         return mFragmentTitleList.get(position);
     }
+
+
+
 }
