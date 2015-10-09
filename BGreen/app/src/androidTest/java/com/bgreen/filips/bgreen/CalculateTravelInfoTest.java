@@ -134,14 +134,14 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
         String nextStop3 = "ValandD";
         String nextStop4 = "GötaplatsenB";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
-        calc.main(false, nextStop1, "Chalmers");
-        calc.main(false, nextStop1, "Chalmers");
-        calc.main(false, nextStop2, "Chalmers");
-        calc.main(false, nextStop2, "Chalmers");
-        calc.main(false, nextStop3, "Chalmers");
-        calc.main(false, nextStop3, "Chalmers");
-        calc.main(false, nextStop4, "Chalmers");
-        calc.main(true, nextStop4, "Chalmers");
+        calc.main(false, nextStop1, "Johanneberg");
+        calc.main(false, nextStop1, "Johanneberg");
+        calc.main(false, nextStop2, "Johanneberg");
+        calc.main(false, nextStop2, "Johanneberg");
+        calc.main(false, nextStop3, "Johanneberg");
+        calc.main(false, nextStop3, "Johanneberg");
+        calc.main(false, nextStop4, "Johanneberg");
+        calc.main(true, nextStop4, "Johanneberg");
         assertTrue(totDistance == calc.getFinalResult());
 
     }
