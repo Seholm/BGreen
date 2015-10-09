@@ -29,6 +29,13 @@ public class ProfileHolder extends Observable {
         profiles.clear();
         profiles.addAll(list);
         sortTopList();
+        for (IProfile profile : profiles) {
+            if (User.getInstance().getEmail().equals(profile.getEmail())){
+                User.getInstance().setUser(profile.getFirstName(), profile.getLastName(),
+                        profile.getEmail(), profile.getTotalDistance(), profile.getBusTrips(),
+                        profile.getImageURL());
+            }
+        }
         System.out.println(User.getInstance().getPlacement());
         if(startUp){
             System.out.println("STARTUP");
