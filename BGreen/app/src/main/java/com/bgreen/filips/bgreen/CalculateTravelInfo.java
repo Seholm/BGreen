@@ -198,6 +198,15 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         //Om ej trafik och loopar flera ej trafik
         //Om åkt och sen blir ej i trafik
 
+        //If wifi lost set nextStop as lastStop
+
+        //FLYTTAD
+        if(lastStop == true){
+            setLatestPoint(nextStop);
+            setEndPoint();
+            calcTotalDistance();
+        }
+
         //Does calculation and sets points if route is correct
         if(route.equals("Lindholmen") || route.equals("Johanneberg")){
             //method doesn't set any values when nextStop in null
@@ -208,13 +217,6 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
                 }else if(!getLatestPoint().equals(nextStop)){
                     setLatestPoint(nextStop);
-                }
-
-                //If wifi lost set nextStop as lastStop
-                if(lastStop == true){
-                    setLatestPoint(nextStop);
-                    setEndPoint();
-                    calcTotalDistance();
                 }
             }
         }
@@ -237,6 +239,11 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     //Method for returning the totaldistance. Only called when wifi is lost and calculation done
     public int getFinalResult(){
         return totDistance;
+    }
+
+    @Override
+    public void resetTotalDistance(){
+        setTotalDistance(0);
     }
 
 }

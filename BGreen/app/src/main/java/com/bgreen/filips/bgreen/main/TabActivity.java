@@ -1,5 +1,6 @@
 package com.bgreen.filips.bgreen.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+    private boolean popupAchivmentShow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +91,20 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     public void onResume(){
         super.onResume();
         FrameLayout achivmentContainer = (FrameLayout) findViewById(R.id.popup_achivments);
-        achivmentContainer.setVisibility(View.VISIBLE);
         CircleImageView button = (CircleImageView) findViewById(R.id.delete_button);
-        button.setVisibility(View.VISIBLE);
+        if(popupAchivmentShow) {
+            achivmentContainer.setVisibility(View.VISIBLE);
+            button.setVisibility(View.VISIBLE);
+        }else{
+            popupAchivmentShow = true;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 10) {
+            //happens when u click back from DetailedAchivmentActiity
+            popupAchivmentShow = false;
+        }
     }
 }

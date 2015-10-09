@@ -15,6 +15,8 @@ import com.bgreen.filips.bgreen.buslogging.DatabaseService;
 import com.bgreen.filips.bgreen.buslogging.IBusses;
 import com.bgreen.filips.bgreen.buslogging.IDatabaseService;
 import com.bgreen.filips.bgreen.buslogging.RetrieveBusData;
+import com.bgreen.filips.bgreen.profile.IUserHandler;
+import com.bgreen.filips.bgreen.profile.UserHandler;
 import com.parse.Parse;
 
 import java.util.ArrayList;
@@ -30,6 +32,7 @@ public class IdentifyTravelService extends Service {
     private int count;
     private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
     private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
+    private IUserHandler userhandler;
 
     public IdentifyTravelService() {
     }
@@ -47,6 +50,7 @@ public class IdentifyTravelService extends Service {
         busses = new Busses();
         calculator = new CalculateTravelInfo();
         count =0;
+        userhandler = new UserHandler(this);
 
         runTask();
 
@@ -74,7 +78,7 @@ public class IdentifyTravelService extends Service {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
                     String nextStop = null;
                     String rutt = null;
-                    //count++;
+                    count++;
                     IDatabaseService service = new DatabaseService();
                     try {
                         nextStop =new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Next_Stop").get();
@@ -90,7 +94,8 @@ public class IdentifyTravelService extends Service {
                             System.out.println("III EJ I TRAFIK");
                             calculator.main(true, nextStop, rutt);
                             if(calculator.getFinalResult() >0) {
-                                service.saveBusTrip(calculator.getFinalResult(), "ws2NCMGYK8");
+                                service.saveBusTrip(calculator.getFinalResult(), userhandler.getUserID());
+                                calculator = new CalculateTravelInfo();
                             }
                         } else {
                             System.out.println(count);
@@ -114,7 +119,7 @@ public class IdentifyTravelService extends Service {
                     calculator.main(true,nextStop,rutt);
                     System.out.println("DET ÄR OMÖJLIGT:" +calculator.getFinalResult());
                     DatabaseService service = new DatabaseService();
-                    service.saveBusTrip(calculator.getFinalResult(),"ws2NCMGYK8");
+                    service.saveBusTrip(calculator.getFinalResult(),userhandler.getUserID());
                     stopSelf();
                 }
             }
