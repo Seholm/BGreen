@@ -1,9 +1,14 @@
 package com.bgreen.filips.bgreen.profile;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by medioloco on 2015-09-28.
  */
-public class Profile implements IProfile{
+public class Profile implements IProfile, Serializable {
     private String firstName;
     private String lastName;
     private String email;
@@ -18,7 +23,7 @@ public class Profile implements IProfile{
     }
 
     public Profile(String firstName, String lastName, String email, String parseID,
-                              int totalDistance, int busTrips, String imageURL){
+                   int totalDistance, int busTrips, String imageURL){
         setFirstName(firstName);
         setLastName(lastName);
         setEmail(email);
@@ -98,6 +103,7 @@ public class Profile implements IProfile{
         this.totalDistance = totalDistance;
     }
 
+
     public int getPlacement() {
         return placement;
     }
@@ -105,4 +111,52 @@ public class Profile implements IProfile{
     public void setPlacement(int placement) {
         this.placement = placement;
     }
+
+
+
+
+
+    protected Profile(Parcel in) {
+        firstName = in.readString();
+        lastName = in.readString();
+        email = in.readString();
+        parseID = in.readString();
+        totalDistance = in.readInt();
+        busTrips = in.readInt();
+        imageURL = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(email);
+        dest.writeString(parseID);
+        dest.writeInt(totalDistance);
+        dest.writeInt(busTrips);
+        dest.writeString(imageURL);
+
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<Profile> CREATOR = new Parcelable.Creator<Profile>() {
+        @Override
+        public Profile createFromParcel(Parcel in) {
+            return new Profile(in);
+        }
+
+        @Override
+        public Profile[] newArray(int size) {
+            return new Profile[size];
+        }
+    };
+
 }

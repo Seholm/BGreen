@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:id="@+id/toplist_top_container"
+    android:background="?android:attr/colorBackground"
     android:layout_height="match_parent"
     tools:context="com.bgreen.filips.bgreen.toplist.ToplistFragment">
 
@@ -11,7 +12,8 @@
         android:layout_height="match_parent"
         tools:context="com.bgreen.filips.bgreen.profile.ProfileFragment"
         android:background="@drawable/ecodriving03"
-        android:visibility="gone">
+        android:visibility="gone"
+        >
 
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
