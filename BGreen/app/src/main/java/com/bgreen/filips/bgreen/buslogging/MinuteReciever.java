@@ -21,7 +21,6 @@ public class MinuteReciever extends BroadcastReceiver {
         List<ScanResult> wifiScanList = wifiManager.getScanResults();
         List<String> bssid= new ArrayList<>(); // A list containing mac-adresses
         IBusses busses = new Busses();
-        System.out.println(wifiScanList.toString());
 
         for (ScanResult result:wifiScanList  ){
             //creates a list of all the MAC-adresses in the area

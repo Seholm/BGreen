@@ -73,7 +73,7 @@ public class IdentifyTravelService extends Service {
 
             @Override
             public void run() {
-                List<String> macAdresses = getMacAdress(wifiManager.getScanResults());
+                List<String> macAdresses = getMacAdress(((WifiManager)getSystemService(Context.WIFI_SERVICE)).getScanResults());
                 if (busses.doesBusExist(macAdresses)) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
                     String nextStop = null;
@@ -90,7 +90,6 @@ public class IdentifyTravelService extends Service {
                     if(rutt!=null) {
                         if (rutt.equals("Ej i trafik")) {
                             System.out.println("finalresult:"+calculator.getFinalResult());
-                            //TODO: Händer inte för finalresult är 0!!
                             System.out.println("III EJ I TRAFIK");
                             calculator.main(true, nextStop, rutt);
                             if(calculator.getFinalResult() >0) {

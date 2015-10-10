@@ -117,6 +117,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
             if(busStops.get(i).equals(point)){
                 startPoint = busStops.get(i-1);
                 setLatestPoint(busStops.get(i));
+                System.out.println("I set startpoint"+startPoint);
                 break;
             }
         }
@@ -149,43 +150,50 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     //Method for calculation the total distance
     private Integer calcTotalDistance(){
         String point = getStartPoint();
+        System.out.println(getStartPoint());
         int numberOfStops=0;
         int totDistance = 0;
 
         //Get the point after startpoint
-        while(point.equals(getStartPoint())){
-            for(int i=0; i<busStops.size()+1; i++){
-                if(point.equals(busStops.get(i))){
+        //TODO: point är null
 
-                    //Set point to the one after the startpoint
-                    point = busStops.get(i+1);
-                    System.out.println("Startpunkt "+busStops.get(i));
-                    break;
+        if(point!=null) {
+            while (point.equals(getStartPoint())) {
+                for (int i = 0; i < busStops.size() + 1; i++) {
+                    if (point.equals(busStops.get(i))) {
 
-                }
-            }
-        }
-
-        //Add together all distances after startpoint until last stop
-        while (!point.equals(getStartPoint())){
-            for(int i=0; i<busStops.size(); i++){
-                if (point.equals(busStops.get(i))){
-                    totDistance = totDistance + busStopsLength.get(i);
-                    System.out.println("avstånd från " + busStops.get(i-1) + " till " + busStops.get(i) +": "+ busStopsLength.get(i));
-
-                    numberOfStops = numberOfStops +1;
-
-                    //If point is lastpoint, break so totDistance is finished calculating
-                    if(busStops.get(i).equals(getEndPoint())){
-                        setTotalDistance(totDistance);
-
+                        //Set point to the one after the startpoint
+                        point = busStops.get(i + 1);
+                        System.out.println("Startpunkt " + busStops.get(i));
                         break;
-                    }
-                    point = busStops.get(i+1);
-                }
 
+                    }
+                }
             }
-            break;
+
+            //Add together all distances after startpoint until last stop
+            while (!point.equals(getStartPoint())) {
+                for (int i = 0; i < busStops.size() - 1; i++) {
+                    if (point.equals(busStops.get(i))) {
+                        totDistance = totDistance + busStopsLength.get(i);
+                        System.out.println("avstånd från " + busStops.get(i - 1) + " till " + busStops.get(i) + ": " + busStopsLength.get(i));
+
+                        numberOfStops = numberOfStops + 1;
+
+                        //If point is lastpoint, break so totDistance is finished calculating
+                        if (busStops.get(i).equals(getEndPoint())) {
+                            setTotalDistance(totDistance);
+
+                            break;
+                        }
+
+                        //TODO: crash index out of bounds
+                        point = busStops.get(i + 1);
+                    }
+
+                }
+                break;
+            }
         }
         //Some prints for testing until we have real api and can do real testing
         System.out.println("Antal stopp: " + numberOfStops);
@@ -218,14 +226,6 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
             }
         }
 
-        
-        //FLYTTAD
-        if(lastStop == true){
-            setLatestPoint(nextStop);
-            setEndPoint();
-            calcTotalDistance();
-        }
-
         //If lastStop is true and nextStop is null, set endPoint and calc with old values
         if(lastStop==true && nextStop==null && getStartPoint()!=null){
             setEndPoint();
@@ -233,11 +233,17 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
         }
         //If route isn't correct and have previous stops. Add previous stops together as totDistance
-        if(lastStop==true && !route.equals("Lindholmen") && !route.equals("Johanneberg") && getStartPoint()!=null){
+        if(lastStop==true && route==null && route==null && getStartPoint()!=null){
 
             setEndPoint();
             calcTotalDistance();
 
+        }
+        //FLYTTAD
+        if(lastStop == true){
+            setLatestPoint(nextStop);
+            setEndPoint();
+            calcTotalDistance();
         }
 
 

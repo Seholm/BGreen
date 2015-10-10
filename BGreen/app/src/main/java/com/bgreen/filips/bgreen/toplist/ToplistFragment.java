@@ -153,7 +153,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
             CircleImageView targetProfilePicture =
                     (CircleImageView)myInflatedView.findViewById(R.id.targetprofile_image);
 
-            Picasso.with(getContext()).load(profiles.get(position).getImageURL()).into(targetProfilePicture);
+            Picasso.with(getContext()).load(changeSizeOnURLImage(profiles.get(position).getImageURL())).into(targetProfilePicture);
             targetProfileDistance.setText("#" + profiles.get(position).getPlacement()
                     + "   Distance: " + profiles.get(position).getTotalDistance() + "m");
             targetProfileName.setText(profiles.get(position).getFirstName() + " " +
@@ -197,6 +197,13 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
             profiles.clear();
             mswipeRefresh.setRefreshing(false);
         }
+    }
+
+    //Change the default size of the image to new size with 150 x 150 px
+    private String changeSizeOnURLImage(String s){
+        String temp = s.substring(0,s.length()-2);
+        temp = temp + "150";
+        return temp;
     }
 
 }
