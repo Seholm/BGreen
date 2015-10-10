@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
 import com.bgreen.filips.bgreen.profile.IUserHandler;
+import com.bgreen.filips.bgreen.profile.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.ProfileService;
 import com.bgreen.filips.bgreen.profile.User;
 import com.bgreen.filips.bgreen.profile.UserHandler;
@@ -31,10 +32,13 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.parse.Parse;
 
+import java.util.Observable;
+import java.util.Observer;
+
 public class LogginActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
+        View.OnClickListener, Observer{
 
     private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
     private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
@@ -58,6 +62,7 @@ public class LogginActivity extends AppCompatActivity implements
     private ProfileService pService= new ProfileService();
     private IUserHandler handler = new UserHandler(LogginActivity.this);
     private User user = User.getInstance();
+    private boolean loadingDone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +88,6 @@ public class LogginActivity extends AppCompatActivity implements
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),
                 60 * 1000, pendingIntent);
 
-        pService.fetchAllProfiles();
-
         // Build GoogleApiClient to request access to the basic user profile and email
         mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
@@ -101,6 +104,8 @@ public class LogginActivity extends AppCompatActivity implements
         // delay in presenting the user with the next sign in step.
         mConnectionProgressDialog = new ProgressDialog(this);
         mConnectionProgressDialog.setMessage("Connecting...");
+
+        ProfileHolder.getInstance().addObserver(this);
     }
 
     @Override
@@ -236,7 +241,7 @@ public class LogginActivity extends AppCompatActivity implements
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
 
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-
+            pService.fetchAllProfiles();
             if(handler.getUserID() != null){
                 System.out.println("*********************" + handler.getUserID());
                 pService.startUpFetchOfUser(handler.getUserID(), handler);
@@ -249,10 +254,15 @@ public class LogginActivity extends AppCompatActivity implements
                         0, 0, currentPerson.getImage().getUrl());
                 pService.saveProfileIfNew(handler);
             }
-
-            Intent tabActivityIntent = new Intent(this, TabActivity.class);
-            startActivity(tabActivityIntent);
-            finish();
+            System.out.println("loadingDone ==" + loadingDone);
+            System.out.println(User.getInstance().getPlacement());
+            if(loadingDone) {
+                Intent tabActivityIntent = new Intent(this, TabActivity.class);
+                startActivity(tabActivityIntent);
+                finish();
+            }else {
+                loadingDone = true;
+            }
 
         }else{
 
@@ -268,9 +278,22 @@ public class LogginActivity extends AppCompatActivity implements
 
                 // request the permission.
                 ActivityCompat.requestPermissions(this,
-                        new String[]{permission},0);
+                        new String[]{permission}, 0);
 
         }
 
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if(loadingDone) {
+            System.out.println("2");
+            Intent tabActivityIntent = new Intent(this, TabActivity.class);
+            startActivity(tabActivityIntent);
+            finish();
+        }else {
+            System.out.println("1");
+            loadingDone = true;
+        }
     }
 }
