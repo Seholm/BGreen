@@ -6,6 +6,7 @@ import static junit.framework.Assert.*;
 
 /**
  * Created by flarssonn on 2015-09-21.
+ * edited by seholm on 2015-10-10
  */
 public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
@@ -134,14 +135,71 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
         String nextStop3 = "ValandD";
         String nextStop4 = "GötaplatsenB";
         ICalculateTravelInfo calc = new CalculateTravelInfo();
-        calc.main(false, nextStop1, "Chalmers");
-        calc.main(false, nextStop1, "Chalmers");
-        calc.main(false, nextStop2, "Chalmers");
-        calc.main(false, nextStop2, "Chalmers");
-        calc.main(false, nextStop3, "Chalmers");
-        calc.main(false, nextStop3, "Chalmers");
-        calc.main(false, nextStop4, "Chalmers");
-        calc.main(true, nextStop4, "Chalmers");
+        calc.main(false, nextStop1, "Johanneberg");
+        calc.main(false, nextStop1, "Johanneberg");
+        calc.main(false, nextStop2, "Johanneberg");
+        calc.main(false, nextStop2, "Johanneberg");
+        calc.main(false, nextStop3, "Johanneberg");
+        calc.main(false, nextStop3, "Johanneberg");
+        calc.main(false, nextStop4, "Johanneberg");
+        calc.main(true, nextStop4, "Johanneberg");
+        assertTrue(totDistance == calc.getFinalResult());
+
+    }
+
+    //Test correct distance calculation with one stop. Between götaplatsen and valand with null inbetween
+    public void testCalcTotalDistanceWithNull1(){
+        int totDistance = 400;
+        String nextStop1 = "ValandC";
+        ICalculateTravelInfo calc = new CalculateTravelInfo();
+        calc.main(false, nextStop1, "Lindholmen");
+        calc.main(false,null,null);
+        calc.main(true, nextStop1, "Lindholmen");
+        assertTrue(totDistance == calc.getFinalResult());
+
+    }
+
+    //Test correct distance calculation with one stop. Between götaplatsen and valand with null as last stop
+    public void testCalcTotalDistanceWithNull2(){
+        int totDistance = 400;
+        String nextStop1 = "ValandC";
+        ICalculateTravelInfo calc = new CalculateTravelInfo();
+        calc.main(false, nextStop1, "Lindholmen");
+        calc.main(true, null, null);
+        assertTrue(totDistance == calc.getFinalResult());
+
+    }
+
+    //Test correct distance calculation with only null
+    public void testCalcTotalDistanceWithNull3(){
+        int totDistance = 0;
+        ICalculateTravelInfo calc = new CalculateTravelInfo();
+        calc.main(false, null, null);
+        calc.main(true, null, null);
+        System.out.println(calc.getFinalResult());
+        assertTrue(totDistance == calc.getFinalResult());
+
+    }
+
+    //Test correct distance calculation with multiple stops and other route brunns to götapl
+    public void testCalcTotalDistanceWithNull4(){
+        int totDistance = 1530;
+        String nextStop1 = "BrunnsparkenA";
+        String nextStop2 = "KungsportsplD";
+        String nextStop3 = "ValandD";
+        String nextStop4 = "GötaplatsenB";
+        ICalculateTravelInfo calc = new CalculateTravelInfo();
+        calc.main(false, null,null);
+        calc.main(false, nextStop1, "Johanneberg");
+        calc.main(false, nextStop1, "Johanneberg");
+        calc.main(false, nextStop2, "Johanneberg");
+        calc.main(false, null,null);
+        calc.main(false, nextStop2, "Johanneberg");
+        calc.main(false, nextStop3, "Johanneberg");
+        calc.main(false, nextStop3, "Johanneberg");
+        calc.main(false, null,null);
+        calc.main(false, nextStop4, "Johanneberg");
+        calc.main(true, null,null);
         assertTrue(totDistance == calc.getFinalResult());
 
     }

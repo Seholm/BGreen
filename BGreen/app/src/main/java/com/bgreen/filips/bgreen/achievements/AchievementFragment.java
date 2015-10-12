@@ -13,6 +13,7 @@ import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.User;
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -120,20 +121,20 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
             intent.putExtra("ACHIEVMENT", 1);
             intent.putExtra("Progress", achievementProgress.get("Achievement1"));
-            startActivity(intent);
+            startActivityForResult(intent, 10);
         }
         if (circleImageViewList.get(1).getId() == v.getId()) {
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
             intent.putExtra("ACHIEVMENT", 2);
             intent.putExtra("Progress", achievementProgress.get("Achievement2"));
             System.out.println(achievementProgress.get("Achievement2"));
-            startActivity(intent);
+            startActivityForResult(intent, 10);
         }
         if (circleImageViewList.get(2).getId() == v.getId()) {
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
             intent.putExtra("ACHIEVMENT", 3);
             intent.putExtra("Progress", achievementProgress.get("Achievement3"));
-            startActivity(intent);
+            startActivityForResult(intent, 10);
         }
         if (circleImageViewList.get(3).getId() == v.getId()) {
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
@@ -148,4 +149,6 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
             startActivity(intent);
         }
     }
+
+
 }

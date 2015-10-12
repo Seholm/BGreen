@@ -1,10 +1,15 @@
 package com.bgreen.filips.bgreen.main;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +20,7 @@ import android.widget.ProgressBar;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
 import com.bgreen.filips.bgreen.profile.IUserHandler;
+import com.bgreen.filips.bgreen.profile.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.ProfileService;
 import com.bgreen.filips.bgreen.profile.User;
 import com.bgreen.filips.bgreen.profile.UserHandler;
@@ -26,10 +32,13 @@ import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.parse.Parse;
 
+import java.util.Observable;
+import java.util.Observer;
+
 public class LogginActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
+        View.OnClickListener, Observer{
 
     private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
     private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
@@ -46,17 +55,25 @@ public class LogginActivity extends AppCompatActivity implements
     /* Should we automatically resolve ConnectionResults when possible? */
     private boolean mShouldResolve = false;
 
+    // A progress dialog to display when the user is connecting in
+    // case there is a delay in any of the dialogs being ready.
+    private ProgressDialog mConnectionProgressDialog;
+
     private ProfileService pService= new ProfileService();
     private IUserHandler handler = new UserHandler(LogginActivity.this);
     private User user = User.getInstance();
-    private ProgressBar progresSpinner;
+    private boolean loadingDone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("*****I LOGGINACTIVITY********************");
+
+        //checks permission which is required for android 6.0+
+        checkPermissions(Manifest.permission.GET_ACCOUNTS);
+        checkPermissions(Manifest.permission.ACCESS_COARSE_LOCATION);
+        checkPermissions(Manifest.permission.ACCESS_FINE_LOCATION);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loggin);
-        System.out.println("*****I LOGGINACTIVITY********************");
 
         //Enable Local Datastore, and Parse DB services.
         try {
@@ -68,10 +85,8 @@ public class LogginActivity extends AppCompatActivity implements
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         Intent intent = new Intent(LogginActivity.this, MinuteReciever.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(LogginActivity.this, 0, intent, 0);
-        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), 1 * 60 * 1000, pendingIntent);
-
-        progresSpinner = (ProgressBar)findViewById(R.id.progressBar);
-        pService.fetchAllProfiles();
+        alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(),
+                60 * 1000, pendingIntent);
 
         // Build GoogleApiClient to request access to the basic user profile and email
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -84,6 +99,13 @@ public class LogginActivity extends AppCompatActivity implements
 
         //OnClicklistner for the signInButton
         findViewById(R.id.sign_in_button).setOnClickListener(this);
+
+        // Configure the ProgressDialog that will be shown if there is a
+        // delay in presenting the user with the next sign in step.
+        mConnectionProgressDialog = new ProgressDialog(this);
+        mConnectionProgressDialog.setMessage("Connecting...");
+
+        ProfileHolder.getInstance().addObserver(this);
     }
 
     @Override
@@ -114,6 +136,7 @@ public class LogginActivity extends AppCompatActivity implements
         // Connect GoogleApiClient
         super.onStart();
         mGoogleApiClient.connect();
+        findViewById(R.id.sign_in_button).setVisibility(View.GONE);
     }
 
     @Override
@@ -130,6 +153,9 @@ public class LogginActivity extends AppCompatActivity implements
         // establish a service connection to Google Play services.
         mShouldResolve = false;
 
+        // Hide the progress dialog if its showing.
+        mConnectionProgressDialog.dismiss();
+
         // Show the signed-in UI
         getProfileInformation();
     }
@@ -142,9 +168,14 @@ public class LogginActivity extends AppCompatActivity implements
             // If the error resolution was not successful we should not resolve further.
             if (resultCode != RESULT_OK) {
                 mShouldResolve = false;
+                // If we've got an error we can't resolve, we're no
+                // longer in the midst of signing in, so we can stop
+                // the progress spinner.
+                mConnectionProgressDialog.dismiss();
             }
 
             mIsResolving = false;
+            findViewById(R.id.loading_textview).setVisibility(View.VISIBLE);
             mGoogleApiClient.connect();
 
         }
@@ -154,9 +185,11 @@ public class LogginActivity extends AppCompatActivity implements
         // User clicked the sign-in button, so begin the sign-in process and automatically
         // attempt to resolve any errors that occur.
         mShouldResolve = true;
-        //TODO: STARTA PROGRESS GREJ
-        progresSpinner.setVisibility(View.VISIBLE);
 
+        // Show the dialog as we are now signing in.
+        mConnectionProgressDialog.show();
+
+        findViewById(R.id.loading_textview).setVisibility(View.VISIBLE);
         mGoogleApiClient.connect();
 
         // Show a message to the user that we are signing in.
@@ -179,6 +212,8 @@ public class LogginActivity extends AppCompatActivity implements
         // Could not connect to Google Play Services.  The user needs to select an account,
         // grant permissions or resolve an error in order to sign in. Refer to the javadoc for
         // ConnectionResult to see possible error codes.
+        findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);
+        findViewById(R.id.loading_textview).setVisibility(View.GONE);
 
         if (!mIsResolving && mShouldResolve) {
             if (connectionResult.hasResolution()) {
@@ -187,6 +222,7 @@ public class LogginActivity extends AppCompatActivity implements
                     mIsResolving = true;
                 } catch (IntentSender.SendIntentException e) {
                     mIsResolving = false;
+                    findViewById(R.id.loading_textview).setVisibility(View.VISIBLE);
                     mGoogleApiClient.connect();
 
                 }
@@ -200,34 +236,64 @@ public class LogginActivity extends AppCompatActivity implements
         }
     }
 
-    //TODO;SPARA PROFILEN I EN EGEN KLASS??
-
     //Gets the profileIno and put it on the TabActivity
     private void getProfileInformation(){
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
 
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-
+            pService.fetchAllProfiles();
             if(handler.getUserID() != null){
-                System.out.println(handler.getUserID());
-                pService.startUpFetchOfUser(handler.getUserID());
+                System.out.println("*********************" + handler.getUserID());
+                pService.startUpFetchOfUser(handler.getUserID(), handler);
 
             }else {
+                System.out.println("handler.getUserID == null");
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
                         0, 0, currentPerson.getImage().getUrl());
-                pService.saveNewProfile(user, handler);
+                pService.saveProfileIfNew(handler);
             }
-
-            progresSpinner.setVisibility(View.GONE);
-            Intent tabActivityIntent = new Intent(this, TabActivity.class);
-            startActivity(tabActivityIntent);
-            finish();
+            System.out.println("loadingDone ==" + loadingDone);
+            System.out.println(User.getInstance().getPlacement());
+            if(loadingDone) {
+                Intent tabActivityIntent = new Intent(this, TabActivity.class);
+                startActivity(tabActivityIntent);
+                finish();
+            }else {
+                loadingDone = true;
+            }
 
         }else{
 
             System.out.println("****CURRENT PERSON IS NULL*****");
+        }
+    }
+
+    private void checkPermissions(String permission){
+
+        if (ContextCompat.checkSelfPermission(this,
+                permission)
+                != PackageManager.PERMISSION_GRANTED){
+
+                // request the permission.
+                ActivityCompat.requestPermissions(this,
+                        new String[]{permission}, 0);
+
+        }
+
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if(loadingDone) {
+            System.out.println("2");
+            Intent tabActivityIntent = new Intent(this, TabActivity.class);
+            startActivity(tabActivityIntent);
+            finish();
+        }else {
+            System.out.println("1");
+            loadingDone = true;
         }
     }
 }

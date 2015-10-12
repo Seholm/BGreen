@@ -1,25 +1,68 @@
 package com.bgreen.filips.bgreen.main;
 
+
+import android.app.AlertDialog;
+
+
+import android.content.ComponentName;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.DialogInterface;
+
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
+
+
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bgreen.filips.bgreen.achievements.AchievementModel;
+import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.Profile;
 
 import com.bgreen.filips.bgreen.profile.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.TestFragment;
+
+import com.bgreen.filips.bgreen.search.SearchModel;
 import com.bgreen.filips.bgreen.toplist.ToplistFragment;
+
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import java.util.ArrayList;
+import java.util.List;
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 
+
+
+    private boolean popupAchivmentShow;
+
+
+    private ViewPager viewPager;
+    private Fragment originalTopList = new ToplistFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,32 +73,135 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         setSupportActionBar(toolbar);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.tab_viewpager);
+        this.viewPager = viewPager;
         setupViewPager(viewPager);
 
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_tabs);
+        tabLayout.setId(View.generateViewId());
         tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (position>1) {
+
+
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                    fragmentTransaction.replace(R.id.toplist_top_container, originalTopList);
+                    fragmentTransaction.addToBackStack(null);
+
+                    fragmentTransaction.commit();
+                }
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
+    private ViewPagerAdapter adapter;
+    private Fragment toplistFragment;
     private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         Fragment profileFragment = new ProfileFragment();
-        Fragment toplistFragment = new ToplistFragment();
-
+        toplistFragment = new ToplistFragment();
 
         //addFrag sets a new fragment to the Tab
         adapter.addFrag(profileFragment, "PROFILE");
+
         adapter.addFrag(new TestFragment(), "TEST");
         adapter.addFrag(toplistFragment, "TOPLIST");
+
         viewPager.setAdapter(adapter);
+        viewPager.setId(View.generateViewId());
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
 
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tab, menu);
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+
+        // Associate searchable configuration with the SearchView
+        final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        final SearchModel sModel = new SearchModel();
+
+        searchView.setOnSearchClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                viewPager.setCurrentItem(2);
+
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+
+
+                List<IProfile> searchList = sModel.doSearch(query);
+                boolean searchGaveresult = true;
+                if(searchList.size()==0){
+                    Toast.makeText(getApplicationContext(), "Din sökning gav inga träffar",
+                            Toast.LENGTH_LONG).show();
+                    searchGaveresult = false;
+                }
+                Bundle bundle = new Bundle();
+                for(int i=0; i<searchList.size(); i++){
+                    bundle.putParcelable(i + "", searchList.get(i));
+
+                }
+                bundle.putInt("Storlek", searchList.size());
+
+                Fragment newTopList = ToplistFragment.newInstance(bundle);
+
+                android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                fragmentTransaction.replace(R.id.toplist_top_container, newTopList,"hej");
+
+                fragmentTransaction.addToBackStack("tag_toplist_fragment");
+
+                fragmentTransaction.commit();
+                searchView.clearFocus();
+                if(searchGaveresult==true){
+
+                    searchView.setQuery("",true);
+                    menu.findItem(R.id.search).collapseActionView();
+                }
+
+
+                //TODO: Fixa så gamla vyn inte syns
+                //Varför i själva fan försvinner inte det gamla fragmentet?!?!?!?!
+                //Jag hatar fragments av hela mitt hjärta!
+
+                return true;
+
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                return false;
+            }
+        });
         return true;
     }
 
@@ -74,6 +220,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void onClick(View v) {
         if(v == findViewById(R.id.delete_button)){
@@ -88,8 +235,25 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     public void onResume(){
         super.onResume();
         FrameLayout achivmentContainer = (FrameLayout) findViewById(R.id.popup_achivments);
-        achivmentContainer.setVisibility(View.VISIBLE);
         CircleImageView button = (CircleImageView) findViewById(R.id.delete_button);
-        button.setVisibility(View.VISIBLE);
+        if(popupAchivmentShow) {
+            achivmentContainer.setVisibility(View.VISIBLE);
+            button.setVisibility(View.VISIBLE);
+        }else{
+            popupAchivmentShow = true;
+        }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 10) {
+            //happens when u click back from DetailedAchivmentActiity
+            popupAchivmentShow = false;
+        }
+    }
+
+
+
+
+
 }

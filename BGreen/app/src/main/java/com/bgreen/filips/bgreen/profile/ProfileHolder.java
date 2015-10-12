@@ -4,13 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Created by medioloco on 2015-10-02.
  */
-public class ProfileHolder {
+public class ProfileHolder extends Observable {
     private static ProfileHolder instance = null;
     private List<IProfile> profiles = new ArrayList<>();
+    private boolean startUp = true;
 
     public static ProfileHolder getInstance(){
         if(instance == null){
@@ -24,9 +26,23 @@ public class ProfileHolder {
     }
 
     public void setProfiles(List<IProfile> list){
+        profiles.clear();
         profiles.addAll(list);
         sortTopList();
-        System.out.println(profiles.size());
+        for (IProfile profile : profiles) {
+            if (User.getInstance().getEmail().equals(profile.getEmail())){
+                User.getInstance().setUser(profile.getFirstName(), profile.getLastName(),
+                        profile.getEmail(), profile.getTotalDistance(), profile.getBusTrips(),
+                        profile.getImageURL());
+            }
+        }
+        System.out.println(User.getInstance().getPlacement());
+        if(startUp){
+            System.out.println("STARTUP");
+            setChanged();
+            notifyObservers();
+            startUp = false;
+        }
     }
 
     public List<IProfile> getProfiles() {
