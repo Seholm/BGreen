@@ -9,10 +9,13 @@
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <string name="textView_profileFragment_distance_ranking">#22   Distance: 1056m</string>
+    <string name="textView_profileFragment_distance_ranking">#22        1056m</string>
     <string name="textView_profileFragment_name">PROFILE</string>
     <string name="title_activity_detailed_achievement">DetailedAchievementActivity</string>
     <string name="title_activity_loggin">LogginActivity</string>
     <string name="title_activity_search">SearchActivity</string>
+    <string name="headline_detailed_achievment">Headline</string>
+    <string name="descriptive_detailed_achievment">Descriptive text example     Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="claim_reward_achievment">Hämta belöning</string>
 
 </resources>
