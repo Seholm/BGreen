@@ -17,6 +17,7 @@
 
     <color name="background_stripe">#EFEEF3</color>
     <color name="popup_border">#ffd700</color>
+    <color name="detailed_acheivement_bg">#0BAEEA</color>
 
 
 </resources>

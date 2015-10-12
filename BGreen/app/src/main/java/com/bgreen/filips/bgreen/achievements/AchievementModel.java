@@ -16,11 +16,17 @@ public class AchievementModel {
         achievementsUnlocked.put("Achievement1", isAchievement1Unlocked(profile));
         achievementsUnlocked.put("Achievement2", isAchievement2Unlocked(profile));
         achievementsUnlocked.put("Achievement3", isAchievement3Unlocked(profile));
+        //Create method 4 and 5
+        achievementsUnlocked.put("Achievement4", isAchievement3Unlocked(profile));
+        achievementsUnlocked.put("Achievement5", isAchievement3Unlocked(profile));
     }
     public void checkProgressAchievements(IProfile profile){
         achievementsProgress.put("Achievement1", progressAchievement1(profile));
         achievementsProgress.put("Achievement2", progressAchievement2(profile));
         achievementsProgress.put("Achievement3", progressAchievement3(profile));
+        //Create method 4 and 5
+        achievementsProgress.put("Achievement4", progressAchievement3(profile));
+        achievementsProgress.put("Achievement5", progressAchievement3(profile));
     }
 
     public Map<String,Boolean> getAchievementsUnlocked(){

@@ -1,80 +1,75 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="fill_parent"
     android:orientation="vertical"
-    android:padding="10dp"
-    tools:context="com.bgreen.filips.bgreen.achievements.DetailedAchievementActivity">
+    tools:context="com.bgreen.filips.bgreen.achievements.DetailedAchievementActivity"
+    android:background="@drawable/ecodriving_detailed_bg"
+    android:foregroundGravity="right"
+    style="@style/Base.TextAppearance.AppCompat.Display1">
 
-   <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/achievment_detailed_image"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:src="@drawable/common_ic_googleplayservices"
+        app:border_width="2dp"
+        app:border_color="#FF000000"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="40dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center_horizontal"
+        android:textSize="40sp"
+        android:text="@string/headline_detailed_achievment"
+        android:layout_marginBottom="20dp"
+        android:id="@+id/detailedAchievmentHeadText" />
+
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:foregroundGravity="right"
-        style="@style/Base.TextAppearance.AppCompat.Display1">
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:id="@+id/achievment_progressbar_percentage"
+        android:layout_gravity="center_horizontal" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/achievment_detailed_image"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
-            android:src="@drawable/common_ic_googleplayservices"
-            app:border_width="2dp"
-            app:border_color="#FF000000"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="70dp"
-            android:layout_marginBottom="70dp" />
+    <ProgressBar
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/detailedAchievementProgressBar"
+        android:minHeight="20dp"
+        android:maxHeight="20dp"
+        android:progressTint="#10ff00" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_horizontal"
-            android:textSize="40sp"
-            android:text="@string/headline_detailed_achievment"
-            android:layout_marginBottom="20dp"
-            android:id="@+id/detailedAchievmentHeadText" />
+    <TextView
+        android:textSize="18sp"
+        android:layout_margin="10sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/descriptive_detailed_achievment"
+        android:id="@+id/detailedAchievmentText" />
 
-       <TextView
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:textAppearance="?android:attr/textAppearanceSmall"
-           android:id="@+id/achievment_progressbar_percentage"
-           android:layout_gravity="center_horizontal" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_margin="50dp"
+        android:text="@string/claim_reward_achievment"
+        android:background="@color/primary"
+        android:id="@+id/achievment_reward_button"
+        android:onClick="getAchievementReward"
+        style="?android:attr/borderlessButtonStyle"
+        android:foregroundGravity="bottom|right">
+    </Button>
 
-       <ProgressBar
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:id="@+id/detailedAchievementProgressBar"
-            android:minHeight="20dp"
-            android:maxHeight="20dp"
-            android:progressTint="#10ff00" />
+</LinearLayout>
 
 
-
-
-       <TextView
-            android:textSize="18sp"
-            android:layout_margin="10sp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/descriptive_detailed_achievment"
-            android:id="@+id/detailedAchievmentText" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_margin="50dp"
-            android:text="@string/claim_reward_achievment"
-            android:background="@color/primary"
-            android:id="@+id/achievment_reward_button"
-            android:onClick="getAchievementReward"
-            style="?android:attr/borderlessButtonStyle"
-            android:foregroundGravity="bottom|right">
-        </Button>
-    </LinearLayout>
-</ScrollView>
