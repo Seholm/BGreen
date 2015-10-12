@@ -1,50 +1,32 @@
 package com.bgreen.filips.bgreen.main;
 
 
-import android.app.AlertDialog;
-
-
-import android.content.ComponentName;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
 
-import android.view.inputmethod.EditorInfo;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bgreen.filips.bgreen.achievements.AchievementModel;
 import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.Profile;
 
 import com.bgreen.filips.bgreen.profile.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.TestFragment;
 
 import com.bgreen.filips.bgreen.search.SearchModel;
 import com.bgreen.filips.bgreen.toplist.ToplistFragment;
@@ -52,7 +34,6 @@ import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -120,8 +101,6 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
         //addFrag sets a new fragment to the Tab
         adapter.addFrag(profileFragment, "PROFILE");
-
-        adapter.addFrag(new TestFragment(), "TEST");
         adapter.addFrag(toplistFragment, "TOPLIST");
 
         viewPager.setAdapter(adapter);
@@ -147,7 +126,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
 
-                viewPager.setCurrentItem(2);
+                viewPager.setCurrentItem(1);
 
             }
         });
@@ -158,13 +137,13 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
                 List<IProfile> searchList = sModel.doSearch(query);
                 boolean searchGaveresult = true;
-                if(searchList.size()==0){
+                if (searchList.size() == 0) {
                     Toast.makeText(getApplicationContext(), "Din sökning gav inga träffar",
                             Toast.LENGTH_LONG).show();
                     searchGaveresult = false;
                 }
                 Bundle bundle = new Bundle();
-                for(int i=0; i<searchList.size(); i++){
+                for (int i = 0; i < searchList.size(); i++) {
                     bundle.putParcelable(i + "", searchList.get(i));
 
                 }
@@ -175,15 +154,15 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
                 android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-                fragmentTransaction.replace(R.id.toplist_top_container, newTopList,"hej");
+                fragmentTransaction.replace(R.id.toplist_top_container, newTopList, "hej");
 
                 fragmentTransaction.addToBackStack("tag_toplist_fragment");
 
                 fragmentTransaction.commit();
                 searchView.clearFocus();
-                if(searchGaveresult==true){
+                if (searchGaveresult == true) {
 
-                    searchView.setQuery("",true);
+                    searchView.setQuery("", true);
                     menu.findItem(R.id.search).collapseActionView();
                 }
 
