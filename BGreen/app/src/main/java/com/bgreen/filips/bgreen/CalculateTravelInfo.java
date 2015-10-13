@@ -173,7 +173,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
             //Add together all distances after startpoint until last stop
             while (!point.equals(getStartPoint())) {
-                for (int i = 0; i < busStops.size() - 1; i++) {
+                for (int i = 0; i < busStops.size(); i++) {
                     if (point.equals(busStops.get(i))) {
                         totDistance = totDistance + busStopsLength.get(i);
                         System.out.println("avstånd från " + busStops.get(i - 1) + " till " + busStops.get(i) + ": " + busStopsLength.get(i));
@@ -198,8 +198,8 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         //Some prints for testing until we have real api and can do real testing
         System.out.println("Antal stopp: " + numberOfStops);
         System.out.println("Sista hållplats: " + getEndPoint());
-        System.out.println("totalt avstånd från " + getStartPoint() + " till " + getEndPoint() + ": " + totDistance);
-        return getFinalResult();
+        System.out.println("totalt avstånd från " + getStartPoint() + " till " + getEndPoint() + ": " + getFinalResult());
+        return totDistance;
     }
 
     //The method the Service class calls to give information which this class can calculate

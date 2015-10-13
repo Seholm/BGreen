@@ -73,6 +73,7 @@ public class IdentifyTravelService extends Service {
 
             @Override
             public void run() {
+                boolean shouldILoop = true;
                 List<String> macAdresses = getMacAdress(((WifiManager)getSystemService(Context.WIFI_SERVICE)).getScanResults());
                 if (busses.doesBusExist(macAdresses)) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
@@ -86,15 +87,17 @@ public class IdentifyTravelService extends Service {
                     try {
                         rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
                     }catch (Exception e){}
-                    System.out.println("rutt:"+rutt);
+                    System.out.println("rutt:" + rutt);
                     if(rutt!=null) {
                         if (rutt.equals("Ej i trafik")) {
-                            System.out.println("finalresult:"+calculator.getFinalResult());
                             System.out.println("III EJ I TRAFIK");
                             calculator.main(true, nextStop, rutt);
+                            System.out.println("FINAL RESULT ÄR:" +"  "+ calculator.getFinalResult());
                             if(calculator.getFinalResult() >0) {
+                                System.out.println("III EJ I TRAFIK, SKA SPARA" + calculator.getFinalResult() + "PÅ DATABAS");
                                 service.saveBusTrip(calculator.getFinalResult(), userhandler.getUserID());
                                 calculator = new CalculateTravelInfo();
+                                shouldILoop = false;
                             }
                         } else {
                             System.out.println(count);
@@ -103,8 +106,11 @@ public class IdentifyTravelService extends Service {
                             calculator.main(false, nextStop, rutt);
                         }
                     }
-
-                    handler.postDelayed(this, 10000); //loops run method every 10 seconds
+                    if(shouldILoop) {
+                        handler.postDelayed(this, 10000); //loops run method every 10 seconds
+                    }else{
+                        stopSelf();
+                    }
                 } else { //if there is no busWifi nearby the process is done and data is sent to
                     String nextStop = null;
                     String rutt = null;

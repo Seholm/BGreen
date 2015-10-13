@@ -204,4 +204,26 @@ public class CalculateTravelInfoTest extends InstrumentationTestCase {
 
     }
 
+    //Test correct distance calculation with one stop. Between götaplatsen and valand with null as last stop
+    public void testCalcTotalDistanceWithEjITrafik1(){
+        int totDistance = 450;
+        String nextStop1 = "Sven Hultins pl.A";
+        ICalculateTravelInfo calc = new CalculateTravelInfo();
+        calc.main(false, nextStop1, "Johanneberg");
+        calc.main(true, null, "Ej i trafik");
+        assertTrue(totDistance == calc.getFinalResult());
+
+    }
+
+    //Test correct distance calculation with one stop. Between götaplatsen and valand with null as last stop
+    public void testCalcTotalDistanceWithEjITrafik2(){
+        int totDistance = 400;
+        String nextStop1 = "ValandC";
+        ICalculateTravelInfo calc = new CalculateTravelInfo();
+        calc.main(false, nextStop1, "Lindholmen");
+        calc.main(true, nextStop1, "Ej i trafik");
+        assertTrue(totDistance == calc.getFinalResult());
+
+    }
+
 }
