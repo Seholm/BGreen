@@ -34,6 +34,7 @@ import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -134,8 +135,8 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-
-                List<IProfile> searchList = sModel.doSearch(query);
+                List<IProfile> profiles = new ArrayList<>();
+                List<IProfile> searchList = sModel.doSearch(query, profiles);
                 boolean searchGaveresult = true;
                 if (searchList.size() == 0) {
                     Toast.makeText(getApplicationContext(), "Din sökning gav inga träffar",
