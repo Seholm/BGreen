@@ -71,17 +71,8 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() == 2);
     }
 
-    public void testProfileSearch6() {
-        IProfile profile = User.getInstance();
-        profile.setFirstName("testPerson");
-        profile.setLastName("Lastname");
-        profiles.clear();
-        profiles.add(profile);
-        List<IProfile> resultList = searchModel.doSearch(null, profiles);
-        assertTrue(resultList.size() != 0);
-    }
 
-    public void testProfileSearch7() {
+    public void testProfileSearch6() {
         List<IProfile> tempList = null;
         List<IProfile> resultList = searchModel.doSearch("", tempList);
         assertTrue(resultList.size() == 0);

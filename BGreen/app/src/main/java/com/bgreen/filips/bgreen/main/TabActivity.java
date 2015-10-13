@@ -6,6 +6,7 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -16,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 
 import android.widget.FrameLayout;
@@ -28,6 +30,7 @@ import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
 
+import com.bgreen.filips.bgreen.profile.ProfileHolder;
 import com.bgreen.filips.bgreen.search.SearchModel;
 import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
@@ -66,7 +69,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position>1) {
+                if (position<1) {
 
 
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
@@ -127,7 +130,9 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onClick(View v) {
 
+
                 viewPager.setCurrentItem(1);
+
 
             }
         });
@@ -135,13 +140,14 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public boolean onQueryTextSubmit(String query) {
 
-                List<IProfile> profiles = new ArrayList<>();
+                List<IProfile> profiles = ProfileHolder.getInstance().getProfiles();
                 List<IProfile> searchList = sModel.doSearch(query, profiles);
                 boolean searchGaveresult = true;
                 if (searchList.size() == 0) {
                     Toast.makeText(getApplicationContext(), "Din sökning gav inga träffar",
                             Toast.LENGTH_LONG).show();
                     searchGaveresult = false;
+
                 }
                 Bundle bundle = new Bundle();
                 for (int i = 0; i < searchList.size(); i++) {
