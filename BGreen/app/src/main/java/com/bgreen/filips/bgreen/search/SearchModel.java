@@ -16,29 +16,33 @@ public class SearchModel {
     List<IProfile> resultList;
     List<IProfile> firstNameResultList;
     List<IProfile> lastNameResultList;
-    //List<IProfile> emailResultList;
+    
 
     public List<IProfile> doSearch(String searchString, List<IProfile> profilesList){
 
-        resultList = new ArrayList<IProfile>();
-        firstNameResultList  = new ArrayList<IProfile>();
-        lastNameResultList = new ArrayList<IProfile>();
+        if(profilesList!=null){
 
-        //List<IProfile> profilesList = ProfileHolder.getInstance().getProfiles();
+            resultList = new ArrayList<IProfile>();
+            firstNameResultList  = new ArrayList<IProfile>();
+            lastNameResultList = new ArrayList<IProfile>();
 
-        String[] searchStrings = searchString.split("\\s+");
-        if(searchStrings==null){
-            searchStrings[0] = searchString;
+
+
+            String[] searchStrings = searchString.split("\\s+");
+            if(searchStrings==null){
+                searchStrings[0] = searchString;
+            }
+
+            searchFirstName(searchStrings, profilesList);
+            searchLastName(searchStrings, profilesList);
+
+            setResult();
+
+
+        }else{
+            resultList = new ArrayList<>();
         }
 
-        searchFirstName(searchStrings, profilesList);
-        searchLastName(searchStrings, profilesList);
-
-        setResult();
-        for(int i=0; i<firstNameResultList.size(); i++){
-            //System.out.println(firstNameResultList.get(i).getFirstName()+i);
-        }
-        System.out.println(firstNameResultList.size());
 
         return getResult();
     }
@@ -53,7 +57,7 @@ public class SearchModel {
 
                 if(profilesList.get(j).getFirstName().toLowerCase().contains(searchLine)){
                     firstNameResultList.add(profilesList.get(j));
-                    //System.out.println(profilesList.get(j).getFirstName()+j);
+
                 }
             }
         }
@@ -71,18 +75,6 @@ public class SearchModel {
             }
         }
     }
-    /*
-    private void searchEmail(String[] searchString, List<IProfile> profilesList){
-        emailResultList = new ArrayList<IProfile>();
-        for (int i=0; i<searchString.length; i++){
-            String searchLine = searchString[i].toLowerCase();
-            for(int j=0; j<profilesList.size(); j++){
-                if(profilesList.get(j).getEmail().toLowerCase().contains(searchLine)){
-                    emailResultList.add(profilesList.get(i));
-                }
-            }
-        }
-    }*/
 
     private void setResult(){
 
@@ -101,15 +93,6 @@ public class SearchModel {
                 resultList.addAll(firstNameResultList);
                 resultList.addAll(lastNameResultList);
             }
-            /*
-            if(resultList==null){
-                for(int i=0; i<firstNameResultList.size(); i++){
-                    resultList.add(firstNameResultList.get(i));
-                }
-                for(int i=0; i<lastNameResultList.size(); i++){
-                    resultList.add(lastNameResultList.get(i));
-                }
-            }*/
         }
         //If only matches on firstname add all firstname-profiles to result
         if(firstNameResultList.size()!=0 && lastNameResultList.size()==0){
