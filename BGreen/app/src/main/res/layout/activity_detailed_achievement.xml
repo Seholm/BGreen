@@ -23,18 +23,18 @@
 
     <TextView
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_gravity="center_horizontal"
         android:textSize="40sp"
         android:text="@string/headline_detailed_achievment"
-        android:layout_marginBottom="20dp"
         android:id="@+id/detailedAchievmentHeadText" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_marginTop="10dp"
         android:id="@+id/achievment_progressbar_percentage"
         android:layout_gravity="center_horizontal" />
 

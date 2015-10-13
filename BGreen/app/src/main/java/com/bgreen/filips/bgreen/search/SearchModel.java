@@ -18,12 +18,13 @@ public class SearchModel {
     List<IProfile> lastNameResultList;
     //List<IProfile> emailResultList;
 
-    public List<IProfile> doSearch(String searchString){
+    public List<IProfile> doSearch(String searchString, List<IProfile> profilesList){
 
         resultList = new ArrayList<IProfile>();
         firstNameResultList  = new ArrayList<IProfile>();
         lastNameResultList = new ArrayList<IProfile>();
-        List<IProfile> profilesList = ProfileHolder.getInstance().getProfiles();
+
+        //List<IProfile> profilesList = ProfileHolder.getInstance().getProfiles();
 
         String[] searchStrings = searchString.split("\\s+");
         if(searchStrings==null){
