@@ -232,7 +232,11 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     }
 
 
-
+    @Override
+    public void onBackPressed(){
+        finish();
+        System.exit(0);
+    }
 
 
 }
