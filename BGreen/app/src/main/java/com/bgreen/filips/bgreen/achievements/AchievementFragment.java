@@ -100,17 +100,17 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     }
 
     private void addToImageList(){
+        imageList.add(R.drawable.achivement03);
         imageList.add(R.drawable.achivement01);
         imageList.add(R.drawable.achivement02);
-        imageList.add(R.drawable.achivement03);
         imageList.add(R.drawable.achievements);
         imageList.add(R.drawable.ment_01);
     }
 
     private void addToImageListLocked(){
+        imageListLocked.add(R.drawable.achivement_opac_03);
         imageListLocked.add(R.drawable.achivement_opac_01);
         imageListLocked.add(R.drawable.achivement_opac_02);
-        imageListLocked.add(R.drawable.achivement_opac_03);
         imageListLocked.add(R.drawable.achievements_locked);
         imageListLocked.add(R.drawable.ment_01_locked);
     }
