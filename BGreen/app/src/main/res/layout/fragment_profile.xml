@@ -46,8 +46,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|bottom"
-            android:background="@color/background_stripe"
-            android:layout_marginBottom="54dp">
+            android:background="@color/background_stripe">
         </FrameLayout>
 
 </FrameLayout>

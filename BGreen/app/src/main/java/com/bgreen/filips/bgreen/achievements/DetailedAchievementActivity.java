@@ -20,7 +20,7 @@ import java.io.InputStreamReader;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DetailedAchievementActivity extends AppCompatActivity {
+public class DetailedAchievementActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView setAchievementHeadline;
     private TextView setAchievmentDescText;
     private CircleImageView circleImageView;
@@ -109,5 +109,10 @@ public class DetailedAchievementActivity extends AppCompatActivity {
         finish();
         //super.onBackPressed();
         //closePopUpAchivment.shouldPopupAchivmentBeClosed(true);
+    }
+
+    @Override
+    public void onClick(View view){
+        onBackPressed();
     }
 }
