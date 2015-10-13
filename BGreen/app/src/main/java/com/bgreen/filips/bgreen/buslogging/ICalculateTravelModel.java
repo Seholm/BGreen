@@ -10,4 +10,5 @@ public interface ICalculateTravelModel {
     public void main(String nextStop, String route);
     public int getFinalResult();
     public List<String> getTripStops();
+    public void clear();
 }

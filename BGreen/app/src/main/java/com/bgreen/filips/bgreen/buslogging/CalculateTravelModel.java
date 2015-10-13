@@ -127,4 +127,9 @@ public class CalculateTravelModel implements ICalculateTravelModel {
         busStopsLength.add(1100);
     }
 
+    public void clear(){
+        busStops.clear();
+        totDistance = 0;
+    }
+
 }
