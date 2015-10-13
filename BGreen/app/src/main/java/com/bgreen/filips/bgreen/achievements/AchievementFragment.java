@@ -140,13 +140,13 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
             intent.putExtra("ACHIEVMENT", 4);
             intent.putExtra("Progress", achievementProgress.get("Achievement4"));
-            startActivity(intent);
+            startActivityForResult(intent,10);
         }
         if (circleImageViewList.get(4).getId() == v.getId()) {
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
             intent.putExtra("ACHIEVMENT", 5);
             intent.putExtra("Progress", achievementProgress.get("Achievement5"));
-            startActivity(intent);
+            startActivityForResult(intent,10);
         }
     }
 

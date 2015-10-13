@@ -6,6 +6,7 @@
     tools:context="com.bgreen.filips.bgreen.achievements.DetailedAchievementActivity"
     android:background="@drawable/ecodriving_detailed_bg"
     android:foregroundGravity="right"
+    android:onClick="onClick"
     style="@style/Base.TextAppearance.AppCompat.Display1">
 
 
