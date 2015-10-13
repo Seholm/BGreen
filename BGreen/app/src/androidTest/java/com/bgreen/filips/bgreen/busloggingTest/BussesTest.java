@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.busloggingTest;
 
 import android.test.InstrumentationTestCase;
 

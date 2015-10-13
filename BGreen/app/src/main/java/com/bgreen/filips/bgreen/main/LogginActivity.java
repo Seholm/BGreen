@@ -243,18 +243,14 @@ public class LogginActivity extends AppCompatActivity implements
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
             pService.fetchAllProfiles();
             if(handler.getUserID() != null){
-                System.out.println("*********************" + handler.getUserID());
                 pService.startUpFetchOfUser(handler.getUserID(), handler);
-
             }else {
-                System.out.println("handler.getUserID == null");
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
                         0, 0, currentPerson.getImage().getUrl());
                 pService.saveProfileIfNew(handler);
             }
-            System.out.println("loadingDone ==" + loadingDone);
             System.out.println(User.getInstance().getPlacement());
             if(loadingDone) {
                 Intent tabActivityIntent = new Intent(this, TabActivity.class);

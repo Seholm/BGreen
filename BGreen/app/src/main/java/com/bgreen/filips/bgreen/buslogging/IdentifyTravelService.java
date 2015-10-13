@@ -28,7 +28,7 @@ public class IdentifyTravelService extends Service {
     private IBusses busses;
     private Handler handler;
     private Runnable onBusTask;
-    private ICalculateTravelInfo calculator;
+    private ICalculateTravelModel calculator;
     private int count;
     private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
     private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
@@ -48,7 +48,7 @@ public class IdentifyTravelService extends Service {
 
         wifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
         busses = new Busses();
-        calculator = new CalculateTravelInfo();
+        calculator = new CalculateTravelModel();
         count =0;
         userhandler = new UserHandler(this);
 
@@ -91,19 +91,19 @@ public class IdentifyTravelService extends Service {
                     if(rutt!=null) {
                         if (rutt.equals("Ej i trafik")) {
                             System.out.println("III EJ I TRAFIK");
-                            calculator.main(true, nextStop, rutt);
+                            calculator.main(nextStop, rutt);
                             System.out.println("FINAL RESULT ÄR:" +"  "+ calculator.getFinalResult());
                             if(calculator.getFinalResult() >0) {
                                 System.out.println("III EJ I TRAFIK, SKA SPARA" + calculator.getFinalResult() + "PÅ DATABAS");
                                 service.saveBusTrip(calculator.getFinalResult(), userhandler.getUserID());
-                                calculator = new CalculateTravelInfo();
+                                calculator.clear();
                                 shouldILoop = false;
                             }
                         } else {
                             System.out.println(count);
                             System.out.println(nextStop);
                             System.out.println(rutt);
-                            calculator.main(false, nextStop, rutt);
+                            calculator.main(nextStop, rutt);
                         }
                     }
                     if(shouldILoop) {
@@ -121,10 +121,11 @@ public class IdentifyTravelService extends Service {
                         rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
                     }catch (Exception e){}
                     System.out.println(nextStop);
-                    calculator.main(true,nextStop,rutt);
+                    calculator.main(nextStop,rutt);
                     System.out.println("DET ÄR OMÖJLIGT:" +calculator.getFinalResult());
                     DatabaseService service = new DatabaseService();
                     service.saveBusTrip(calculator.getFinalResult(),userhandler.getUserID());
+                    calculator.clear();
                     stopSelf();
                 }
             }
