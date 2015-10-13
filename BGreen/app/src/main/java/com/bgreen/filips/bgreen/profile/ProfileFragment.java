@@ -26,21 +26,24 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private CircleImageView circleImageView;
     private TextView profileRankingAndDistance;
     private TextView nameTextView;
-    private ProfileService profileService = new ProfileService();
+    private TextView profileCarbonCalc;
+    private ProfileService profileService;
+    private CarbonDioxideCalculator carbonCalculator;
 
     public ProfileFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
+        profileService = new ProfileService();
+        carbonCalculator = new CarbonDioxideCalculator();
         View myInflatedView = inflater.inflate(R.layout.fragment_profile, container,false);
         profileRankingAndDistance = (TextView) myInflatedView.findViewById(R.id.profile_Ranking_Distance_TextView);
         circleImageView = (CircleImageView) myInflatedView.findViewById(R.id.profile_image);
         nameTextView = (TextView) myInflatedView.findViewById(R.id.profile_textView);
+        profileCarbonCalc = (TextView) myInflatedView.findViewById(R.id.profile_carbondioxide_calculator);
 
         profileRefresh = (SwipeRefreshLayout) myInflatedView.findViewById
                 (R.id.profile_swipe_refresh);
@@ -57,8 +60,10 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private void setProfileText() {
         profileService.fetchAllProfiles();
         User user = User.getInstance();
-        profileRankingAndDistance.setText("#" + user.getPlacement() + "   Distance: "+ user.getTotalDistance() + "m");
+        profileRankingAndDistance.setText("#" + user.getPlacement() + "         "
+                + user.getTotalDistance() + "m");
         nameTextView.setText(user.getFirstName() + " " + user.getLastName());
+        profileCarbonCalc.setText(carbonCalculator.calculateSpill(user.getTotalDistance()));
 
         //Picasso library loads the image URL and put it into circleImageView
         Picasso.with(this.getActivity())
@@ -75,8 +80,6 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     @Override
     public void onRefresh() {
-        //profileService.fetchAllProfiles();
-
         setProfileText();
         profileRefresh.setRefreshing(false);
 
