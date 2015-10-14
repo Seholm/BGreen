@@ -41,6 +41,15 @@
             android:layout_marginTop="176dp"
             android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="200dp"
+            android:text="Large Text"
+            android:id="@+id/profile_carbondioxide_calculator" />
+
         <FrameLayout
             android:id="@+id/achivement_fragment"
             android:layout_width="fill_parent"
@@ -48,6 +57,8 @@
             android:layout_gravity="center_horizontal|bottom"
             android:background="@color/background_stripe">
         </FrameLayout>
+
+
 
 </FrameLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
