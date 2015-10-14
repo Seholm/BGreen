@@ -94,7 +94,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         });
 
     }
-
+    private boolean drag = false;
     private ViewPagerAdapter adapter;
     private Fragment toplistFragment;
     private void setupViewPager(ViewPager viewPager) {
@@ -132,7 +132,8 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
 
                 viewPager.setCurrentItem(1);
-
+                viewPager.beginFakeDrag();
+                drag=true;
 
             }
         });
@@ -167,10 +168,12 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
                 fragmentTransaction.commit();
                 searchView.clearFocus();
+                drag=false;
                 if (searchGaveresult == true) {
 
                     searchView.setQuery("", true);
                     menu.findItem(R.id.search).collapseActionView();
+                    viewPager.endFakeDrag();
                 }
 
 
@@ -187,6 +190,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
                 return false;
             }
+
         });
         return true;
     }
@@ -241,8 +245,13 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed(){
-        finish();
-        System.exit(0);
+        if(viewPager.isFakeDragging()==true){
+            viewPager.endFakeDrag();
+        }else{
+            finish();
+            System.exit(0);
+
+        }
     }
 
 
