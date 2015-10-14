@@ -48,7 +48,7 @@
         android:id="@+id/detailedAchievementProgressBar"
         android:minHeight="20dp"
         android:maxHeight="20dp"
-        android:progressTint="#10ff00" />
+        android:progressTint="#6B9F32" />
 
     <TextView
         android:textSize="18sp"
@@ -56,7 +56,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/descriptive_detailed_achievment"
-        android:id="@+id/detailedAchievmentText" />
+        android:id="@+id/detailedAchievmentText"
+        android:textColor="#000000"/>
 
     <Button
         android:layout_width="wrap_content"

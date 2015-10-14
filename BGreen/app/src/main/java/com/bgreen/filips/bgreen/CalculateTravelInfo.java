@@ -1,5 +1,7 @@
 package com.bgreen.filips.bgreen;
 
+import android.app.LauncherActivity;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -173,6 +175,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
 
             //Add together all distances after startpoint until last stop
             while (!point.equals(getStartPoint())) {
+
                 for (int i = 0; i < busStops.size(); i++) {
                     if (point.equals(busStops.get(i))) {
                         totDistance = totDistance + busStopsLength.get(i);
@@ -202,29 +205,55 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
         return totDistance;
     }
 
+
+    private void addToDistance(String nextStop, String route){
+        if(route.equals("Johanneberg")){
+            setBusStopsSouthRoute();
+            setBusStopsSouthRouteDistance();
+            for(int i=0; i<busStops.size(); i++){
+                if(busStops.get(i).equals(nextStop)){
+
+                    totDistance = totDistance + busStopsLength.get(i);
+
+                }
+            }
+        }
+    }
+
     //The method the Service class calls to give information which this class can calculate
     public void main(boolean lastStop, String nextStop, String route) {
-        //Om ej trafik och loopar flera ej trafik
-        //Om åkt och sen blir ej i trafik
-
-        //If wifi lost set nextStop as lastStop
-
 
         if(route!=null){
             //Does calculation and sets points if route is correct
             if (route.equals("Lindholmen") || route.equals("Johanneberg")) {
                 //method doesn't set any values when nextStop in null
-                if (nextStop != null && route != null) {
-                    //Set startpoint if there is none else set nextStop as latestPoint
-                    if (startPoint == null) {
-                        setStartPoint(nextStop, route);
-
-                    } else if (!getLatestPoint().equals(nextStop)) {
+                if (nextStop != null){
+                    //set next stop as latest point
+                    if (getLatestPoint()==null|| !getLatestPoint().equals(nextStop)) {
                         setLatestPoint(nextStop);
+                        addToDistance(nextStop, route);
                     }
                 }
             }
+
+        }else if(lastStop==true && !getLatestPoint().equals(nextStop)){
+            System.out.println("hej");
         }
+
+
+
+
+
+
+
+
+
+
+
+        /*
+
+
+
 
         //If lastStop is true and nextStop is null, set endPoint and calc with old values
         if(lastStop==true && nextStop==null && getStartPoint()!=null){
@@ -244,7 +273,7 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
             setLatestPoint(nextStop);
             setEndPoint();
             calcTotalDistance();
-        }
+        }*/
 
 
     }
@@ -259,6 +288,11 @@ public class CalculateTravelInfo implements ICalculateTravelInfo {
     public void resetTotalDistance(){
         setTotalDistance(0);
     }
+
+
+
+
+
 
 }
 

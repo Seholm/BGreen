@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.CarbonDioxideCalculator;
 import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.ProfileService;
@@ -81,6 +82,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
 
     @Override
     public void flipCard(int position) {
+        CarbonDioxideCalculator dioxideCalculator = new CarbonDioxideCalculator();
 
         if(position>=0) {
             TextView targetProfileName = (TextView) myInflatedView.findViewById
@@ -89,12 +91,17 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
                     (R.id.targetprofile_Ranking_Distance_TextView);
             CircleImageView targetProfilePicture =
                     (CircleImageView)myInflatedView.findViewById(R.id.targetprofile_image);
+            TextView targetProfileCarbonCalc =
+                    (TextView) myInflatedView.findViewById(R.id.targetprofile_carbon_calculator);
 
-            Picasso.with(getContext()).load(changeSizeOnURLImage(profiles.get(position).getImageURL())).into(targetProfilePicture);
-            targetProfileDistance.setText("#" + profiles.get(position).getPlacement()
-                    + "   Distance: " + profiles.get(position).getTotalDistance() + "m");
+            Picasso.with(getContext()).load(changeSizeOnURLImage(profiles.get(position).
+                    getImageURL())).into(targetProfilePicture);
+            targetProfileDistance.setText("#" + profiles.get(position).getPlacement() +
+                    "         " + profiles.get(position).getTotalDistance() + "m");
             targetProfileName.setText(profiles.get(position).getFirstName() + " " +
                     profiles.get(position).getLastName());
+            targetProfileCarbonCalc.setText(dioxideCalculator.calculateSpill(profiles.
+                    get(position).getTotalDistance()));
             mswipeRefresh.setEnabled(false);
         }
 

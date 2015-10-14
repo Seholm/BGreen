@@ -3,16 +3,13 @@ package com.bgreen.filips.bgreen.searchTest;
 import android.test.InstrumentationTestCase;
 
 import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.Profile;
 import com.bgreen.filips.bgreen.profile.User;
 import com.bgreen.filips.bgreen.search.SearchModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by paki on 12/10/15.
- */
+
 public class SearchProfileTest extends InstrumentationTestCase {
     private List<IProfile> profiles = new ArrayList<>();
     private SearchModel searchModel = new SearchModel();
@@ -71,17 +68,8 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() == 2);
     }
 
-    public void testProfileSearch6() {
-        IProfile profile = User.getInstance();
-        profile.setFirstName("testPerson");
-        profile.setLastName("Lastname");
-        profiles.clear();
-        profiles.add(profile);
-        List<IProfile> resultList = searchModel.doSearch(null, profiles);
-        assertTrue(resultList.size() != 0);
-    }
 
-    public void testProfileSearch7() {
+    public void testProfileSearch6() {
         List<IProfile> tempList = null;
         List<IProfile> resultList = searchModel.doSearch("", tempList);
         assertTrue(resultList.size() == 0);
