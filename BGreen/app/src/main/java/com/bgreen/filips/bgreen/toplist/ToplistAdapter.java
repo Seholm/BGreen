@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.DistanceTransformer;
 import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.Profile;
 import com.squareup.picasso.Picasso;
@@ -30,7 +31,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
 
     private List<IProfile> profiles;
     private Context context;
-    //OnItemClickListener clickListener;
+    private DistanceTransformer distanceTransformer;
     private IFlipcard flipper;
 
     @Override
@@ -69,6 +70,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
                 parent, false); //sista som var tom
         TopListHolder vh = new TopListHolder(v);
         context = parent.getContext();
+        distanceTransformer = new DistanceTransformer();
         return vh;
     }
 
@@ -83,7 +85,8 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
         });
         holder.personName.setText(profiles.get(position).getFirstName() + " " +
                     profiles.get(position).getLastName());
-        holder.personDistance.setText((Integer.toString(profiles.get(position).getTotalDistance())) + " m");
+        holder.personDistance.setText((distanceTransformer.transformer(profiles.get(position).
+                getTotalDistance())));
         Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
         holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));
     }
