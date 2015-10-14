@@ -19,6 +19,7 @@ public class MinuteReciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> wifiScanList = wifiManager.getScanResults();
+        System.out.println(wifiScanList.toString());
         List<String> bssid= new ArrayList<>(); // A list containing mac-adresses
         IBusses busses = new Busses();
 
