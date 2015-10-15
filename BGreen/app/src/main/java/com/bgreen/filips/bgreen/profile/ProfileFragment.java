@@ -28,8 +28,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private TextView nameTextView;
     private TextView profileCarbonCalc;
     private ProfileService profileService;
-    private CarbonDioxideCalculator carbonCalculator;
-    private DistanceTransformer distanceTransformer;
+    private ValueTransformer transformer;
+
 
     public ProfileFragment() {
     }
@@ -38,8 +38,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         profileService = new ProfileService();
-        carbonCalculator = new CarbonDioxideCalculator();
-        distanceTransformer = new DistanceTransformer();
+        transformer = new ValueTransformer();
 
         // Inflate the layout for this fragment
         View myInflatedView = inflater.inflate(R.layout.fragment_profile, container,false);
@@ -64,9 +63,9 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         profileService.fetchAllProfiles();
         User user = User.getInstance();
         profileRankingAndDistance.setText("#" + user.getPlacement() + "  "+ "Distans: "
-                + user.getTotalDistance() + "m");
+                + transformer.distanceTransformer(user.getTotalDistance()));
         nameTextView.setText(user.getFirstName() + " " + user.getLastName());
-        profileCarbonCalc.setText(carbonCalculator.calculateSpill(user.getTotalDistance()));
+        profileCarbonCalc.setText(transformer.calculateSpill(user.getTotalDistance()));
 
         //Picasso library loads the image URL and put it into circleImageView
         Picasso.with(this.getActivity())

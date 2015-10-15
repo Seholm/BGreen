@@ -1,21 +1,15 @@
 package com.bgreen.filips.bgreen.toplist;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.profile.DistanceTransformer;
 import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.Profile;
+import com.bgreen.filips.bgreen.profile.ValueTransformer;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -31,7 +25,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
 
     private List<IProfile> profiles;
     private Context context;
-    private DistanceTransformer distanceTransformer;
+    private ValueTransformer transformer;
     private IFlipcard flipper;
 
     @Override
@@ -70,7 +64,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
                 parent, false); //sista som var tom
         TopListHolder vh = new TopListHolder(v);
         context = parent.getContext();
-        distanceTransformer = new DistanceTransformer();
+        transformer = new ValueTransformer();
         return vh;
     }
 
@@ -84,8 +78,8 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
             }
         });
         holder.personName.setText(profiles.get(position).getFirstName() + " " +
-                    profiles.get(position).getLastName());
-        holder.personDistance.setText((distanceTransformer.transformer(profiles.get(position).
+                profiles.get(position).getLastName());
+        holder.personDistance.setText((transformer.distanceTransformer(profiles.get(position).
                 getTotalDistance())));
         Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
         holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));

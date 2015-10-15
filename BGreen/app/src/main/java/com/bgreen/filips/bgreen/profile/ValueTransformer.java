@@ -1,11 +1,10 @@
 package com.bgreen.filips.bgreen.profile;
 
 
-import java.text.DecimalFormat;
-
-public class CarbonDioxideCalculator {
+public class ValueTransformer {
     private String temp = "";
     private double y;
+
     // calculates the difference between riding the new electric bus compared
     // to riding with an automobile. All numbers are from SIKA, SCB and EOn.
     // If the value is larger than 1000, returns it in form of kg, else g.
@@ -16,12 +15,30 @@ public class CarbonDioxideCalculator {
 
         if (y >= 1000) {    //checks if the amount is above 1000 or not.
             y = y / 1000;   // if above, change the value to kilograms and check the decimals.
-            temp = "CO2 sparad: " + checkValue(y) + "kg";
+            temp = "CO² sparad: " + checkValue(y) + "kg";
         } else {
-            temp = "CO2 sparad: " + checkValue(y) + "g";
+            temp = "CO² sparad: " + checkValue(y) + "g";
         }
         return temp;
     }
+
+    // Transforms the traveled distance to km and mil.
+    // If the distance traveled is greater than 1000m, convert to km.
+    // If the distance traveled is greater than 100km, 100000m, convert to mil.
+    public String distanceTransformer(int i) {
+        y = i;
+
+        if (y >= 100000) {
+            y = y/10000;
+            temp = checkValue(y) + " mil";
+        } else if (y >= 1000) {
+            y = y/1000;
+            temp = checkValue(y) + " km";
+        } else {
+            temp = y + " m";
+        } return temp;
+    }
+
 
     private String checkValue(double i) {
         //Returns the integer in String format, to check for decimals.
