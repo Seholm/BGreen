@@ -132,8 +132,10 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     viewPager.setEnabledSwipe(false);
+
                 }else{
                     viewPager.setEnabledSwipe(true);
+                    menu.findItem(R.id.search).collapseActionView();
                 }
             }
         });
@@ -179,7 +181,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
                 fragmentTransaction.commit();
                 searchView.clearFocus();
                 searchView.setQuery("", true);
-                menu.findItem(R.id.search).collapseActionView();
+
 
 
                 //TODO: Fixa så gamla vyn inte syns
