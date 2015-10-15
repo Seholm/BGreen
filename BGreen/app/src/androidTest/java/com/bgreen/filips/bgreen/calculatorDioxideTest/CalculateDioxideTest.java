@@ -15,35 +15,35 @@ public class CalculateDioxideTest extends InstrumentationTestCase {
         //Test for simple grams.
         profile.setTotalDistance(1000);
         String temp = calculator.calculateSpill(profile.getTotalDistance());
-        assertTrue(temp.equals("CO² sparad: 167.0g"));
+        assertTrue(temp.equals("CO₂ sparad: 167.0g"));
     }
 
     public void testIfKilograms() {
         //Test for transformation to kilogram.
         profile.setTotalDistance(10000);
         String temp = calculator.calculateSpill(profile.getTotalDistance());
-        assertTrue(temp.equals("CO² sparad: 1.6kg"));
+        assertTrue(temp.equals("CO₂ sparad: 1.6kg"));
     }
 
     public void testIfZero() {
         //Test for zero distance.
         profile.setTotalDistance(0);
         String temp = calculator.calculateSpill(profile.getTotalDistance());
-        assertTrue(temp.equals("CO² sparad: 0.0g"));
+        assertTrue(temp.equals("CO₂ sparad: 0.0g"));
     }
 
     public void testUnderChangeKG(){
         //Test for just below the transformation to Kg.
         profile.setTotalDistance(5988);
         String temp = calculator.calculateSpill(profile.getTotalDistance());
-        assertTrue(temp.equals("CO² sparad: 999.9g"));
+        assertTrue(temp.equals("CO₂ sparad: 999.9g"));
     }
 
     public void testOverChangeKG() {
         //Test for just above the transformation to Kg.
         profile.setTotalDistance(5989);
         String temp = calculator.calculateSpill(profile.getTotalDistance());
-        assertTrue(temp.equals("CO² sparad: 1.0kg"));
+        assertTrue(temp.equals("CO₂ sparad: 1.0kg"));
     }
 
 }

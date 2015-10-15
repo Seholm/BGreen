@@ -15,9 +15,9 @@ public class ValueTransformer {
 
         if (y >= 1000) {    //checks if the amount is above 1000 or not.
             y = y / 1000;   // if above, change the value to kilograms and check the decimals.
-            temp = "CO² sparad: " + checkValue(y) + "kg";
+            temp = "CO₂ sparad: " + checkValue(y) + "kg";
         } else {
-            temp = "CO² sparad: " + checkValue(y) + "g";
+            temp = "CO₂ sparad: " + checkValue(y) + "g";
         }
         return temp;
     }
