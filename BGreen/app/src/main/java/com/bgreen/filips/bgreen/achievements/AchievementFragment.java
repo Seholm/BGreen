@@ -45,7 +45,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
 
         //List with the place where achievementimages gets put
         imageViewList = new ArrayList<>();
-        addToCircleImageViewList();
+        addToImageViewList();
         //List with images for unlocked achievements
         imageList = new ArrayList<>();
         addToImageList();
@@ -82,6 +82,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                     else{
                         //Picasso.with(this.getContext()).load(imageListLocked.get(i)).into(imageViewList.get(i));
                         imageViewList.get(i).setImageResource(imageListLocked.get(i));
+                        imageViewList.get(i).setAlpha(0.3f);
                     }
                 }
             }
@@ -89,7 +90,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         return myInflatedView;
     }
 
-    private void addToCircleImageViewList(){
+    private void addToImageViewList(){
         //imageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_01));
         //imageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_02));
         //imageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_03));
