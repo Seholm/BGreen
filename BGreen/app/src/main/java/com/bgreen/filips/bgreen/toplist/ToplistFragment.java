@@ -100,7 +100,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
             Picasso.with(getContext()).load(changeSizeOnURLImage(profiles.get(position).
                     getImageURL())).into(targetProfilePicture);
             targetProfileDistance.setText("#" + profiles.get(position).getPlacement() +
-                    "         " + distanceTransformer.transformer(profiles.get(position).getTotalDistance()));
+                    "  "+"Distans: " + profiles.get(position).getTotalDistance() + "m");
             targetProfileName.setText(profiles.get(position).getFirstName() + " " +
                     profiles.get(position).getLastName());
             targetProfileCarbonCalc.setText(dioxideCalculator.calculateSpill(profiles.
