@@ -6,11 +6,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.achievements.ReadTextForAchievement;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -23,13 +23,15 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class DetailedAchievementActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView setAchievementHeadline;
     private TextView setAchievmentDescText;
-    private CircleImageView circleImageView;
+    private ImageView imageView;
     private String txtReader = "";
     private String subTxtReader = "";
     private Bundle bundle;
     private ProgressBar detailedAchievementPBar;
     private TextView setProgressPercentage;
     private Button getRewardButton;
+    private int achievemnt;
+    private InputStream is;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,20 +42,20 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     }
 
     public void displayAchievmentDetails() {
-        int i = bundle.getInt("ACHIEVMENT");
+        achievemnt = bundle.getInt("ACHIEVMENT");
         int progress = (int) bundle.getDouble("Progress");
 
         ReadTextForAchievement r = new ReadTextForAchievement();
-        setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
-        setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
-        circleImageView = (CircleImageView) findViewById(R.id.achievment_detailed_image);
+        TextView setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
+        TextView setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
+        imageView = (ImageView) findViewById(R.id.achievment_detailed_image);
         detailedAchievementPBar = (ProgressBar) findViewById(R.id.detailedAchievementProgressBar);
         setProgressPercentage = (TextView) findViewById(R.id.achievment_progressbar_percentage);
         getRewardButton = (Button) findViewById(R.id.achievment_reward_button);
 
 
         StringBuffer sbuffer = new StringBuffer();
-        InputStream is = this.getResources().openRawResource(R.raw.achievementlist + i);
+        setAchievement(achievemnt);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         if (is != null) {
             try {
@@ -61,7 +63,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
                     sbuffer.append(txtReader + "\n");
                     subTxtReader = txtReader;
                 }
-                Picasso.with(this).load(R.drawable.ment_01 + i).into(circleImageView);
+
                 setAchievementHeadline.setText(r.parseHeadline(subTxtReader));
                 setAchievmentDescText.setText(r.parseDescText(subTxtReader));
                 detailedAchievementPBar.setProgress(progress);
@@ -73,6 +75,31 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
+    }
+
+    private void setAchievement(int image){
+        switch (image) {
+            case 1:
+                Picasso.with(this).load(R.drawable.coffee_cup).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist1);
+                break;
+            case 2:
+                Picasso.with(this).load(R.drawable.air_plane).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist2);
+                break;
+            case 3:
+                Picasso.with(this).load(R.drawable.check_mark).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist3);
+                break;
+            case 4:
+                Picasso.with(this).load(R.drawable.fify_five).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist4);
+                break;
+            case 5:
+                Picasso.with(this).load(R.drawable.road_sign).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist5);
+                break;
         }
     }
 

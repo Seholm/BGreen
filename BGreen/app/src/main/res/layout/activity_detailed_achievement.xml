@@ -10,14 +10,11 @@
     style="@style/Base.TextAppearance.AppCompat.Display1">
 
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <ImageView
         android:id="@+id/achievment_detailed_image"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:src="@drawable/common_ic_googleplayservices"
-        app:border_width="2dp"
-        app:border_color="#FF000000"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="40dp" />

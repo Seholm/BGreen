@@ -81,7 +81,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
                     //image for locked achievement
                     else{
                         //Picasso.with(this.getContext()).load(imageListLocked.get(i)).into(imageViewList.get(i));
-                        imageViewList.get(i).setImageResource(imageListLocked.get(i));
+                        imageViewList.get(i).setImageResource(imageList.get(i));
                         imageViewList.get(i).setAlpha(0.3f);
                     }
                 }
@@ -91,11 +91,6 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
     }
 
     private void addToImageViewList(){
-        //imageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_01));
-        //imageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_02));
-        //imageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_03));
-        //imageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_04));
-        //imageViewList.add((CircleImageView) myInflatedView.findViewById(R.id.achivement_image_05));
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_01));
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_02));
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_03));
@@ -106,22 +101,18 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
 
     private void addToImageList(){
         imageList.add(R.drawable.coffee_cup);
-        imageList.add(R.drawable.check_mark);
         imageList.add(R.drawable.air_plane);
+        imageList.add(R.drawable.check_mark);
         imageList.add(R.drawable.fify_five);
-        imageList.add(R.drawable.road_sign);
-        //imageList.add(R.drawable.achievements);
-        //imageList.add(R.drawable.ment_01);
+        imageList.add(R.drawable.road_sign);;
     }
 
     private void addToImageListLocked(){
         imageListLocked.add(R.drawable.coffee_cup_locked);
-        imageListLocked.add(R.drawable.check_mark_locked);
         imageListLocked.add(R.drawable.air_plane_locked);
+        imageListLocked.add(R.drawable.check_mark_locked);
         imageListLocked.add(R.drawable.fify_five_locked);
         imageListLocked.add(R.drawable.road_sign_locked);
-        //imageListLocked.add(R.drawable.achievements_locked);
-        //imageListLocked.add(R.drawable.ment_01_locked);
     }
 
     @Override
