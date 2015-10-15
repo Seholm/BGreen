@@ -29,6 +29,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private TextView profileCarbonCalc;
     private ProfileService profileService;
     private CarbonDioxideCalculator carbonCalculator;
+    private DistanceTransformer distanceTransformer;
 
     public ProfileFragment() {
     }
@@ -36,9 +37,11 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         profileService = new ProfileService();
         carbonCalculator = new CarbonDioxideCalculator();
+        distanceTransformer = new DistanceTransformer();
+
+        // Inflate the layout for this fragment
         View myInflatedView = inflater.inflate(R.layout.fragment_profile, container,false);
         profileRankingAndDistance = (TextView) myInflatedView.findViewById(R.id.profile_Ranking_Distance_TextView);
         circleImageView = (CircleImageView) myInflatedView.findViewById(R.id.profile_image);
@@ -61,7 +64,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         profileService.fetchAllProfiles();
         User user = User.getInstance();
         profileRankingAndDistance.setText("#" + user.getPlacement() + "         "
-                + user.getTotalDistance() + "m");
+                + distanceTransformer.transformer(user.getTotalDistance()));
         nameTextView.setText(user.getFirstName() + " " + user.getLastName());
         profileCarbonCalc.setText(carbonCalculator.calculateSpill(user.getTotalDistance()));
 
