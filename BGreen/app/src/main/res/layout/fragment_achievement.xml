@@ -6,23 +6,78 @@
     tools:context="com.bgreen.filips.bgreen.achievements.AchievementFragment"
     android:gravity="center_horizontal">
 
+
+
     <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/achivement_fragment_head_text"
+        android:text="FRAMSTEG:"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:gravity="center" />
+
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="FRAMSTEG:     "
-        android:id="@+id/achivement_head_text"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:id="@+id/achivement_imageView_01"
+        android:background="@drawable/coffee_cup"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@+id/achivement_imageView_02"/>
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/achivement_imageView_02"
+        android:background="@drawable/check_mark"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@+id/achivement_imageView_03"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@id/achivement_imageView_03"
+        android:background="@drawable/air_plane"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/achivement_imageView_04"
+        android:background="@drawable/fify_five"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@id/achivement_imageView_03"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/achivement_imageView_05"
+        android:background="@drawable/road_sign"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toEndOf="@id/achivement_imageView_04"/>
+
+    <!--
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/achivement_image_01"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:src="@drawable/common_ic_googleplayservices"
-        app:border_width="2dp"
-        app:border_color="#FF000000"
+        app:border_width="4dp"
+        app:border_color="@color/popup_border"
         android:layout_below="@id/achivement_head_text"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="10dp"
@@ -37,8 +92,8 @@
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:src="@drawable/common_ic_googleplayservices"
-        app:border_width="2dp"
-        app:border_color="#FF000000"
+        app:border_width="4dp"
+        app:border_color="@color/popup_border"
         android:layout_gravity="center_horizontal"
         android:layout_below="@id/achivement_head_text"
         android:layout_toRightOf="@id/achivement_image_01"
@@ -96,5 +151,6 @@
         android:layout_marginBottom="10dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"/>
+        -->
 
 </RelativeLayout>
