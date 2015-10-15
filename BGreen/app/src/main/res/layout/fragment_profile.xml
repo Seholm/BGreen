@@ -39,16 +39,8 @@
             android:id="@+id/profile_Ranking_Distance_TextView"
             android:layout_gravity="center_horizontal|top"
             android:layout_marginTop="176dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="200dp"
-            android:text="Large Text"
-            android:id="@+id/profile_carbondioxide_calculator" />
+            android:textStyle="bold"
+            android:textSize="25dp" />
 
         <FrameLayout
             android:id="@+id/achivement_fragment"
@@ -57,6 +49,27 @@
             android:layout_gravity="center_horizontal|bottom"
             android:background="@color/background_stripe">
         </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#8BCE40"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="65dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="185dp"
+        android:elevation="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_gravity="center"
+            android:text="Large Text"
+            android:id="@+id/profile_carbondioxide_calculator"
+            android:textStyle="bold" />
+
+    </FrameLayout>
 
 
 

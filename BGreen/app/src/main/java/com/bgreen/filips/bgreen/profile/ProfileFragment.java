@@ -60,7 +60,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private void setProfileText() {
         profileService.fetchAllProfiles();
         User user = User.getInstance();
-        profileRankingAndDistance.setText("#" + user.getPlacement() + "         "
+        profileRankingAndDistance.setText("#" + user.getPlacement() + "  "+ "Distans: "
                 + user.getTotalDistance() + "m");
         nameTextView.setText(user.getFirstName() + " " + user.getLastName());
         profileCarbonCalc.setText(carbonCalculator.calculateSpill(user.getTotalDistance()));

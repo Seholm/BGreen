@@ -23,9 +23,9 @@ public class Busses implements IBusses {
         //reg.no: EOG 606
 
         busses.put("5c:35:3b:e8:8a:fb","171330"); //HEMMA HOS SEHOLM
-        busses.put("74:a0:2f:cc:fc:3e","171330");
+        busses.put("74:a0:2f:cc:fc:3e","100021");
         busses.put("3c:0e:23:69:87:50","100022");//FYSIK
-        busses.put("c0:25:5c:e4:84:0e","100022");
+        busses.put("c0:25:5c:e4:84:0e","171330");
 
         // [SSID: Vasttrafik, BSSID: f2:21:10:09:53:00, capabilities: [ESS], level: -41, frequency: 2462, timestamp: 96795888626, distance: ?(cm), distanceSd: ?(cm),
         // SSID: ElectriCity, BSSID: 04:f0:21:10:09:53, capabilities: [ESS], level: -42, frequency: 2462, timestamp: 96795888613, distance: ?(cm), distanceSd: ?(cm),
