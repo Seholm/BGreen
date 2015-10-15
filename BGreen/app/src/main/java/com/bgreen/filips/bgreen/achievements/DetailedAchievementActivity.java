@@ -31,6 +31,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     private TextView setProgressPercentage;
     private Button getRewardButton;
     private int achievemnt;
+    private InputStream is;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
 
 
         StringBuffer sbuffer = new StringBuffer();
-        InputStream is = this.getResources().openRawResource(R.raw.achievementlist + achievemnt);
+        setAchievement(achievemnt);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         if (is != null) {
             try {
@@ -62,8 +63,6 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
                     sbuffer.append(txtReader + "\n");
                     subTxtReader = txtReader;
                 }
-
-                setAchievementImage(achievemnt);
 
                 setAchievementHeadline.setText(r.parseHeadline(subTxtReader));
                 setAchievmentDescText.setText(r.parseDescText(subTxtReader));
@@ -79,22 +78,27 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         }
     }
 
-    private void setAchievementImage(int image){
+    private void setAchievement(int image){
         switch (image) {
             case 1:
                 Picasso.with(this).load(R.drawable.coffee_cup).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist1);
                 break;
             case 2:
                 Picasso.with(this).load(R.drawable.air_plane).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist2);
                 break;
             case 3:
                 Picasso.with(this).load(R.drawable.check_mark).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist3);
                 break;
             case 4:
                 Picasso.with(this).load(R.drawable.fify_five).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist4);
                 break;
             case 5:
                 Picasso.with(this).load(R.drawable.road_sign).into(imageView);
+                is = this.getResources().openRawResource(R.raw.achievementlist5);
                 break;
         }
     }
