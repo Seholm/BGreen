@@ -98,6 +98,8 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_01));
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_02));
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_03));
+        imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_04));
+        imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_05));
 
     }
 
@@ -105,6 +107,8 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         imageList.add(R.drawable.coffee_cup);
         imageList.add(R.drawable.check_mark);
         imageList.add(R.drawable.air_plane);
+        imageList.add(R.drawable.fify_five);
+        imageList.add(R.drawable.road_sign);
         //imageList.add(R.drawable.achievements);
         //imageList.add(R.drawable.ment_01);
     }
@@ -113,6 +117,8 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         imageListLocked.add(R.drawable.coffee_cup_locked);
         imageListLocked.add(R.drawable.check_mark_locked);
         imageListLocked.add(R.drawable.air_plane_locked);
+        imageListLocked.add(R.drawable.fify_five_locked);
+        imageListLocked.add(R.drawable.road_sign_locked);
         //imageListLocked.add(R.drawable.achievements_locked);
         //imageListLocked.add(R.drawable.ment_01_locked);
     }
