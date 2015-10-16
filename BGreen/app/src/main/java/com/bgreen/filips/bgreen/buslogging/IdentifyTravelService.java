@@ -8,13 +8,6 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.IBinder;
 
-import com.bgreen.filips.bgreen.CalculateTravelInfo;
-import com.bgreen.filips.bgreen.ICalculateTravelInfo;
-import com.bgreen.filips.bgreen.buslogging.Busses;
-import com.bgreen.filips.bgreen.buslogging.DatabaseService;
-import com.bgreen.filips.bgreen.buslogging.IBusses;
-import com.bgreen.filips.bgreen.buslogging.IDatabaseService;
-import com.bgreen.filips.bgreen.buslogging.RetrieveBusData;
 import com.bgreen.filips.bgreen.profile.IUserHandler;
 import com.bgreen.filips.bgreen.profile.UserHandler;
 import com.parse.Parse;
