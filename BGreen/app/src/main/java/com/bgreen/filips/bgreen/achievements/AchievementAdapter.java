@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.User;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,8 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
     AchievementFragment achievementFragment;
     Map<String,Boolean> unlockedAchievements;
     Map<String,Double> achievementProgress;
+    AchievmentRequirements achievmentRequirements;
+    IProfile profile;
 
     @Override
     public void update(Observable observable, Object data) {
@@ -42,6 +46,8 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
 
     public AchievementAdapter(List<IAchievement> achievements, AchievementFragment achievementFragment,
                               Map<String,Boolean> unlockedAchievements, Map<String,Double> achievementProgress) {
+        this.achievmentRequirements = new AchievmentRequirements();
+        this.profile = User.getInstance();
         this.achievements = achievements;
         this.achievementFragment = achievementFragment;
         this.unlockedAchievements = unlockedAchievements;
@@ -62,24 +68,20 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("hejhej ********************" + Integer.toString(position));
                 achievementFragment.displayAchievement(position);
             }
         });
 
         String achievement = "Achievement" + (position);
 
-        //if there is no more achievementList don't load an image
-        if(unlockedAchievements.get(achievement)!=null){
-            //image for unlocked achievement
-            if(unlockedAchievements.get(achievement)==true){
-                new ImageLoadTask(achievements.get(position).getAchievementImageURL(), holder.imageView).execute();
-            }
-            //image for locked achievement
-            else{
-                new ImageLoadTask(achievements.get(position).getAchievementImageURL(), holder.imageView).execute();
-                holder.imageView.setAlpha(0.3f);
-            }
+        //image for unlocked achievement
+        if(achievmentRequirements.checkAchivment(profile, achievements.get(position))){
+            new ImageLoadTask(achievements.get(position).getAchievementImageURL(), holder.imageView).execute();
+        }
+        //image for locked achievement
+        else{
+            new ImageLoadTask(achievements.get(position).getAchievementImageURL(), holder.imageView).execute();
+            holder.imageView.setAlpha(0.3f);
         }
     }
 

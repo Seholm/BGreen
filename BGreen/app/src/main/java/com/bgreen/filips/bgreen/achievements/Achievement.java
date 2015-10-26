@@ -26,11 +26,11 @@ public class Achievement implements IAchievement {
 
     @Override
     public int getAchievementRequirements() {
-        return 0;
+        return 15;
     }
 
     @Override
     public String getAchievementRequirementCategory() {
-        return "Distance";
+        return "trips";
     }
 }
