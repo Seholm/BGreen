@@ -46,7 +46,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     private boolean popupAchivmentShow;
 
 
-    private ViewPager viewPager;
+    private MyViewPager viewPager;
     private Fragment originalTopList = new ToplistFragment();
 
     @Override
@@ -57,7 +57,8 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         final Toolbar toolbar = (Toolbar) findViewById(R.id.tab_toolbar);
         setSupportActionBar(toolbar);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.tab_viewpager);
+        final MyViewPager viewPager = (MyViewPager) findViewById(R.id.tab_viewpager);
+
         this.viewPager = viewPager;
         setupViewPager(viewPager);
 
@@ -126,15 +127,26 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
         final SearchModel sModel = new SearchModel();
 
+        searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus){
+                    viewPager.setEnabledSwipe(false);
+
+                }else{
+                    viewPager.setEnabledSwipe(true);
+                    menu.findItem(R.id.search).collapseActionView();
+                }
+            }
+        });
+
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
 
                 viewPager.setCurrentItem(1);
-                viewPager.beginFakeDrag();
-                drag=true;
-
+                //viewPager.setEnabledSwipe(false);
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -168,13 +180,8 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
                 fragmentTransaction.commit();
                 searchView.clearFocus();
-                drag=false;
-                if (searchGaveresult == true) {
+                searchView.setQuery("", true);
 
-                    searchView.setQuery("", true);
-                    menu.findItem(R.id.search).collapseActionView();
-                    viewPager.endFakeDrag();
-                }
 
 
                 //TODO: Fixa så gamla vyn inte syns
@@ -190,6 +197,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
                 return false;
             }
+
 
         });
         return true;
@@ -245,13 +253,11 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed(){
-        if(viewPager.isFakeDragging()==true){
-            viewPager.endFakeDrag();
-        }else{
-            finish();
-            System.exit(0);
 
-        }
+        finish();
+        System.exit(0);
+
+
     }
 
 

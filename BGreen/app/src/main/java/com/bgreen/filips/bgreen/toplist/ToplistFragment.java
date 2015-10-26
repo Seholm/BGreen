@@ -12,11 +12,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.profile.CarbonDioxideCalculator;
-import com.bgreen.filips.bgreen.profile.DistanceTransformer;
 import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.ProfileService;
+import com.bgreen.filips.bgreen.profile.ValueTransformer;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +29,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
-    private DistanceTransformer distanceTransformer;
+    private ValueTransformer transformer;
 
     private List<IProfile> profiles = new ArrayList<>();
     View cardBack;
@@ -50,7 +49,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        distanceTransformer = new DistanceTransformer();
+        transformer = new ValueTransformer();
         Bundle bundle = getArguments();
         int size=0;
         try{
@@ -85,7 +84,6 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
 
     @Override
     public void flipCard(int position) {
-        CarbonDioxideCalculator dioxideCalculator = new CarbonDioxideCalculator();
 
         if(position>=0) {
             TextView targetProfileName = (TextView) myInflatedView.findViewById
@@ -100,10 +98,10 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
             Picasso.with(getContext()).load(changeSizeOnURLImage(profiles.get(position).
                     getImageURL())).into(targetProfilePicture);
             targetProfileDistance.setText("#" + profiles.get(position).getPlacement() +
-                    "  "+"Distans: " + profiles.get(position).getTotalDistance() + "m");
+                    "  "+"Distans: " + transformer.distanceTransformer(profiles.get(position).getTotalDistance()));
             targetProfileName.setText(profiles.get(position).getFirstName() + " " +
                     profiles.get(position).getLastName());
-            targetProfileCarbonCalc.setText(dioxideCalculator.calculateSpill(profiles.
+            targetProfileCarbonCalc.setText(transformer.calculateSpill(profiles.
                     get(position).getTotalDistance()));
             mswipeRefresh.setEnabled(false);
         }
