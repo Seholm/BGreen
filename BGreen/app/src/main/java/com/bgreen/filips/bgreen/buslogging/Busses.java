@@ -20,7 +20,8 @@ public class Busses implements IBusses {
         busses.put("04:f0:21:10:09:53","171327");//reg.no: EOG 622
         busses.put("04:f0:21:10:09:b7","171330");//reg.no: EOG 634
         busses.put("04:f0:21:10:0a:07","100020");//reg.no: EPO 131
-        //reg.no: EOG 606
+        busses.put("04:f0:21:10:09:e7","171234");//reg.no: EOG 606
+        busses.put("04:f0:21:10:09:b8","171164");//reg.no: EOG 604
 
         busses.put("5c:35:3b:e8:8a:fb","171330"); //HEMMA HOS SEHOLM
         busses.put("74:a0:2f:cc:fc:3e","100021");

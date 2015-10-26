@@ -38,11 +38,18 @@ public class ProfileService implements IProfileService{
             ParseObject p = query.getFirst();
             if(p != null){
                 startUpFetchOfUser(p.getObjectId(), handler);
-            }else {
-                saveNewProfile(handler);
             }
         } catch (ParseException e) {
-            e.printStackTrace();
+            if(e.getCode() == ParseException.OBJECT_NOT_FOUND)
+            {
+                //User doesn't exist
+                saveNewProfile(handler);
+            }
+            else
+            {
+                //unknown error, debug
+                e.printStackTrace();
+            }
         }
 
     }
