@@ -13,18 +13,18 @@ public class AchievementModel {
     Map<String,Double> achievementsProgress = new HashMap();
 
     public void checkUnlockedAchievements(IProfile profile){
-        achievementsUnlocked.put("Achievement1", isAchievement1Unlocked(profile));
-        achievementsUnlocked.put("Achievement2", isAchievement2Unlocked(profile));
-        achievementsUnlocked.put("Achievement3", isAchievement3Unlocked(profile));
-        achievementsUnlocked.put("Achievement4", isAchievement4Unlocked(profile));
-        achievementsUnlocked.put("Achievement5", isAchievement5Unlocked(profile));
+        achievementsUnlocked.put("Achievement0", isAchievement1Unlocked(profile));
+        achievementsUnlocked.put("Achievement1", isAchievement2Unlocked(profile));
+        achievementsUnlocked.put("Achievement2", isAchievement3Unlocked(profile));
+        achievementsUnlocked.put("Achievement3", isAchievement4Unlocked(profile));
+        achievementsUnlocked.put("Achievement4", isAchievement5Unlocked(profile));
     }
     public void checkProgressAchievements(IProfile profile){
-        achievementsProgress.put("Achievement1", progressAchievement1(profile));
-        achievementsProgress.put("Achievement2", progressAchievement2(profile));
-        achievementsProgress.put("Achievement3", progressAchievement3(profile));
-        achievementsProgress.put("Achievement4", progressAchievement4(profile));
-        achievementsProgress.put("Achievement5", progressAchievement5(profile));
+        achievementsProgress.put("Achievement0", progressAchievement1(profile));
+        achievementsProgress.put("Achievement1", progressAchievement2(profile));
+        achievementsProgress.put("Achievement2", progressAchievement3(profile));
+        achievementsProgress.put("Achievement3", progressAchievement4(profile));
+        achievementsProgress.put("Achievement4", progressAchievement5(profile));
     }
 
     public Map<String,Boolean> getAchievementsUnlocked(){
