@@ -26,4 +26,27 @@ public class AchievmentRequirements {
         }
         return false;
     }
+
+    public double checkAchivmentProgress(IProfile profile,IAchievement achievement) {
+        if (achievement.getAchievementRequirementCategory().equals("distance")) {
+            if (profile.getTotalDistance() < achievement.getAchievementRequirements()) {
+                double progress = profile.getTotalDistance() / achievement.getAchievementRequirements();
+                return progress * 100.0;
+            } else {
+                return 100.0;
+            }
+
+        }
+        if (achievement.getAchievementRequirementCategory().equals("trips")) {
+            if (profile.getBusTrips() < achievement.getAchievementRequirements()) {
+                double progress = profile.getBusTrips() / achievement.getAchievementRequirements();
+                return progress * 100.0;
+            } else {
+                return 100.0;
+            }
+        }
+        return 0;
+    }
+
+
 }
