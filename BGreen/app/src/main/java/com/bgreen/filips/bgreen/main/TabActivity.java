@@ -25,6 +25,7 @@ import android.widget.FrameLayout;
 
 import android.widget.Toast;
 
+import com.bgreen.filips.bgreen.achievements.AchievementFragment;
 import com.bgreen.filips.bgreen.profile.IProfile;
 
 import com.bgreen.filips.bgreen.profile.ProfileFragment;
@@ -95,14 +96,16 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         });
 
     }
-    private boolean drag = false;
+
     private ViewPagerAdapter adapter;
     private Fragment toplistFragment;
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
-        Fragment profileFragment = new ProfileFragment();
         toplistFragment = new ToplistFragment();
+
+        Fragment aFragment = new AchievementFragment();
+        ProfileFragment profileFragment = ProfileFragment.newInstance(aFragment);
 
         //addFrag sets a new fragment to the Tab
         adapter.addFrag(profileFragment, "PROFILE");
@@ -155,11 +158,11 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
                 List<IProfile> profiles = ProfileHolder.getInstance().getProfiles();
                 List<IProfile> searchList = sModel.doSearch(query, profiles);
-                boolean searchGaveresult = true;
+
                 if (searchList.size() == 0) {
                     Toast.makeText(getApplicationContext(), "Din sökning gav inga träffar",
                             Toast.LENGTH_LONG).show();
-                    searchGaveresult = false;
+
 
                 }
                 Bundle bundle = new Bundle();

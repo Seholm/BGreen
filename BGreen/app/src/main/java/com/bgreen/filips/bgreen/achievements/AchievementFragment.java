@@ -149,4 +149,7 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
             startActivityForResult(intent,10);
         }
     }
+
+
+
 }
