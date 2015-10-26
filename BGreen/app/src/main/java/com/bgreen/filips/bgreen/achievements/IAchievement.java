@@ -8,4 +8,9 @@ import android.graphics.drawable.Drawable;
 public interface IAchievement {
 
     String getAchievementImageURL();
+    String getAchievementTitle();
+    String getAchievementDescription();
+    int getAchievementRequirements();
+    String getAchievementRequirementCategory();
+
 }

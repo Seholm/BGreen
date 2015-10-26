@@ -80,23 +80,23 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
 
     private void setAchievement(int image){
         switch (image) {
-            case 1:
+            case 0:
                 Picasso.with(this).load(R.drawable.coffee_cup).into(imageView);
                 is = this.getResources().openRawResource(R.raw.achievementlist1);
                 break;
-            case 2:
+            case 1:
                 Picasso.with(this).load(R.drawable.air_plane).into(imageView);
                 is = this.getResources().openRawResource(R.raw.achievementlist2);
                 break;
-            case 3:
+            case 2:
                 Picasso.with(this).load(R.drawable.check_mark).into(imageView);
                 is = this.getResources().openRawResource(R.raw.achievementlist3);
                 break;
-            case 4:
+            case 3:
                 Picasso.with(this).load(R.drawable.fify_five).into(imageView);
                 is = this.getResources().openRawResource(R.raw.achievementlist4);
                 break;
-            case 5:
+            case 4:
                 Picasso.with(this).load(R.drawable.road_sign).into(imageView);
                 is = this.getResources().openRawResource(R.raw.achievementlist5);
                 break;
