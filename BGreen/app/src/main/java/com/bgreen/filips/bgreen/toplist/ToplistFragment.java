@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.ITransformer;
 import com.bgreen.filips.bgreen.profile.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.ProfileService;
 import com.bgreen.filips.bgreen.profile.ValueTransformer;
@@ -29,7 +30,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
-    private ValueTransformer transformer;
+    private ITransformer transformer;
 
     private List<IProfile> profiles = new ArrayList<>();
     View cardBack;

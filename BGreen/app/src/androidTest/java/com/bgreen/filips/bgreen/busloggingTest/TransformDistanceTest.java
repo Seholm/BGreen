@@ -2,11 +2,12 @@ package com.bgreen.filips.bgreen.busloggingTest;
 
 import android.test.InstrumentationTestCase;
 
+import com.bgreen.filips.bgreen.profile.ITransformer;
 import com.bgreen.filips.bgreen.profile.ValueTransformer;
 
     //test for various distance transoformations
 public class TransformDistanceTest extends InstrumentationTestCase {
-    private ValueTransformer transformer = new ValueTransformer();
+    private ITransformer transformer = new ValueTransformer();
     private int length;
 
     //simple test if it displays 100 meters correctly.

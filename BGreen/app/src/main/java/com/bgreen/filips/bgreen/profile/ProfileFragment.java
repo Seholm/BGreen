@@ -28,7 +28,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private TextView nameTextView;
     private TextView profileCarbonCalc;
     private ProfileService profileService;
-    private ValueTransformer transformer;
+    private ITransformer transformer;
 
 
     public ProfileFragment() {
