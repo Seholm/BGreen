@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class MinuteReciever extends BroadcastReceiver {
     // the class works as a reciever which checks if a specific wifi is in the area
+    //and loops every 1 minute
 
     @Override
     public void onReceive(Context context, Intent intent) {

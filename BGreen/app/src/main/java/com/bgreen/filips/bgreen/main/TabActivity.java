@@ -31,6 +31,7 @@ import com.bgreen.filips.bgreen.profile.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
 
 import com.bgreen.filips.bgreen.profile.ProfileHolder;
+import com.bgreen.filips.bgreen.search.ISearchModel;
 import com.bgreen.filips.bgreen.search.SearchModel;
 import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
@@ -125,7 +126,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
-        final SearchModel sModel = new SearchModel();
+        final ISearchModel sModel = new SearchModel();
 
         searchView.setOnQueryTextFocusChangeListener(new View.OnFocusChangeListener() {
             @Override

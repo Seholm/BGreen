@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by flarssonn on 2015-10-02.
  */
-public class SearchModel {
+public class SearchModel implements ISearchModel {
 
     List<IProfile> resultList;
     List<IProfile> firstNameResultList;

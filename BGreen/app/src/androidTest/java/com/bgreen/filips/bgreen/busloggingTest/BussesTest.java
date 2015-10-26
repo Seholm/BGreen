@@ -13,30 +13,34 @@ import java.util.List;
  */
 public class BussesTest extends InstrumentationTestCase {
 
+    IBusses busses;
+
+
+
     public void testDoesBusExist(){
-        IBusses busses = new Busses();
-        assertTrue(busses.doesBusExist("00:13:95:13:49:f5"));
-        assertTrue(busses.doesBusExist("00:13:95:13:4b:be"));
-        assertTrue(busses.doesBusExist("00:13:95:14:3b:f0"));
-        assertTrue(busses.doesBusExist("00:13:95:14:69:8a"));
-        assertTrue(busses.doesBusExist("00:13:95:13:49:f7"));
-        assertTrue(busses.doesBusExist("00:13:95:13:62:96"));
-        assertTrue(busses.doesBusExist("00:13:95:0f:92:a4"));
-        assertTrue(busses.doesBusExist("00:13:95:13:4b:bc"));
-        assertTrue(busses.doesBusExist("00:13:95:14:3b:f2"));
-        assertTrue(busses.doesBusExist("00:13:95:13:5f:20"));
+        busses = new Busses();
+
+
+        assertTrue(busses.doesBusExist("04:f0:21:10:09:e8"));
+
+        assertTrue(busses.doesBusExist("04:f0:21:10:09:53"));
+        assertTrue(busses.doesBusExist("04:f0:21:10:09:b7"));
+        assertTrue(busses.doesBusExist("04:f0:21:10:0a:07"));
+        assertTrue(busses.doesBusExist("04:f0:21:10:09:e7"));
+        assertTrue(busses.doesBusExist("04:f0:21:10:09:b8"));
+        assertTrue(busses.doesBusExist("04:f0:21:10:09:df"));
         assertFalse(busses.doesBusExist("TEST"));
         assertFalse(busses.doesBusExist("13:95:13:5f:20"));
 
     }
     public void testDoesBusExistList(){
-        IBusses busses = new Busses();
+        busses = new Busses();
         List<String> busList= new ArrayList<>();
         busList.add("Test");
         assertFalse(busses.doesBusExist(busList));
-        busList.add("00:13:95:13:5f:20");
+        busList.add("04:f0:21:10:09:e8");
         assertTrue(busses.doesBusExist(busList));
-        busList.add("00:13:95:14:3b:f0");
+        busList.add("04:f0:21:10:09:b7");
         assertTrue(busses.doesBusExist(busList));
 
     }
