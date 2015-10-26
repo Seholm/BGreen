@@ -1,25 +1,47 @@
 package com.bgreen.filips.bgreen.achievements;
 
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Albertsson on 15-10-26.
+ * Created by medioloco on 15-10-26.
  */
 public class AchievementService implements IAchievementService {
 
+    private final String ACHIEVEMENT = "Achievement";
+    private final String TITLE = "Title";
+    private final String REQUIREMENT = "Requirement";
+    private final String DESCRIPTION = "Description";
+    private final String IMGURL = "ImgURL";
+    private final String CATEGORY = "Category";
 
-    @Override
     public List<IAchievement> getAllAchievements() {
-        List<IAchievement> list = new ArrayList<>();
-        IAchievement achievement = new Achievement();
+        ParseQuery<ParseObject> query = new ParseQuery<>(ACHIEVEMENT);
+        List<IAchievement> fetchedAchievements = new ArrayList<>();
+        try{
+            List<ParseObject> parseAchievements = query.find();
+            for (ParseObject parseAchievement: parseAchievements){
+                fetchedAchievements.add(CopyParseAchievement(parseAchievement));
+            }
+            return fetchedAchievements;
+        }catch (Exception e) {
+            if(e.getClass() == com.parse.ParseException.class){
+                //handle error
+            }
+        }
+        return null;
+    }
 
-        list.add(achievement);
-        list.add(achievement);
-        list.add(achievement);
-        list.add(achievement);
-        list.add(achievement);
+    private IAchievement CopyParseAchievement(ParseObject parseAchievement) {
+        return new Achievement(parseAchievement.getString(TITLE),
+                parseAchievement.getInt(REQUIREMENT),
+                AchievementCategory.valueOf(parseAchievement.getString(CATEGORY)),
+                parseAchievement.getString(DESCRIPTION),
+                parseAchievement.getString(IMGURL));
 
-        return list;
     }
 }

@@ -14,8 +14,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
  * Created by Albertsson on 15-10-26.
  */
@@ -73,11 +71,11 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         if(unlockedAchievements.get(achievement)!=null){
             //image for unlocked achievement
             if(unlockedAchievements.get(achievement)==true){
-                new ImageLoadTask(achievements.get(position).getAchievementImageURL(), holder.imageView).execute();
+                new ImageLoadTask(achievements.get(position).getImgURL(), holder.imageView).execute();
             }
             //image for locked achievement
             else{
-                new ImageLoadTask(achievements.get(position).getAchievementImageURL(), holder.imageView).execute();
+                new ImageLoadTask(achievements.get(position).getImgURL(), holder.imageView).execute();
                 holder.imageView.setAlpha(0.3f);
             }
         }

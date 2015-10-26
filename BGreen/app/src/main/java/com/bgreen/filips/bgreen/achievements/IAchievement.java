@@ -7,10 +7,16 @@ import android.graphics.drawable.Drawable;
  */
 public interface IAchievement {
 
-    String getAchievementImageURL();
-    String getAchievementTitle();
-    String getAchievementDescription();
-    int getAchievementRequirements();
-    String getAchievementRequirementCategory();
+    String getImgURL();
+    String getTitle();
+    String getDescription();
+    int getRequirement();
+    AchievementCategory getCategory();
+
+    void setImgURL(String imgURL);
+    void setTitle(String title);
+    void setRequirement(int requirement);
+    void setCategory(AchievementCategory category);
+    void setDescription(String description);
 
 }
