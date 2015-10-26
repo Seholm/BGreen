@@ -11,41 +11,49 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.User;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailedAchievementActivity extends AppCompatActivity implements View.OnClickListener {
-    private TextView setAchievementHeadline;
-    private TextView setAchievmentDescText;
     private ImageView imageView;
-    private String txtReader = "";
-    private String subTxtReader = "";
     private Bundle bundle;
     private ProgressBar detailedAchievementPBar;
     private TextView setProgressPercentage;
     private Button getRewardButton;
-    private int achievemnt;
-    private InputStream is;
+    private int achievemntPosition;
+
+    private List<IAchievement> achievementList = new ArrayList<>();
+    private IAchievementService achievementService = new AchievementService();
+    private IAchievement achievement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_achievement);
+
         bundle = getIntent().getExtras();
+        achievementList = achievementService.getAllAchievements();
+        achievemntPosition = bundle.getInt("ACHIEVMENT");
+        achievement = achievementList.get(achievemntPosition);
+
         displayAchievmentDetails();
     }
 
     public void displayAchievmentDetails() {
-        achievemnt = bundle.getInt("ACHIEVMENT");
-        int progress = (int) bundle.getDouble("Progress");
 
-        ReadTextForAchievement r = new ReadTextForAchievement();
+        IProfile profile = User.getInstance();
+        AchievmentRequirements achievmentRequirements = new AchievmentRequirements();
+
         TextView setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         TextView setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
         imageView = (ImageView) findViewById(R.id.achievment_detailed_image);
@@ -54,53 +62,19 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         getRewardButton = (Button) findViewById(R.id.achievment_reward_button);
 
 
-        StringBuffer sbuffer = new StringBuffer();
-        setAchievement(achievemnt);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-        if (is != null) {
-            try {
-                while ((txtReader = reader.readLine()) != null) {
-                    sbuffer.append(txtReader + "\n");
-                    subTxtReader = txtReader;
-                }
+        setAchievementHeadline.setText(achievement.getTitle());
+        setAchievmentDescText.setText(achievement.getDescription());
+        System.out.println(profile.getBusTrips() + " " + achievement.getRequirement());
 
-                setAchievementHeadline.setText(r.parseHeadline(subTxtReader));
-                setAchievmentDescText.setText(r.parseDescText(subTxtReader));
-                detailedAchievementPBar.setProgress(progress);
-                setProgressPercentage.setText((Integer.toString(progress)) + "%");
-                getRewardButton.setVisibility(View.GONE);
-                
-                is.close();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
+        double progres = achievmentRequirements.checkAchivmentProgress(profile, achievement);
+        System.out.println(progres);
+        int progress = (int)Math.round(achievmentRequirements.checkAchivmentProgress(profile, achievement));
 
-    private void setAchievement(int image){
-        switch (image) {
-            case 0:
-                Picasso.with(this).load(R.drawable.coffee_cup).into(imageView);
-                is = this.getResources().openRawResource(R.raw.achievementlist1);
-                break;
-            case 1:
-                Picasso.with(this).load(R.drawable.air_plane).into(imageView);
-                is = this.getResources().openRawResource(R.raw.achievementlist2);
-                break;
-            case 2:
-                Picasso.with(this).load(R.drawable.check_mark).into(imageView);
-                is = this.getResources().openRawResource(R.raw.achievementlist3);
-                break;
-            case 3:
-                Picasso.with(this).load(R.drawable.fify_five).into(imageView);
-                is = this.getResources().openRawResource(R.raw.achievementlist4);
-                break;
-            case 4:
-                Picasso.with(this).load(R.drawable.road_sign).into(imageView);
-                is = this.getResources().openRawResource(R.raw.achievementlist5);
-                break;
-        }
+        detailedAchievementPBar.setProgress(progress);
+        setProgressPercentage.setText((Integer.toString(progress)) + "%");
+        Picasso.with(this).load(achievement.getImgURL()).into(imageView);
+        getRewardButton.setVisibility(View.GONE);
+
     }
 
     public void getAchievementReward (View view) {

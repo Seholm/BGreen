@@ -74,5 +74,4 @@ public class Achievement implements IAchievement {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }
