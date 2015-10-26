@@ -13,4 +13,24 @@ public class Achievement implements IAchievement {
     public String getAchievementImageURL() {
         return "http://www.market-pie.com/img/apple-touch-icon-144x144-precomposed.png";
     }
+
+    @Override
+    public String getAchievementTitle() {
+        return null;
+    }
+
+    @Override
+    public String getAchievementDescription() {
+        return null;
+    }
+
+    @Override
+    public int getAchievementRequirements() {
+        return 0;
+    }
+
+    @Override
+    public String getAchievementRequirementCategory() {
+        return null;
+    }
 }
