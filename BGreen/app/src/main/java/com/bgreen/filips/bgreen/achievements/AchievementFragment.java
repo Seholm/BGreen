@@ -4,6 +4,8 @@ package com.bgreen.filips.bgreen.achievements;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.profile.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,18 +22,19 @@ import java.util.Map;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AchievementFragment extends Fragment implements View.OnClickListener {
+public class AchievementFragment extends Fragment {
 
-    View myInflatedView;
-    List<ImageView> imageViewList;
-    List<Integer> imageList;
-    List<Integer> imageListLocked;
+    private View myInflatedView;
+    private List<IAchievement> achievementList = new ArrayList<>();
+    private IAchievementService achievementService = new AchievementService();
 
+    private Map<String,Boolean> unlockedAchievements;
+    private Map<String,Double> achievementProgress;
+    private AchievementModel aModel;
 
-    Map<String,Boolean> unlockedAchievements;
-    Map<String,Double> achievementProgress;
-    AchievementModel aModel;
-
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView recyclerView;
+    private AchievementAdapter adapter;
 
     public AchievementFragment() {
         // Required empty public constructor
@@ -43,53 +47,31 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
 
         myInflatedView = inflater.inflate(R.layout.fragment_achievement, container,false);
 
+        //*!*!*!*!*! TEST *!*!*!*!*!*
+        achievementList = achievementService.getAllAchievements();
+        checkAchievements();
+
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView = (RecyclerView) myInflatedView.findViewById(R.id.recycler_view_achievement);
+        recyclerView.setLayoutManager(layoutManager);
+        adapter = new AchievementAdapter(achievementList, this, unlockedAchievements, achievementProgress);
+        recyclerView.setAdapter(adapter);
+
+        /*
         //List with the place where achievementimages gets put
         imageViewList = new ArrayList<>();
         addToImageViewList();
-        //List with images for unlocked achievements
+        //List with images for unlocked achievementList
         imageList = new ArrayList<>();
         addToImageList();
-        //List with images for locked achievements
+        //List with images for locked achievementList
         imageListLocked = new ArrayList<>();
         addToImageListLocked();
+        */
 
-        //AchievementModel to use to see which achievements profile have unlocked
-        aModel = new AchievementModel();
-
-        if(imageViewList != null && imageList != null){
-            //Se profiles achievements
-            aModel.checkUnlockedAchievements(User.getInstance());
-            aModel.checkProgressAchievements(User.getInstance());
-            //Map with unlocked and locked achievement
-            unlockedAchievements = aModel.getAchievementsUnlocked();
-            //Map with progress for achievements
-            achievementProgress = aModel.getAchievementsProgress();
-
-            for(int i = 0; i < imageViewList.size(); i++){
-                imageViewList.get(i).setClickable(true);
-                imageViewList.get(i).setOnClickListener(this);
-
-                String achievement = "Achievement" + (i+1);
-
-                //if there is no more achievements don't load an image
-                if(unlockedAchievements.get(achievement)!=null){
-                    //image for unlocked achievement
-                    if(unlockedAchievements.get(achievement)==true){
-                        //Picasso.with(this.getContext()).load(imageList.get(i)).into(imageViewList.get(i));
-                        imageViewList.get(i).setImageResource(imageList.get(i));
-                    }
-                    //image for locked achievement
-                    else{
-                        //Picasso.with(this.getContext()).load(imageListLocked.get(i)).into(imageViewList.get(i));
-                        imageViewList.get(i).setImageResource(imageList.get(i));
-                        imageViewList.get(i).setAlpha(0.3f);
-                    }
-                }
-            }
-        }
         return myInflatedView;
     }
-
+/*
     private void addToImageViewList(){
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_01));
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_02));
@@ -97,25 +79,32 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_04));
         imageViewList.add((ImageView) myInflatedView.findViewById(R.id.achivement_imageView_05));
 
+    }*/
+
+    public void displayAchievement(int achivement){
+
+        Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+
+        intent.putExtra("ACHIEVMENT", achivement);
+        startActivityForResult(intent, 10);
     }
 
-    private void addToImageList(){
-        imageList.add(R.drawable.coffee_cup);
-        imageList.add(R.drawable.air_plane);
-        imageList.add(R.drawable.check_mark);
-        imageList.add(R.drawable.fify_five);
-        imageList.add(R.drawable.road_sign);;
+    public void checkAchievements(){
+        //AchievementModel to use to see which achievementList profile have unlocked
+        aModel = new AchievementModel();
+
+        if(achievementList != null){
+            //Se profiles achievementList
+            aModel.checkUnlockedAchievements(User.getInstance());
+            aModel.checkProgressAchievements(User.getInstance());
+            //Map with unlocked and locked achievement
+            unlockedAchievements = aModel.getAchievementsUnlocked();
+            //Map with progress for achievementList
+            achievementProgress = aModel.getAchievementsProgress();
+        }
     }
 
-    private void addToImageListLocked(){
-        imageListLocked.add(R.drawable.coffee_cup_locked);
-        imageListLocked.add(R.drawable.air_plane_locked);
-        imageListLocked.add(R.drawable.check_mark_locked);
-        imageListLocked.add(R.drawable.fify_five_locked);
-        imageListLocked.add(R.drawable.road_sign_locked);
-    }
-
-    @Override
+    /*@Override
     public void onClick(View v) {
         if (imageViewList.get(0).getId() == v.getId()) {
             Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
@@ -148,8 +137,10 @@ public class AchievementFragment extends Fragment implements View.OnClickListene
             intent.putExtra("Progress", achievementProgress.get("Achievement5"));
             startActivityForResult(intent,10);
         }
-    }
+    }*/
+ }
 
 
 
-}
+
+

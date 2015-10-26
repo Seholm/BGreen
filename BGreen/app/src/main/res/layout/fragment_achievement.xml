@@ -2,10 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context="com.bgreen.filips.bgreen.achievements.AchievementFragment"
-    android:gravity="center_horizontal">
-
+    android:gravity="center_horizontal|bottom">
 
 
     <TextView
@@ -17,140 +16,11 @@
         android:layout_gravity="center"
         android:gravity="center" />
 
-    <ImageView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view_achievement"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/achivement_imageView_01"
-        android:background="@drawable/coffee_cup"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toStartOf="@+id/achivement_imageView_02"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@id/achivement_imageView_02"
-        android:background="@drawable/air_plane"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toStartOf="@+id/achivement_imageView_03"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@id/achivement_imageView_03"
-        android:background="@drawable/check_mark"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_gravity="center"
-        android:gravity="center"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/achivement_imageView_04"
-        android:background="@drawable/fify_five"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@id/achivement_imageView_03"/>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/achivement_imageView_05"
-        android:background="@drawable/road_sign"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_toEndOf="@id/achivement_imageView_04"/>
-
-    <!--
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/achivement_image_01"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/common_ic_googleplayservices"
-        app:border_width="4dp"
-        app:border_color="@color/popup_border"
-        android:layout_below="@id/achivement_head_text"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:clickable="true" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/achivement_image_02"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/common_ic_googleplayservices"
-        app:border_width="4dp"
-        app:border_color="@color/popup_border"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@id/achivement_head_text"
-        android:layout_toRightOf="@id/achivement_image_01"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:clickable="true" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/achivement_image_03"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/common_ic_googleplayservices"
-        app:border_width="2dp"
-        app:border_color="#FF000000"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@id/achivement_head_text"
-        android:layout_toRightOf="@id/achivement_image_02"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:clickable="true" />
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/achivement_image_04"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/common_ic_googleplayservices"
-        app:border_width="2dp"
-        app:border_color="#FF000000"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@id/achivement_head_text"
-        android:layout_toRightOf="@id/achivement_image_03"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/achivement_image_05"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:src="@drawable/common_ic_googleplayservices"
-        app:border_width="2dp"
-        app:border_color="#FF000000"
-        android:layout_gravity="center_horizontal"
-        android:layout_below="@id/achivement_head_text"
-        android:layout_toRightOf="@id/achivement_image_04"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
-        -->
+        android:layout_height="100dp"
+        android:clickable="false"
+        />
 
 </RelativeLayout>

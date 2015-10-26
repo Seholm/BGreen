@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ProfileService implements IProfileService{
 
-    private User user = User.getInstance();
+    private IUser user = User.getInstance();
     private final String FIRST_NAME = "FirstName";
     private final String LAST_NAME = "LastName";
     private final String EMAIL = "Email";
