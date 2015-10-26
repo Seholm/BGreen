@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.profile.User;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,17 +24,17 @@ import java.util.Map;
  */
 public class AchievementFragment extends Fragment {
 
-    View myInflatedView;
-    List<IAchievement> achievementList = new ArrayList<>();
-    IAchievementService achievementService = new AchievementService();
+    private View myInflatedView;
+    private List<IAchievement> achievementList = new ArrayList<>();
+    private IAchievementService achievementService = new AchievementService();
 
-    Map<String,Boolean> unlockedAchievements;
-    Map<String,Double> achievementProgress;
-    AchievementModel aModel;
+    private Map<String,Boolean> unlockedAchievements;
+    private Map<String,Double> achievementProgress;
+    private AchievementModel aModel;
 
-    RecyclerView.LayoutManager layoutManager;
-    RecyclerView recyclerView;
-    AchievementAdapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView recyclerView;
+    private AchievementAdapter adapter;
 
     public AchievementFragment() {
         // Required empty public constructor
@@ -81,7 +82,9 @@ public class AchievementFragment extends Fragment {
     }*/
 
     public void displayAchievement(int achivement){
+
         Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
+
         intent.putExtra("ACHIEVMENT", achivement);
         intent.putExtra("Progress", achievementProgress.get(achivement));
         startActivityForResult(intent, 10);
