@@ -10,14 +10,14 @@ import java.util.List;
 public class AchievmentRequirements {
 
     public boolean checkAchivment(IProfile profile,IAchievement achievement){
-        if(achievement.getCategory().equals("distance")){
+        if(achievement.getCategory() == AchievementCategory.DISTANCE){
             if(profile.getTotalDistance()>=achievement.getRequirement()){
                 return true;
             }else{
                 return false;
             }
 
-        }if(achievement.getCategory().equals("trips")){
+        }if(achievement.getCategory() == AchievementCategory.TRIPS){
             if(profile.getBusTrips()>=achievement.getRequirement()){
                 return true;
             }else{
@@ -28,7 +28,7 @@ public class AchievmentRequirements {
     }
 
     public double checkAchivmentProgress(IProfile profile,IAchievement achievement) {
-        if (achievement.getCategory().equals("distance")) {
+        if (achievement.getCategory() == AchievementCategory.DISTANCE) {
             if (profile.getTotalDistance() < achievement.getRequirement()) {
                 double progress = (double)profile.getTotalDistance() / (double)achievement.getRequirement();
                 return progress * 100.0;
@@ -37,7 +37,7 @@ public class AchievmentRequirements {
             }
 
         }
-        if (achievement.getCategory().equals("trips")) {
+        if (achievement.getCategory() == AchievementCategory.TRIPS) {
             if (profile.getBusTrips() < achievement.getRequirement()) {
                 double progress = (double)profile.getBusTrips() / (double)achievement.getRequirement();
                 return progress * 100.0;
@@ -47,6 +47,4 @@ public class AchievmentRequirements {
         }
         return 100;
     }
-
-
 }

@@ -70,8 +70,6 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
             }
         });
 
-        String achievement = "Achievement" + (position);
-
         //image for unlocked achievement
         if(achievmentRequirements.checkAchivment(profile, achievements.get(position))){
             new ImageLoadTask(achievements.get(position).getImgURL(), holder.imageView).execute();
