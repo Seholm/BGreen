@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
+import com.bgreen.filips.bgreen.profile.IUser;
 import com.bgreen.filips.bgreen.profile.IUserHandler;
 import com.bgreen.filips.bgreen.profile.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.ProfileService;
@@ -61,7 +62,7 @@ public class LogginActivity extends AppCompatActivity implements
 
     private ProfileService pService= new ProfileService();
     private IUserHandler handler = new UserHandler(LogginActivity.this);
-    private User user = User.getInstance();
+    private IUser user = User.getInstance();
     private boolean loadingDone = false;
 
     @Override

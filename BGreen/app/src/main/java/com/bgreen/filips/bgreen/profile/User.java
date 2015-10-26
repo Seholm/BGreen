@@ -3,15 +3,15 @@ package com.bgreen.filips.bgreen.profile;
 /**
  * Created by medioloco on 2015-10-01.
  */
-public class User extends Profile {
+public class User extends Profile implements IUser {
 
-    private static User instance = null;
+    private static IUser instance = null;
 
     public User(){
         //exists only to defeat instantiation
     }
 
-    public static User getInstance() {
+    public static IUser getInstance() {
         if(instance == null){
             instance = new User();
         }
