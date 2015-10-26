@@ -14,8 +14,8 @@ public class SearchProfileTest extends InstrumentationTestCase {
     private List<IProfile> profiles = new ArrayList<>();
     private SearchModel searchModel = new SearchModel();
 
-    public void testProfileSearch1() {
-        IProfile profile = User.getInstance();
+    public void testOnePersonSearch() {
+        IProfile profile = new MockProfile();
         profile.setFirstName("TestPerson");
         profile.setLastName("Lastname");
         profiles.clear();
@@ -24,8 +24,8 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() == 1);
     }
 
-    public void testProfileSearch2() {
-        IProfile profile = User.getInstance();
+    public void testNoPersonSearch() {
+        IProfile profile = new MockProfile();
         profile.setFirstName("TestPerson");
         profile.setLastName("Lastname");
         profiles.clear();
@@ -34,18 +34,8 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() == 0);
     }
 
-    public void testProfileSearch3() {
-        IProfile profile = User.getInstance();
-        profile.setFirstName("TestPerson");
-        profile.setLastName("Lastname");
-        profiles.clear();
-        profiles.add(profile);
-        List<IProfile> resultList = searchModel.doSearch("test", profiles);
-        assertTrue(resultList.size() == 1);
-    }
-
-    public void testProfileSearch4() {
-        IProfile profile = User.getInstance();
+    public void testSearchForNoName() {
+        IProfile profile = new MockProfile();
         profile.setFirstName("testPerson");
         profile.setLastName("Lastname");
         profiles.clear();
@@ -54,9 +44,9 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() != 0);
     }
 
-    public void testProfileSearch5() {
-        IProfile profile1 = User.getInstance();
-        IProfile profile2 = User.getInstance();
+    public void testSearchForSameName() {
+        IProfile profile1 = new MockProfile();
+        IProfile profile2 = new MockProfile();
         profile1.setFirstName("testPerson1");
         profile1.setLastName("Lastname");
         profile2.setFirstName("testPerson2");
@@ -68,8 +58,7 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() == 2);
     }
 
-
-    public void testProfileSearch6() {
+    public void testEmptyListSearch() {
         List<IProfile> tempList = null;
         List<IProfile> resultList = searchModel.doSearch("", tempList);
         assertTrue(resultList.size() == 0);

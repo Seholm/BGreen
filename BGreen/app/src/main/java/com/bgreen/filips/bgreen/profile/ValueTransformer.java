@@ -1,7 +1,7 @@
 package com.bgreen.filips.bgreen.profile;
 
 
-public class ValueTransformer {
+public class ValueTransformer implements ITransformer {
     private String temp = "";
     private double y;
 

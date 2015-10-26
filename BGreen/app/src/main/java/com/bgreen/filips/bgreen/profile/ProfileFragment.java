@@ -2,6 +2,7 @@ package com.bgreen.filips.bgreen.profile;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -11,7 +12,12 @@ import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.achievements.AchievementFragment;
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.main.TabActivity;
 import com.squareup.picasso.Picasso;
+
+import java.lang.reflect.Field;
+import java.util.Observable;
+import java.util.Observer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -19,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * A simple {@link Fragment} subclass.
  */
 
-public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
+public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 
 
     private SwipeRefreshLayout profileRefresh;
@@ -28,10 +34,21 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
     private TextView nameTextView;
     private TextView profileCarbonCalc;
     private IProfileService profileService;
-    private ValueTransformer transformer;
 
+    private ITransformer transformer;
+
+    private Fragment achievementFragment;
 
     public ProfileFragment() {
+
+    }
+
+    public static ProfileFragment newInstance(Fragment fragment){
+
+        ProfileFragment newProfileFragment = new ProfileFragment();
+        newProfileFragment.achievementFragment = fragment;
+
+        return newProfileFragment;
     }
 
     @Override
@@ -51,13 +68,20 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
                 (R.id.profile_swipe_refresh);
         profileRefresh.setOnRefreshListener(this);
 
-        Fragment achievementFragment = new AchievementFragment();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.add(R.id.achivement_fragment, achievementFragment).commit();
+
+
+        if(achievementFragment!=null){
+
+            FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+            transaction.add(R.id.achivement_fragment, achievementFragment).commit();
+        }
+
+
         setProfileText();
 
         return myInflatedView;
     }
+
 
     private void setProfileText() {
         profileService.fetchAllProfiles();
