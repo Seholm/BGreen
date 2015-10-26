@@ -26,7 +26,7 @@ public class Achievement implements IAchievement {
 
     @Override
     public int getAchievementRequirements() {
-        return 15;
+        return 300;
     }
 
     @Override

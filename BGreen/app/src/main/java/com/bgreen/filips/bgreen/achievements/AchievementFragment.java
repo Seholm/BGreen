@@ -86,7 +86,6 @@ public class AchievementFragment extends Fragment {
         Intent intent = new Intent(this.getActivity(), DetailedAchievementActivity.class);
 
         intent.putExtra("ACHIEVMENT", achivement);
-        intent.putExtra("Progress", achievementProgress.get(achivement));
         startActivityForResult(intent, 10);
     }
 

@@ -11,6 +11,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.User;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
@@ -48,7 +50,9 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     }
 
     public void displayAchievmentDetails() {
-        int progress = (int) bundle.getDouble("Progress");
+
+        IProfile profile = User.getInstance();
+        AchievmentRequirements achievmentRequirements = new AchievmentRequirements();
 
         TextView setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         TextView setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
@@ -60,6 +64,12 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
 
         setAchievementHeadline.setText(achievement.getAchievementTitle());
         setAchievmentDescText.setText(achievement.getAchievementDescription());
+        System.out.println(profile.getBusTrips() + " " + achievement.getAchievementRequirements());
+
+        double progres = achievmentRequirements.checkAchivmentProgress(profile, achievement);
+        System.out.println(progres);
+        int progress = (int)Math.round(achievmentRequirements.checkAchivmentProgress(profile, achievement));
+
         detailedAchievementPBar.setProgress(progress);
         setProgressPercentage.setText((Integer.toString(progress)) + "%");
         Picasso.with(this).load(achievement.getAchievementImageURL()).into(imageView);
