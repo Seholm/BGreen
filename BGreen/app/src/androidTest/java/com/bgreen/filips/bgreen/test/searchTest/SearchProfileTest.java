@@ -1,9 +1,8 @@
-package com.bgreen.filips.bgreen.searchTest;
+package com.bgreen.filips.bgreen.test.searchTest;
 
 import android.test.InstrumentationTestCase;
 
 import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.User;
 import com.bgreen.filips.bgreen.search.SearchModel;
 
 import java.util.ArrayList;

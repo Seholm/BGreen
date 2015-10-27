@@ -1,9 +1,11 @@
-package com.bgreen.filips.bgreen.achievements;
+package com.bgreen.filips.bgreen.achievements.service;
 
+import com.bgreen.filips.bgreen.achievements.model.AchievementCategory;
+import com.bgreen.filips.bgreen.achievements.model.Achievement;
+import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 

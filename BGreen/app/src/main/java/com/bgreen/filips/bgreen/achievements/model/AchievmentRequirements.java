@@ -1,13 +1,14 @@
-package com.bgreen.filips.bgreen.achievements;
+package com.bgreen.filips.bgreen.achievements.model;
 
+import com.bgreen.filips.bgreen.achievements.model.AchievementCategory;
+import com.bgreen.filips.bgreen.achievements.model.IAchievement;
+import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
 import com.bgreen.filips.bgreen.profile.IProfile;
-
-import java.util.List;
 
 /**
  * Created by Filips on 10/26/2015.
  */
-public class AchievmentRequirements {
+public class AchievmentRequirements implements IAchievmentRequirements {
 
     public boolean checkAchivment(IProfile profile,IAchievement achievement){
         if(achievement.getCategory() == AchievementCategory.DISTANCE){

@@ -1,6 +1,5 @@
-package com.bgreen.filips.bgreen.achievements;
+package com.bgreen.filips.bgreen.achievements.presenter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,11 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.achievements.service.ImageLoadTask;
+import com.bgreen.filips.bgreen.achievements.model.AchievmentRequirements;
+import com.bgreen.filips.bgreen.achievements.model.IAchievement;
+import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
 import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.User;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -22,11 +24,8 @@ import java.util.Observer;
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementHolder> implements Observer {
 
     private List<IAchievement> achievements;
-    private Context context;
-    AchievementFragment achievementFragment;
-    Map<String,Boolean> unlockedAchievements;
-    Map<String,Double> achievementProgress;
-    AchievmentRequirements achievmentRequirements;
+    IDisplayAchivment idisplayAchievement;
+    IAchievmentRequirements achievmentRequirements;
     IProfile profile;
 
     @Override
@@ -42,14 +41,12 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
          }
     }
 
-    public AchievementAdapter(List<IAchievement> achievements, AchievementFragment achievementFragment,
-                              Map<String,Boolean> unlockedAchievements, Map<String,Double> achievementProgress) {
+    public AchievementAdapter(List<IAchievement> achievements, IDisplayAchivment idisplayAchievement) {
         this.achievmentRequirements = new AchievmentRequirements();
         this.profile = User.getInstance();
         this.achievements = achievements;
-        this.achievementFragment = achievementFragment;
-        this.unlockedAchievements = unlockedAchievements;
-        this.achievementProgress = achievementProgress;
+        this.idisplayAchievement = idisplayAchievement; //interface used to not have circulair dependencies,
+        // calls AchivmentsFragments displayAchivment method later
     }
 
     @Override
@@ -57,7 +54,6 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.achievement_context,
                 parent, false);
         AchievementHolder vh = new AchievementHolder(v);
-        context = parent.getContext();
         return vh;
     }
 
@@ -66,7 +62,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                achievementFragment.displayAchievement(position);
+                idisplayAchievement.displayAchievement(position);
             }
         });
 

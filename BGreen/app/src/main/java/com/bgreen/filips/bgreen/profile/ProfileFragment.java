@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bgreen.filips.bgreen.achievements.AchievementFragment;
+import com.bgreen.filips.bgreen.achievements.presenter.AchievementFragment;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.main.TabActivity;
 import com.squareup.picasso.Picasso;
@@ -64,9 +64,8 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         nameTextView = (TextView) myInflatedView.findViewById(R.id.profile_textView);
         profileCarbonCalc = (TextView) myInflatedView.findViewById(R.id.profile_carbondioxide_calculator);
 
-        profileRefresh = (SwipeRefreshLayout) myInflatedView.findViewById
-                (R.id.profile_swipe_refresh);
-        profileRefresh.setOnRefreshListener(this);
+        //profileRefresh = (SwipeRefreshLayout) myInflatedView.findViewById(R.id.profile_swipe_refresh);
+        //profileRefresh.setOnRefreshListener(this);
 
 
 
@@ -76,11 +75,13 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
             transaction.add(R.id.achivement_fragment, achievementFragment).commit();
         }
 
-
+        profileRefresh = (SwipeRefreshLayout) myInflatedView.findViewById(R.id.profile_swipe_refresh1);
+        profileRefresh.setOnRefreshListener(this);
         setProfileText();
 
         return myInflatedView;
     }
+
 
 
     private void setProfileText() {

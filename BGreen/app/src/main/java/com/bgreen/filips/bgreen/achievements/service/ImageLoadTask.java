@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.achievements;
+package com.bgreen.filips.bgreen.achievements.service;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
