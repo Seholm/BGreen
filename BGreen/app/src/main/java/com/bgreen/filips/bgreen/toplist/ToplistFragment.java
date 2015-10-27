@@ -17,6 +17,7 @@ import com.bgreen.filips.bgreen.profile.ITransformer;
 import com.bgreen.filips.bgreen.profile.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.ProfileService;
 import com.bgreen.filips.bgreen.profile.ValueTransformer;
+import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -67,7 +68,11 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
             profiles = profileList;
         }else{
             ProfileService profileService = new ProfileService();
-            profileService.fetchAllProfiles();
+            try {
+                profileService.fetchAllProfiles();
+            } catch (ParseException e) {
+                //TODO: isaac fixar...
+            }
             profiles = ProfileHolder.getInstance().getProfiles();
         }
         mLayoutManager = new LinearLayoutManager(getContext());

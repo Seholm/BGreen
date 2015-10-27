@@ -2,8 +2,10 @@ package com.bgreen.filips.bgreen.main;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -32,6 +34,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.parse.Parse;
+import com.parse.ParseException;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -80,7 +83,9 @@ public class LogginActivity extends AppCompatActivity implements
         try {
             Parse.enableLocalDatastore(this);
             Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
-        }catch (Exception e){}
+        }catch (Exception e){
+            displayError(e.getMessage());
+        }
 
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -230,7 +235,7 @@ public class LogginActivity extends AppCompatActivity implements
             } else {
                 // Could not resolve the connection result, show the user an
                 // error dialog.
-                //TODO;showErrorDialog(connectionResult);
+                displayError(connectionResult.toString());
             }
         } else {
             //TODO;Show the signed-out UI
@@ -242,15 +247,27 @@ public class LogginActivity extends AppCompatActivity implements
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
 
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-            pService.fetchAllProfiles();
+            try {
+                pService.fetchAllProfiles();
+            } catch (ParseException e) {
+                displayError(e.getMessage());
+            }
             if(handler.getUserID() != null){
-                pService.startUpFetchOfUser(handler.getUserID(), handler);
+                try {
+                    pService.startUpFetchOfUser(handler.getUserID(), handler);
+                } catch (ParseException e) {
+                    displayError(e.getMessage());
+                }
             }else {
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
                         0, 0, currentPerson.getImage().getUrl());
-                pService.saveProfileIfNew(handler);
+                try {
+                    pService.saveProfileIfNew(handler);
+                } catch (ParseException e) {
+                    displayError(e.getMessage());
+                }
             }
             System.out.println(User.getInstance().getPlacement());
             if(loadingDone) {
@@ -262,7 +279,6 @@ public class LogginActivity extends AppCompatActivity implements
             }
 
         }else{
-
             System.out.println("****CURRENT PERSON IS NULL*****");
         }
     }
@@ -284,13 +300,25 @@ public class LogginActivity extends AppCompatActivity implements
     @Override
     public void update(Observable observable, Object data) {
         if(loadingDone) {
-            System.out.println("2");
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
             startActivity(tabActivityIntent);
             finish();
         }else {
-            System.out.println("1");
             loadingDone = true;
         }
+    }
+
+    private void displayError(String errorMsg){
+        new AlertDialog.Builder(LogginActivity.this)
+                .setTitle("Nätverksproblem")
+                .setMessage("Orsakat av: " + errorMsg + ". Se till att du har inernetåtkomst " +
+                        "och försök igen.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        System.exit(0);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 }

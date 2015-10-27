@@ -85,7 +85,11 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
 
     private void setProfileText() {
-        profileService.fetchAllProfiles();
+        try {
+            profileService.fetchAllProfiles();
+        } catch (Exception e) {
+            //TODO: isaac fixar..
+        }
         IUser user = User.getInstance();
         profileRankingAndDistance.setText("#" + user.getPlacement() + "  "+ "Distans: "
                 + transformer.distanceTransformer(user.getTotalDistance()));
