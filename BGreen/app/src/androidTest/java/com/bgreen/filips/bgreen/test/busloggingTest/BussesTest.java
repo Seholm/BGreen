@@ -2,8 +2,8 @@ package com.bgreen.filips.bgreen.test.busloggingTest;
 
 import android.test.InstrumentationTestCase;
 
-import com.bgreen.filips.bgreen.buslogging.Busses;
-import com.bgreen.filips.bgreen.buslogging.IBusses;
+import com.bgreen.filips.bgreen.buslogging.model.Busses;
+import com.bgreen.filips.bgreen.buslogging.model.IBusses;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +15,9 @@ public class BussesTest extends InstrumentationTestCase {
 
     IBusses busses;
 
-
-
     public void testDoesBusExist(){
         busses = new Busses();
-
-
         assertTrue(busses.doesBusExist("04:f0:21:10:09:e8"));
-
         assertTrue(busses.doesBusExist("04:f0:21:10:09:53"));
         assertTrue(busses.doesBusExist("04:f0:21:10:09:b7"));
         assertTrue(busses.doesBusExist("04:f0:21:10:0a:07"));

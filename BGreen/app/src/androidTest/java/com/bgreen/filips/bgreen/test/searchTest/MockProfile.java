@@ -7,6 +7,8 @@ import com.bgreen.filips.bgreen.profile.model.IProfile;
 public class MockProfile implements IProfile {
     String firstName;
     String lastName;
+    int totalDistance;
+    int trips;
 
     @Override
     public void setFirstName(String firstName) {
@@ -31,12 +33,12 @@ public class MockProfile implements IProfile {
 
     @Override
     public void setTotalDistance(int totalDistance) {
-
+        this.totalDistance = totalDistance;
     }
 
     @Override
     public void setBusTrips(int busTrips) {
-
+        this.trips = busTrips;
     }
 
     @Override
@@ -71,12 +73,12 @@ public class MockProfile implements IProfile {
 
     @Override
     public int getTotalDistance() {
-        return 0;
+        return totalDistance;
     }
 
     @Override
     public int getBusTrips() {
-        return 0;
+        return trips;
     }
 
     @Override

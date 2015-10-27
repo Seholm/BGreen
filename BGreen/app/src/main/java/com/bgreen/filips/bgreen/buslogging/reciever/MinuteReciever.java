@@ -1,10 +1,14 @@
-package com.bgreen.filips.bgreen.buslogging;
+package com.bgreen.filips.bgreen.buslogging.reciever;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+
+import com.bgreen.filips.bgreen.buslogging.controller.IdentifyTravelService;
+import com.bgreen.filips.bgreen.buslogging.model.Busses;
+import com.bgreen.filips.bgreen.buslogging.model.IBusses;
 
 import java.util.ArrayList;
 import java.util.List;

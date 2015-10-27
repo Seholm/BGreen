@@ -19,7 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
+import com.bgreen.filips.bgreen.buslogging.reciever.MinuteReciever;
 import com.bgreen.filips.bgreen.profile.model.IUser;
 import com.bgreen.filips.bgreen.profile.model.IUserHandler;
 import com.bgreen.filips.bgreen.profile.model.ProfileHolder;

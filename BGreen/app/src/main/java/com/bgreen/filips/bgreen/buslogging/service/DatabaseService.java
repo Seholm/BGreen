@@ -1,5 +1,6 @@
-package com.bgreen.filips.bgreen.buslogging;
+package com.bgreen.filips.bgreen.buslogging.service;
 
+import com.bgreen.filips.bgreen.buslogging.service.IDatabaseService;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
