@@ -1,6 +1,4 @@
-package com.bgreen.filips.bgreen.achievements;
-
-import android.graphics.drawable.Drawable;
+package com.bgreen.filips.bgreen.achievements.model;
 
 /**
  * Created by Albertsson on 15-10-26.

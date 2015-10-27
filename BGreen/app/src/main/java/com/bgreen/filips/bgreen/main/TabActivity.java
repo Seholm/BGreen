@@ -25,7 +25,7 @@ import android.widget.FrameLayout;
 
 import android.widget.Toast;
 
-import com.bgreen.filips.bgreen.achievements.AchievementFragment;
+import com.bgreen.filips.bgreen.achievements.presenter.AchievementFragment;
 import com.bgreen.filips.bgreen.profile.IProfile;
 
 import com.bgreen.filips.bgreen.profile.ProfileFragment;

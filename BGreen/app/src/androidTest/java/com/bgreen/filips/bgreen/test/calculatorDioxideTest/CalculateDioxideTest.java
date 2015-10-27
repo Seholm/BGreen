@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.calculatorDioxideTest;
+package com.bgreen.filips.bgreen.test.calculatorDioxideTest;
 
 import android.test.InstrumentationTestCase;
 

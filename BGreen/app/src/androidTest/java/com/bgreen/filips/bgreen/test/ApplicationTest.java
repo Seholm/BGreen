@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen;
+package com.bgreen.filips.bgreen.test;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

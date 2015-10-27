@@ -1,4 +1,6 @@
-package com.bgreen.filips.bgreen.achievements;
+package com.bgreen.filips.bgreen.achievements.service;
+
+import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 
 import java.util.List;
 

@@ -47,7 +47,7 @@
 
 
         <activity
-            android:name=".achievements.DetailedAchievementActivity"
+            android:name=".achievements.presenter.DetailedAchievementActivity"
             android:label="@string/title_activity_detailed_achievement"
             android:screenOrientation="portrait">
         </activity>

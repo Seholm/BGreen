@@ -1,8 +1,4 @@
-package com.bgreen.filips.bgreen.achievements;
-
-import android.graphics.drawable.Drawable;
-
-import com.bgreen.filips.bgreen.R;
+package com.bgreen.filips.bgreen.achievements.model;
 
 /**
  * Created by medioloco on 15-10-26.

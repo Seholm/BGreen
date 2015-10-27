@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bgreen.filips.bgreen.achievements.AchievementFragment;
+import com.bgreen.filips.bgreen.achievements.presenter.AchievementFragment;
 import com.bgreen.filips.bgreen.R;
 import com.bgreen.filips.bgreen.main.TabActivity;
 import com.squareup.picasso.Picasso;

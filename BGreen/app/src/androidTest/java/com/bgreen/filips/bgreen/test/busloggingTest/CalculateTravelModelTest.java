@@ -1,11 +1,9 @@
-package com.bgreen.filips.bgreen.busloggingTest;
+package com.bgreen.filips.bgreen.test.busloggingTest;
 
 import android.test.InstrumentationTestCase;
 
 import com.bgreen.filips.bgreen.buslogging.CalculateTravelModel;
 import com.bgreen.filips.bgreen.buslogging.ICalculateTravelModel;
-
-import static junit.framework.Assert.*;
 
 /**
  * Created by flarssonn on 2015-09-21.

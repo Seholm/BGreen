@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.achievements;
+package com.bgreen.filips.bgreen.achievements.presenter;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,18 +11,17 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.achievements.model.AchievmentRequirements;
+import com.bgreen.filips.bgreen.achievements.model.IAchievement;
+import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
+import com.bgreen.filips.bgreen.achievements.service.AchievementService;
+import com.bgreen.filips.bgreen.achievements.service.IAchievementService;
 import com.bgreen.filips.bgreen.profile.IProfile;
 import com.bgreen.filips.bgreen.profile.User;
 import com.squareup.picasso.Picasso;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DetailedAchievementActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView imageView;
@@ -52,7 +51,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     public void displayAchievmentDetails() {
 
         IProfile profile = User.getInstance();
-        AchievmentRequirements achievmentRequirements = new AchievmentRequirements();
+        IAchievmentRequirements achievmentRequirements = new AchievmentRequirements();
 
         TextView setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         TextView setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
@@ -108,8 +107,6 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     public void onBackPressed(){
         setResult(10);
         finish();
-        //super.onBackPressed();
-        //closePopUpAchivment.shouldPopupAchivmentBeClosed(true);
     }
 
     @Override

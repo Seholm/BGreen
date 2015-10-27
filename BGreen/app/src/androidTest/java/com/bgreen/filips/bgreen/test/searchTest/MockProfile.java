@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.searchTest;
+package com.bgreen.filips.bgreen.test.searchTest;
 
 import android.os.Parcel;
 

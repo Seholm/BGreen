@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.achievements;
+package com.bgreen.filips.bgreen.achievements.model;
 
 /**
  * Created by medioloco on 2015-10-26.
