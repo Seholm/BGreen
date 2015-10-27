@@ -2,10 +2,8 @@ package com.bgreen.filips.bgreen.main;
 
 import android.Manifest;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -26,6 +24,7 @@ import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.service.ProfileService;
 import com.bgreen.filips.bgreen.profile.model.User;
 import com.bgreen.filips.bgreen.profile.model.UserHandler;
+import com.bgreen.filips.bgreen.profile.utils.ErrorHandler;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -67,6 +66,8 @@ public class LogginActivity extends AppCompatActivity implements
     private IUser user = User.getInstance();
     private boolean loadingDone = false;
 
+    private ErrorHandler errorHandler = new ErrorHandler(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -83,7 +84,7 @@ public class LogginActivity extends AppCompatActivity implements
             Parse.enableLocalDatastore(this);
             Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
         }catch (Exception e){
-            displayError(e.getMessage());
+            errorHandler.displayError(e.getMessage());
         }
 
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
@@ -234,7 +235,7 @@ public class LogginActivity extends AppCompatActivity implements
             } else {
                 // Could not resolve the connection result, show the user an
                 // error dialog.
-                displayError(connectionResult.toString());
+                errorHandler.displayError("could not establish connection to Google+");
             }
         } else {
             //TODO;Show the signed-out UI
@@ -249,13 +250,13 @@ public class LogginActivity extends AppCompatActivity implements
             try {
                 pService.fetchAllProfiles();
             } catch (ParseException e) {
-                displayError(e.getMessage());
+                errorHandler.displayError(e.getMessage());
             }
             if(handler.getUserID() != null){
                 try {
                     pService.startUpFetchOfUser(handler.getUserID(), handler);
                 } catch (ParseException e) {
-                    displayError(e.getMessage());
+                    errorHandler.displayError(e.getMessage());
                 }
             }else {
                 user.setUser(currentPerson.getName().getGivenName(),
@@ -265,7 +266,7 @@ public class LogginActivity extends AppCompatActivity implements
                 try {
                     pService.saveProfileIfNew(handler);
                 } catch (ParseException e) {
-                    displayError(e.getMessage());
+                    errorHandler.displayError(e.getMessage());
                 }
             }
             System.out.println(User.getInstance().getPlacement());
@@ -283,15 +284,12 @@ public class LogginActivity extends AppCompatActivity implements
     }
 
     private void checkPermissions(String permission){
-
         if (ContextCompat.checkSelfPermission(this,
                 permission)
                 != PackageManager.PERMISSION_GRANTED){
-
                 // request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{permission}, 0);
-
         }
 
     }
@@ -305,19 +303,5 @@ public class LogginActivity extends AppCompatActivity implements
         }else {
             loadingDone = true;
         }
-    }
-
-    private void displayError(String errorMsg){
-        new AlertDialog.Builder(LogginActivity.this)
-                .setTitle("Nätverksproblem")
-                .setMessage("Orsakat av: " + errorMsg + ". Se till att du har inernetåtkomst " +
-                        "och försök igen.")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        System.exit(0);
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
     }
 }

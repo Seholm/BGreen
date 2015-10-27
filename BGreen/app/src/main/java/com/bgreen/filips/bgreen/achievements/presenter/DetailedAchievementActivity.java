@@ -19,6 +19,7 @@ import com.bgreen.filips.bgreen.achievements.service.AchievementService;
 import com.bgreen.filips.bgreen.achievements.service.IAchievementService;
 import com.bgreen.filips.bgreen.profile.model.IProfile;
 import com.bgreen.filips.bgreen.profile.model.User;
+import com.bgreen.filips.bgreen.profile.utils.ErrorHandler;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
             try{
                 achievementHolder.setAchievementList(achievementService.getAllAchievements());
             }catch (Exception e){
-                //TODO: fixa display error
+                new ErrorHandler(this).displayError(e.getMessage());
             }
         }
         achievementHolder.getAchievementList();
