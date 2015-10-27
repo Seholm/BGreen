@@ -16,6 +16,7 @@ import com.bgreen.filips.bgreen.profile.model.User;
 import com.bgreen.filips.bgreen.profile.model.ValueTransformer;
 import com.bgreen.filips.bgreen.profile.service.IProfileService;
 import com.bgreen.filips.bgreen.profile.service.ProfileService;
+import com.bgreen.filips.bgreen.profile.utils.ErrorHandler;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -84,7 +85,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         try {
             profileService.fetchAllProfiles();
         } catch (Exception e) {
-            //TODO: isaac fixar..
+            new ErrorHandler(this.getContext()).displayError(e.getMessage());
         }
         IUser user = User.getInstance();
         profileRankingAndDistance.setText("#" + user.getPlacement() + "  "+ "Distans: "

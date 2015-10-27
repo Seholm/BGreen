@@ -17,6 +17,7 @@ import com.bgreen.filips.bgreen.profile.model.ITransformer;
 import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
 import com.bgreen.filips.bgreen.profile.service.ProfileService;
 import com.bgreen.filips.bgreen.profile.model.ValueTransformer;
+import com.bgreen.filips.bgreen.profile.utils.ErrorHandler;
 import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
 
@@ -71,7 +72,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
             try {
                 profileService.fetchAllProfiles();
             } catch (ParseException e) {
-                //TODO: isaac fixar...
+                new ErrorHandler(this.getContext()).displayError(e.getMessage());
             }
             profiles = ProfileHolder.getInstance().getProfiles();
         }
