@@ -1,4 +1,6 @@
-package com.bgreen.filips.bgreen.buslogging;
+package com.bgreen.filips.bgreen.buslogging.model;
+
+import com.bgreen.filips.bgreen.buslogging.model.IBusses;
 
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +15,7 @@ public class Busses implements IBusses {
     public Busses() {
 
         busses = new HashMap<String, String>();
-        // a Map with id and mac adresses of al the busses
+        // a Map with id and BSSID of all the busses
 
         busses.put("04:f0:21:10:09:df", "100021");//reg.no: EPO 136
         busses.put("04:f0:21:10:09:e8", "100022");//reg.no: EPO 143
@@ -26,7 +28,7 @@ public class Busses implements IBusses {
 
     @Override
     public String getCurrentBus(List<String> bssids) {
-        //gets the busses id from a MAC-adress
+        //gets the busses id from a BSSID
         for (String bssid : bssids){
             if(busses.containsKey(bssid)){
                 return busses.get(bssid);
@@ -38,14 +40,12 @@ public class Busses implements IBusses {
 
     @Override
     public boolean doesBusExist(String BSSID) {
-        System.out.println(busses.containsKey(BSSID));
         return busses.containsKey(BSSID);
     }
     @Override
     public boolean doesBusExist(List<String> BSSIDs) {
         for(String bssid : BSSIDs){
             if(doesBusExist(bssid)){
-                System.out.println("matching mac adress:"+bssid);
                 return true;
             }
         }

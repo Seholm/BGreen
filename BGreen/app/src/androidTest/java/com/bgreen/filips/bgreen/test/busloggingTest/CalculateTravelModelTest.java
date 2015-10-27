@@ -2,8 +2,8 @@ package com.bgreen.filips.bgreen.test.busloggingTest;
 
 import android.test.InstrumentationTestCase;
 
-import com.bgreen.filips.bgreen.buslogging.CalculateTravelModel;
-import com.bgreen.filips.bgreen.buslogging.ICalculateTravelModel;
+import com.bgreen.filips.bgreen.buslogging.model.CalculateTravelModel;
+import com.bgreen.filips.bgreen.buslogging.model.ICalculateTravelModel;
 
 /**
  * Created by flarssonn on 2015-09-21.

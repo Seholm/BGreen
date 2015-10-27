@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.buslogging;
+package com.bgreen.filips.bgreen.buslogging.controller;
 
 import android.app.Service;
 import android.content.Context;
@@ -8,6 +8,13 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.IBinder;
 
+import com.bgreen.filips.bgreen.buslogging.model.Busses;
+import com.bgreen.filips.bgreen.buslogging.model.CalculateTravelModel;
+import com.bgreen.filips.bgreen.buslogging.model.IBusses;
+import com.bgreen.filips.bgreen.buslogging.model.ICalculateTravelModel;
+import com.bgreen.filips.bgreen.buslogging.service.DatabaseService;
+import com.bgreen.filips.bgreen.buslogging.service.IDatabaseService;
+import com.bgreen.filips.bgreen.buslogging.service.RetrieveBusData;
 import com.bgreen.filips.bgreen.profile.model.IUserHandler;
 import com.bgreen.filips.bgreen.profile.model.UserHandler;
 import com.parse.Parse;
@@ -17,12 +24,10 @@ import java.util.List;
 
 public class IdentifyTravelService extends Service {
 
-    private WifiManager wifiManager;
     private IBusses busses;
     private Handler handler;
     private Runnable onBusTask;
     private ICalculateTravelModel calculator;
-    private int count;
     private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
     private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
     private IUserHandler userhandler;
@@ -39,10 +44,8 @@ public class IdentifyTravelService extends Service {
             //Parse already initialized
         }
 
-        wifiManager=(WifiManager)getSystemService(Context.WIFI_SERVICE);
         busses = new Busses();
         calculator = new CalculateTravelModel();
-        count =0;
         userhandler = new UserHandler(this);
 
         runTask();
@@ -67,12 +70,11 @@ public class IdentifyTravelService extends Service {
             @Override
             public void run() {
                 boolean shouldILoop = true;
-                List<String> macAdresses = getMacAdress(((WifiManager)getSystemService(Context.WIFI_SERVICE)).getScanResults());
+                List<String> macAdresses = getBSSID(((WifiManager)getSystemService(Context.WIFI_SERVICE)).getScanResults());
                 if (busses.doesBusExist(macAdresses)) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
                     String nextStop = null;
                     String rutt = null;
-                    count++;
                     IDatabaseService service = new DatabaseService();
                     try {
                         nextStop =new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Next_Stop").get();
@@ -93,7 +95,6 @@ public class IdentifyTravelService extends Service {
                                 shouldILoop = false;
                             }
                         } else {
-                            System.out.println(count);
                             System.out.println(nextStop);
                             System.out.println(rutt);
                             calculator.main(nextStop, rutt);
@@ -129,7 +130,8 @@ public class IdentifyTravelService extends Service {
 
     }
 
-    private List<String> getMacAdress(List<ScanResult> wifiList){
+    private List<String> getBSSID(List<ScanResult> wifiList){
+        //converts scanresults to a list of BSSID'S
 
         List<String> bssid= new ArrayList<>();
         for (ScanResult result:wifiList  ){

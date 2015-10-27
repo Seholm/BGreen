@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.buslogging;
+package com.bgreen.filips.bgreen.buslogging.model;
 
 import java.util.List;
 

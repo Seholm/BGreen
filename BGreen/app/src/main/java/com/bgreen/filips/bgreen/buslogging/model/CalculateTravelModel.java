@@ -1,4 +1,6 @@
-package com.bgreen.filips.bgreen.buslogging;
+package com.bgreen.filips.bgreen.buslogging.model;
+
+import com.bgreen.filips.bgreen.buslogging.model.ICalculateTravelModel;
 
 import java.util.ArrayList;
 import java.util.List;

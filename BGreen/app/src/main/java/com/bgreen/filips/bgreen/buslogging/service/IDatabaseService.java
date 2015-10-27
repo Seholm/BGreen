@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.buslogging;
+package com.bgreen.filips.bgreen.buslogging.service;
 
 /**
  * Created by medioloco on 2015-09-15.

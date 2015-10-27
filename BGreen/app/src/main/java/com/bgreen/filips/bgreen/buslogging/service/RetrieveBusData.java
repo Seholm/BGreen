@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.buslogging;
+package com.bgreen.filips.bgreen.buslogging.service;
 
 import android.os.AsyncTask;
 
@@ -13,22 +13,20 @@ import javax.net.ssl.HttpsURLConnection;
  * Created by Filips on 9/23/2015.
  */
 public class RetrieveBusData extends AsyncTask <String,Void,String> {
+    //class to recieve data from electricity API
     @Override
     protected String doInBackground(String... params) {
         try {
 
             StringBuffer response = new StringBuffer();
-            String key = "Basic Z3JwMjA6eXhZN09ENGFRMg==";
-            String url = getURL(params[0],params[1]);
+            String key = "Basic Z3JwMjA6eXhZN09ENGFRMg=="; //API-key
+            String url = getURL(params[0],params[1]); //gets info for what to ask the api for, aparam[0] is what buss,
+                                                    // param[1] is the value.
             URL requestURL = new URL(url);
             HttpsURLConnection con = (HttpsURLConnection) requestURL
                     .openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Authorization", key);
-
-            //int responseCode = con.getResponseCode();
-            //System.out.println("\nSending 'GET' request to URL : " + url);
-            //System.out.println("Response Code : " + responseCode);
 
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
@@ -37,11 +35,12 @@ public class RetrieveBusData extends AsyncTask <String,Void,String> {
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
+                //adds all the resonpses to one string
             }
             in.close();
             return parseRespnos(response.toString());
         }catch(IOException e ){
-            //TODO NÅGOT
+            //TODO ISACS ERROR HANDLE DELUX PRO
             e.printStackTrace();
         }
         return null;

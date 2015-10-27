@@ -2,146 +2,89 @@ package com.bgreen.filips.bgreen.test.achievementsTest;
 
 import android.test.InstrumentationTestCase;
 
+import com.bgreen.filips.bgreen.achievements.model.AchievementCategory;
+import com.bgreen.filips.bgreen.achievements.model.AchievmentRequirements;
+import com.bgreen.filips.bgreen.achievements.model.IAchievement;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
+import com.bgreen.filips.bgreen.profile.model.User;
+import com.bgreen.filips.bgreen.test.searchTest.MockProfile;
+
 /**
  * Created by flarssonn on 2015-09-29.
  */
 public class AchievementModelTest extends InstrumentationTestCase {
 
-    //test to assert that achievement1 is not unlocked when bustrips is 0
-    //TODO: SKRIV OM
-    /*
+    //test when an achivment shouldn't be unlocked with distance
     public void testAchievement1Unlocked1(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
+        AchievmentRequirements testModel = new AchievmentRequirements();
+        IProfile profile = new MockProfile();
         profile.setBusTrips(0);
         profile.setTotalDistance(0);
-        testModel.checkUnlockedAchievements(profile);
-        Map<String,Boolean> achievementsUnlocked = testModel.getAchievementsUnlocked();
-        assertFalse(achievementsUnlocked.get("Achievement1"));
+        IAchievement achievement = new MockAchivment1();
+        achievement.setCategory(AchievementCategory.DISTANCE);
+        achievement.setRequirement(1000);
+        assertFalse(testModel.checkAchivment(profile,achievement));
     }
 
-    //test to assert that achievement1 is unlocked when bustrips is > 1
+    //test when an achivment should be unlocked with distance
     public void testAchievement1Unlocked2(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(4);
-        profile.setTotalDistance(5000);
-        testModel.checkUnlockedAchievements(profile);
-        Map<String,Boolean> achievementsUnlocked = testModel.getAchievementsUnlocked();
-        assertTrue(achievementsUnlocked.get("Achievement1"));
-    }
-
-    //test to assert that achievement1 has progress 0
-    public void testAchievement1Progress1(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
+        AchievmentRequirements testModel = new AchievmentRequirements();
+        IProfile profile = new MockProfile();
         profile.setBusTrips(0);
-        profile.setTotalDistance(0);
-        testModel.checkProgressAchievements(profile);
-        Map<String,Double> achievementsProgress = testModel.getAchievementsProgress();
-        assertEquals(achievementsProgress.get("Achievement1"), 0.0);
+        profile.setTotalDistance(5001);
+        IAchievement achievement = new MockAchivment1();
+        achievement.setCategory(AchievementCategory.DISTANCE);
+        achievement.setRequirement(5000);
+        assertTrue(testModel.checkAchivment(profile, achievement));
     }
 
-    //test to assert that achievement1 has progress 1
-    public void testAchievement1Progress2(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(1);
-        profile.setTotalDistance(5000);
-        testModel.checkProgressAchievements(profile);
-        Map<String,Double> achievementsProgress = testModel.getAchievementsProgress();
-        assertEquals(achievementsProgress.get("Achievement1"), 100.0);
-    }
-
-    //test to assert that achievement2 is not unlocked when totdistance is less than 10 000m
-    public void testAchievement2Unlocked1(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(4);
-        profile.setTotalDistance(5000);
-        testModel.checkUnlockedAchievements(profile);
-        Map<String,Boolean> achievementsUnlocked = testModel.getAchievementsUnlocked();
-        assertFalse(achievementsUnlocked.get("Achievement2"));
-    }
-
-    //test to assert that achievement2 is unlocked when totdistance is >= 10 000m
-    public void testAchievement2Unlocked2(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(4);
-        profile.setTotalDistance(10000);
-        testModel.checkUnlockedAchievements(profile);
-        Map<String,Boolean> achievementsUnlocked = testModel.getAchievementsUnlocked();
-        assertTrue(achievementsUnlocked.get("Achievement2"));
-    }
-
-    //test to assert that achievement2 has progress 0,5
-    public void testAchievement2Progress1(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(4);
-        profile.setTotalDistance(5000);
-        testModel.checkProgressAchievements(profile);
-        Map<String,Double> achievementsProgress = testModel.getAchievementsProgress();
-        assertEquals(achievementsProgress.get("Achievement2"), 50.0);
-    }
-
-    //test to assert that achievement2 has progress 1
-    public void testAchievement2Progress2(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(4);
-        profile.setTotalDistance(10000);
-        testModel.checkProgressAchievements(profile);
-        Map<String,Double> achievementsProgress = testModel.getAchievementsProgress();
-        assertEquals(achievementsProgress.get("Achievement2"), 100.0);
-    }
-
-    //test to assert that achievement3 is not unlocked when 10 trips isn't completed
-    public void testAchievement3Unlocked1(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
+    //test when an achivment shouldn't be unlocked with trips
+    public void testAchievement1Unlocked3(){
+        AchievmentRequirements testModel = new AchievmentRequirements();
+        IProfile profile = new MockProfile();
         profile.setBusTrips(0);
+        profile.setTotalDistance(10000);
+        IAchievement achievement = new MockAchivment1();
+        achievement.setCategory(AchievementCategory.TRIPS);
+        achievement.setRequirement(7);
+        assertFalse(testModel.checkAchivment(profile,achievement));
+    }
+
+    //test when an achivment should be unlocked with trips
+    public void testAchievement1Unlocked4(){
+        AchievmentRequirements testModel = new AchievmentRequirements();
+        IProfile profile = new MockProfile();
+        profile.setBusTrips(7);
         profile.setTotalDistance(0);
-        testModel.checkUnlockedAchievements(profile);
-        Map<String,Boolean> achievementsUnlocked = testModel.getAchievementsUnlocked();
-        assertFalse(achievementsUnlocked.get("Achievement3"));
+        IAchievement achievement = new MockAchivment1();
+        achievement.setCategory(AchievementCategory.TRIPS);
+        achievement.setRequirement(7);
+        assertTrue(testModel.checkAchivment(profile,achievement));
     }
 
-    //test to assert that achievement3 is unlocked when 10 trips is completed
-    public void testAchievement3Unlocked2(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(10);
-        profile.setTotalDistance(3000);
-        testModel.checkUnlockedAchievements(profile);
-        Map<String,Boolean> achievementsUnlocked = testModel.getAchievementsUnlocked();
-        assertTrue(achievementsUnlocked.get("Achievement3"));
+    //test if progress works for Distance
+    public void testAchievementProgress1(){
+        AchievmentRequirements testModel = new AchievmentRequirements();
+        IProfile profile = new MockProfile();
+        profile.setBusTrips(7);
+        profile.setTotalDistance(50000);
+        IAchievement achievement = new MockAchivment1();
+        achievement.setCategory(AchievementCategory.DISTANCE);
+        achievement.setRequirement(100000);
+        assertTrue(50 == testModel.checkAchivmentProgress(profile, achievement));
     }
 
-    //test to assert that achievement3 has progress 0.3
-    public void testAchievement3Progress1(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(3);
-        profile.setTotalDistance(1000);
-        testModel.checkProgressAchievements(profile);
-        Map<String,Double> achievementsProgress = testModel.getAchievementsProgress();
-        assertEquals(achievementsProgress.get("Achievement3"), 30.0);
+    //test if progress works for Trips
+    public void testAchievementProgress2(){
+        AchievmentRequirements testModel = new AchievmentRequirements();
+        IProfile profile = new MockProfile();
+        profile.setBusTrips(7);
+        profile.setTotalDistance(50000);
+        IAchievement achievement = new MockAchivment1();
+        achievement.setCategory(AchievementCategory.TRIPS);
+        achievement.setRequirement(10);
+        assertTrue(70==testModel.checkAchivmentProgress(profile,achievement));
     }
-
-    //test to assert that achievement3 has progress 1.0
-    public void testAchievement3Progress2(){
-        AchievementModel testModel = new AchievementModel();
-        IProfile profile = User.getInstance();
-        profile.setBusTrips(10);
-        profile.setTotalDistance(1000);
-        testModel.checkProgressAchievements(profile);
-        Map<String,Double> achievementsProgress = testModel.getAchievementsProgress();
-        assertEquals(achievementsProgress.get("Achievement3"), 100.0);
-    }
-    */
-
 
 
 }
