@@ -1,8 +1,6 @@
 package com.bgreen.filips.bgreen.search;
 
-import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.Profile;
-import com.bgreen.filips.bgreen.profile.ProfileHolder;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
 
 
 import java.util.ArrayList;

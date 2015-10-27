@@ -1,5 +1,11 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.service;
 
+import com.bgreen.filips.bgreen.profile.model.IUser;
+import com.bgreen.filips.bgreen.profile.model.IUserHandler;
+import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
+import com.bgreen.filips.bgreen.profile.model.User;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
+import com.bgreen.filips.bgreen.profile.model.Profile;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -13,7 +19,7 @@ import java.util.List;
 /**
  * Created by medioloco on 2015-09-22.
  */
-public class ProfileService implements IProfileService{
+public class ProfileService implements IProfileService {
 
     private IUser user = User.getInstance();
     private final String FIRST_NAME = "FirstName";
@@ -45,15 +51,6 @@ public class ProfileService implements IProfileService{
                 //User doesn't exist
                 saveNewProfile(handler);
             }
-            else
-            {
-                try {
-                    throw e;
-                } catch (Exception e1) {
-                    //Never gonna get here
-                    e1.printStackTrace();
-                }
-            }
         }
 
     }
@@ -78,13 +75,6 @@ public class ProfileService implements IProfileService{
                 if (e == null) {
                     user.setParseID(parseProfile.getObjectId());
                     handler.writeToFile(user.getParseID());
-                } else {
-                    try {
-                        throw e;
-                    } catch (Exception e1) {
-                        //Never gonna get here
-                        e1.printStackTrace();
-                    }
                 }
             }
         });
@@ -99,13 +89,6 @@ public class ProfileService implements IProfileService{
             public void done(ParseObject parseObject, ParseException e) {
                 if (e == null) {
                     writeToUser(parseObject, handler);
-                } else {
-                    try {
-                        throw e;
-                    } catch (Exception e1) {
-                        //Never gonna get here
-                        e1.printStackTrace();
-                    }
                 }
             }
         });
@@ -130,13 +113,6 @@ public class ProfileService implements IProfileService{
                         profileList.add(p);
                     }
                     ProfileHolder.getInstance().setProfiles(profileList);
-                }else{
-                    try {
-                        throw e;
-                    } catch (Exception e1) {
-                        //Never gonna get here
-                        e1.printStackTrace();
-                    }
                 }
             }
         });
@@ -144,11 +120,7 @@ public class ProfileService implements IProfileService{
 
     public void startUpFetchOfUser(final String ID, IUserHandler handler) throws ParseException{
         ParseQuery<ParseObject> query = ParseQuery.getQuery(USER);
-        try {
-            writeToUser(query.get(ID), handler);
-        } catch (ParseException e){
-            throw e;
-        }
+        writeToUser(query.get(ID), handler);
     }
 
     private void writeToUser(ParseObject parseObject, IUserHandler handler) {

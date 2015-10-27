@@ -10,7 +10,7 @@
         android:id="@+id/targetprofile_framelayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.bgreen.filips.bgreen.profile.ProfileFragment"
+        tools:context="com.bgreen.filips.bgreen.profile.presenter.ProfileFragment"
         android:background="@drawable/ecodriving03"
         android:visibility="gone"
         >

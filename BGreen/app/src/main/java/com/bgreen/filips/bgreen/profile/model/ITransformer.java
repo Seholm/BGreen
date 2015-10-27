@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.model;
 
 public interface ITransformer {
     String calculateSpill(int i);

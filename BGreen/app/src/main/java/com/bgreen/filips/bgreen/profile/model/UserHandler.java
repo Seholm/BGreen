@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.model;
 
 import android.content.Context;
 import android.util.Log;
@@ -14,7 +14,7 @@ import java.io.OutputStreamWriter;
  * this class is intended to save a users ID as a string to a .txt file
  * Created by medioloco on 2015-09-22.
  */
-public class UserHandler implements IUserHandler{
+public class UserHandler implements IUserHandler {
 
     private Context context;
 

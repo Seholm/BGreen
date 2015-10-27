@@ -2,8 +2,8 @@ package com.bgreen.filips.bgreen.test.calculatorDioxideTest;
 
 import android.test.InstrumentationTestCase;
 
-import com.bgreen.filips.bgreen.profile.ITransformer;
-import com.bgreen.filips.bgreen.profile.ValueTransformer;
+import com.bgreen.filips.bgreen.profile.model.ITransformer;
+import com.bgreen.filips.bgreen.profile.model.ValueTransformer;
 
 public class CalculateDioxideTest extends InstrumentationTestCase {
     //Tests to see if the correct amount of CO2 is displayed and calculated.

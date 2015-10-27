@@ -2,8 +2,8 @@ package com.bgreen.filips.bgreen.test.busloggingTest;
 
 import android.test.InstrumentationTestCase;
 
-import com.bgreen.filips.bgreen.profile.ITransformer;
-import com.bgreen.filips.bgreen.profile.ValueTransformer;
+import com.bgreen.filips.bgreen.profile.model.ITransformer;
+import com.bgreen.filips.bgreen.profile.model.ValueTransformer;
 
     //test for various distance transoformations
 public class TransformDistanceTest extends InstrumentationTestCase {

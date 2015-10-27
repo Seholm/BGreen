@@ -1,4 +1,6 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.service;
+
+import com.bgreen.filips.bgreen.profile.model.IUserHandler;
 
 /**
  * Created by medioloco on 2015-09-29.

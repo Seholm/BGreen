@@ -1,14 +1,12 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 /**
  * Created by medioloco on 2015-09-28.
  */
-public class Profile implements IProfile, Serializable {
+public class Profile implements IProfile {
     private String firstName;
     private String lastName;
     private String email;

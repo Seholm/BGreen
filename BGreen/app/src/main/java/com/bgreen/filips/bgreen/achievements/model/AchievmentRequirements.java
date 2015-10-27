@@ -1,9 +1,6 @@
 package com.bgreen.filips.bgreen.achievements.model;
 
-import com.bgreen.filips.bgreen.achievements.model.AchievementCategory;
-import com.bgreen.filips.bgreen.achievements.model.IAchievement;
-import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
-import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
 
 /**
  * Created by Filips on 10/26/2015.

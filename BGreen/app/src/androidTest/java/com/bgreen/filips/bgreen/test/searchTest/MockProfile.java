@@ -2,7 +2,7 @@ package com.bgreen.filips.bgreen.test.searchTest;
 
 import android.os.Parcel;
 
-import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
 
 public class MockProfile implements IProfile {
     String firstName;

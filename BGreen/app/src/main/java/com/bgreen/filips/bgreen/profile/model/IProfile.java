@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.model;
 
 import android.os.Parcelable;
 

@@ -1,4 +1,6 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.model;
+
+import com.bgreen.filips.bgreen.profile.model.IProfile;
 
 /**
  * Created by Filips on 10/26/2015.

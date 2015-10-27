@@ -8,8 +8,8 @@ import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.os.IBinder;
 
-import com.bgreen.filips.bgreen.profile.IUserHandler;
-import com.bgreen.filips.bgreen.profile.UserHandler;
+import com.bgreen.filips.bgreen.profile.model.IUserHandler;
+import com.bgreen.filips.bgreen.profile.model.UserHandler;
 import com.parse.Parse;
 
 import java.util.ArrayList;

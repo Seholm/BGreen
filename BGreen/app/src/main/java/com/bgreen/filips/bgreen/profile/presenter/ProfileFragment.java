@@ -1,8 +1,7 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.presenter;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
@@ -10,20 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.bgreen.filips.bgreen.achievements.presenter.AchievementFragment;
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.main.TabActivity;
+import com.bgreen.filips.bgreen.profile.model.ITransformer;
+import com.bgreen.filips.bgreen.profile.model.IUser;
+import com.bgreen.filips.bgreen.profile.model.User;
+import com.bgreen.filips.bgreen.profile.model.ValueTransformer;
+import com.bgreen.filips.bgreen.profile.service.IProfileService;
+import com.bgreen.filips.bgreen.profile.service.ProfileService;
 import com.squareup.picasso.Picasso;
-
-import java.lang.reflect.Field;
-import java.util.Observable;
-import java.util.Observer;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * A simple {@link Fragment} subclass.
- */
 
 public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener{
 

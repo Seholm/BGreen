@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.ValueTransformer;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
+import com.bgreen.filips.bgreen.profile.model.ValueTransformer;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

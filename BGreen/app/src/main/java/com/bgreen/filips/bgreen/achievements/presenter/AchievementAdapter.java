@@ -11,8 +11,8 @@ import com.bgreen.filips.bgreen.achievements.service.ImageLoadTask;
 import com.bgreen.filips.bgreen.achievements.model.AchievmentRequirements;
 import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
-import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.User;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
+import com.bgreen.filips.bgreen.profile.model.User;
 
 import java.util.List;
 import java.util.Observable;

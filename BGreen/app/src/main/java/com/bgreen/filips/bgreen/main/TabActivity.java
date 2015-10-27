@@ -6,7 +6,6 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
 import android.widget.FrameLayout;
@@ -26,12 +24,12 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.bgreen.filips.bgreen.achievements.presenter.AchievementFragment;
-import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
 
-import com.bgreen.filips.bgreen.profile.ProfileFragment;
+import com.bgreen.filips.bgreen.profile.presenter.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
 
-import com.bgreen.filips.bgreen.profile.ProfileHolder;
+import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
 import com.bgreen.filips.bgreen.search.ISearchModel;
 import com.bgreen.filips.bgreen.search.SearchModel;
 import com.bgreen.filips.bgreen.toplist.ToplistFragment;
@@ -39,7 +37,6 @@ import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 

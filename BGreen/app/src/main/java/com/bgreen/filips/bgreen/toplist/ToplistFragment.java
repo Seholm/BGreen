@@ -12,11 +12,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.ITransformer;
-import com.bgreen.filips.bgreen.profile.ProfileHolder;
-import com.bgreen.filips.bgreen.profile.ProfileService;
-import com.bgreen.filips.bgreen.profile.ValueTransformer;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
+import com.bgreen.filips.bgreen.profile.model.ITransformer;
+import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
+import com.bgreen.filips.bgreen.profile.service.ProfileService;
+import com.bgreen.filips.bgreen.profile.model.ValueTransformer;
 import com.parse.ParseException;
 import com.squareup.picasso.Picasso;
 

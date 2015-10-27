@@ -16,8 +16,8 @@ import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
 import com.bgreen.filips.bgreen.achievements.service.AchievementService;
 import com.bgreen.filips.bgreen.achievements.service.IAchievementService;
-import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.User;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
+import com.bgreen.filips.bgreen.profile.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -1,5 +1,7 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.model;
 
+
+import com.bgreen.filips.bgreen.profile.model.ITransformer;
 
 public class ValueTransformer implements ITransformer {
     private String temp = "";

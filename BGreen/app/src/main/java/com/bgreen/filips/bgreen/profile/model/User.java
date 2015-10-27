@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.profile;
+package com.bgreen.filips.bgreen.profile.model;
 
 /**
  * Created by medioloco on 2015-10-01.
