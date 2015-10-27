@@ -1,7 +1,4 @@
-<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/profile_swipe_refresh"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,6 +7,18 @@
     android:layout_height="match_parent"
     tools:context="com.bgreen.filips.bgreen.profile.ProfileFragment"
     android:background="@drawable/ecodriving03">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/profile_swipe_refresh1"
+        >
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
             xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -23,26 +32,49 @@
             android:layout_marginTop="20dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/textView_profileFragment_name"
-            android:id="@+id/profile_textView"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginTop="136dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/textView_profileFragment_name"
+        android:id="@+id/profile_textView"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="136dp" />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/textView_profileFragment_distance_ranking"
-            android:id="@+id/profile_Ranking_Distance_TextView"
-            android:layout_gravity="center_horizontal|top"
-            android:layout_marginTop="176dp"
-            android:textStyle="bold"
-            android:textSize="25dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/textView_profileFragment_distance_ranking"
+        android:id="@+id/profile_Ranking_Distance_TextView"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_marginTop="176dp"
+        android:textStyle="bold"
+        android:textSize="25dp" />
 
         <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#8BCE40"
+            android:layout_marginLeft="65dp"
+            android:layout_marginRight="65dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="185dp"
+            android:elevation="6dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_gravity="center"
+                android:text="Large Text"
+                android:id="@+id/profile_carbondioxide_calculator"
+                android:textStyle="bold" />
+
+        </FrameLayout>
+
+    </FrameLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <FrameLayout
             android:id="@+id/achivement_fragment"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -50,28 +82,5 @@
             android:background="@color/background_stripe">
         </FrameLayout>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#8BCE40"
-        android:layout_marginLeft="65dp"
-        android:layout_marginRight="65dp"
-        android:layout_gravity="bottom"
-        android:layout_marginBottom="185dp"
-        android:elevation="6dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:layout_gravity="center"
-            android:text="Large Text"
-            android:id="@+id/profile_carbondioxide_calculator"
-            android:textStyle="bold" />
-
-    </FrameLayout>
-
-
-
 </FrameLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
+
