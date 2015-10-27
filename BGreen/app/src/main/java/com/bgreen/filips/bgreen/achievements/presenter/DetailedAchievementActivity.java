@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.achievements.model.AchievementHolder;
 import com.bgreen.filips.bgreen.achievements.model.AchievmentRequirements;
 import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
@@ -31,19 +32,26 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     private Button getRewardButton;
     private int achievemntPosition;
 
-    private List<IAchievement> achievementList = new ArrayList<>();
     private IAchievementService achievementService = new AchievementService();
     private IAchievement achievement;
+    private AchievementHolder achievementHolder = AchievementHolder.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_achievement);
-
+        if (achievementHolder.getAchievementList().size() == 0 ||
+                achievementHolder.getAchievementList() == null){
+            try{
+                achievementHolder.setAchievementList(achievementService.getAllAchievements());
+            }catch (Exception e){
+                //TODO: fixa display error
+            }
+        }
+        achievementHolder.getAchievementList();
         bundle = getIntent().getExtras();
-        achievementList = achievementService.getAllAchievements();
         achievemntPosition = bundle.getInt("ACHIEVMENT");
-        achievement = achievementList.get(achievemntPosition);
+        achievement = achievementHolder.getAchievementList().get(achievemntPosition);
 
         displayAchievmentDetails();
     }

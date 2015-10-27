@@ -42,7 +42,11 @@ public class AchievementFragment extends Fragment implements IDisplayAchivment {
 
         myInflatedView = inflater.inflate(R.layout.fragment_achievement, container, false);
 
-        achievementList = achievementService.getAllAchievements();
+        try {
+            achievementList = achievementService.getAllAchievements();
+        }catch (Exception e){
+
+        }
 
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView = (RecyclerView) myInflatedView.findViewById(R.id.recycler_view_achievement);
