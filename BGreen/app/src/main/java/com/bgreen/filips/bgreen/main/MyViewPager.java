@@ -42,4 +42,7 @@ public class MyViewPager extends ViewPager {
     public void setEnabledSwipe(boolean enabled) {
         mIsEnabledSwipe = enabled;
     }
+    public boolean getEnabledSwipe(){
+        return mIsEnabledSwipe;
+    }
 }

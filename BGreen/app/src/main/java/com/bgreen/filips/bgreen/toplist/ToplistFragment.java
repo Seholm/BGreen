@@ -32,7 +32,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
     private ITransformer transformer;
-
+    private boolean flipEnabled = true;
     private List<IProfile> profiles = new ArrayList<>();
     View cardBack;
     View cardFace;
@@ -90,47 +90,49 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
 
     @Override
     public void flipCard(int position) {
+        if(flipEnabled==true){
+            if(position>=0) {
+                TextView targetProfileName = (TextView) myInflatedView.findViewById
+                        (R.id.targetprofile_name_textView);
+                TextView targetProfileDistance = (TextView) myInflatedView.findViewById
+                        (R.id.targetprofile_Ranking_Distance_TextView);
+                CircleImageView targetProfilePicture =
+                        (CircleImageView)myInflatedView.findViewById(R.id.targetprofile_image);
+                TextView targetProfileCarbonCalc =
+                        (TextView) myInflatedView.findViewById(R.id.targetprofile_carbon_calculator);
 
-        if(position>=0) {
-            TextView targetProfileName = (TextView) myInflatedView.findViewById
-                    (R.id.targetprofile_name_textView);
-            TextView targetProfileDistance = (TextView) myInflatedView.findViewById
-                    (R.id.targetprofile_Ranking_Distance_TextView);
-            CircleImageView targetProfilePicture =
-                    (CircleImageView)myInflatedView.findViewById(R.id.targetprofile_image);
-            TextView targetProfileCarbonCalc =
-                    (TextView) myInflatedView.findViewById(R.id.targetprofile_carbon_calculator);
-
-            Picasso.with(getContext()).load(changeSizeOnURLImage(profiles.get(position).
-                    getImageURL())).into(targetProfilePicture);
-            targetProfileDistance.setText("#" + profiles.get(position).getPlacement() +
-                    "  "+"Distans: " + transformer.distanceTransformer(profiles.get(position).getTotalDistance()));
-            targetProfileName.setText(profiles.get(position).getFirstName() + " " +
-                    profiles.get(position).getLastName());
-            targetProfileCarbonCalc.setText(transformer.calculateSpill(profiles.
-                    get(position).getTotalDistance()));
-            mswipeRefresh.setEnabled(false);
-        }
-
-        View rootLayout = getActivity().findViewById(R.id.toplist_top_container);
-        cardFace= myInflatedView.findViewById(R.id.toplist_fragment1);
-        //cardFace = getActivity().findViewById(R.id.toplist_fragment1);
-        cardBack = myInflatedView.findViewById(R.id.targetprofile_framelayout);
-        //cardBack = getActivity().findViewById(R.id.targetprofile_framelayout);
-        cardBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                flipCard(-1);
-                mswipeRefresh.setEnabled(true);
+                Picasso.with(getContext()).load(changeSizeOnURLImage(profiles.get(position).
+                        getImageURL())).into(targetProfilePicture);
+                targetProfileDistance.setText("#" + profiles.get(position).getPlacement() +
+                        "  "+"Distans: " + transformer.distanceTransformer(profiles.get(position).getTotalDistance()));
+                targetProfileName.setText(profiles.get(position).getFirstName() + " " +
+                        profiles.get(position).getLastName());
+                targetProfileCarbonCalc.setText(transformer.calculateSpill(profiles.
+                        get(position).getTotalDistance()));
+                mswipeRefresh.setEnabled(false);
             }
-        });
 
-        FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
-        if (cardFace.getVisibility() == View.GONE)
-        {
-            flipAnimation.reverse();
+            View rootLayout = getActivity().findViewById(R.id.toplist_top_container);
+            cardFace= myInflatedView.findViewById(R.id.toplist_fragment1);
+            //cardFace = getActivity().findViewById(R.id.toplist_fragment1);
+            cardBack = myInflatedView.findViewById(R.id.targetprofile_framelayout);
+            //cardBack = getActivity().findViewById(R.id.targetprofile_framelayout);
+            cardBack.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    flipCard(-1);
+                    mswipeRefresh.setEnabled(true);
+                }
+            });
+
+            FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
+            if (cardFace.getVisibility() == View.GONE)
+            {
+                flipAnimation.reverse();
+            }
+            rootLayout.startAnimation(flipAnimation);
         }
-        rootLayout.startAnimation(flipAnimation);
+
     }
 
     @Override
@@ -151,5 +153,12 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
         String temp = s.substring(0,s.length()-2);
         temp = temp + "150";
         return temp;
+    }
+
+    public void disableFlip(){
+        flipEnabled = false;
+    }
+    public void enableFlip(){
+        flipEnabled = true;
     }
 }

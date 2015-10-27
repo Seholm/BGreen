@@ -43,10 +43,10 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
 
     private boolean popupAchivmentShow;
-
+    private int currentPage;
 
     private MyViewPager viewPager;
-    private Fragment originalTopList = new ToplistFragment();
+    private ToplistFragment originalTopList = new ToplistFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,12 +69,20 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position<1) {
+                if (position<1&&viewPager.getEnabledSwipe()==true) {
 
 
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    originalTopList.enableFlip();
+                    fragmentTransaction.replace(R.id.toplist_top_container, originalTopList);
+                    fragmentTransaction.addToBackStack(null);
 
+                    fragmentTransaction.commit();
+                }else if(position<1&& viewPager.getEnabledSwipe()==false){
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    originalTopList.disableFlip();
                     fragmentTransaction.replace(R.id.toplist_top_container, originalTopList);
                     fragmentTransaction.addToBackStack(null);
 
@@ -84,7 +92,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void onPageSelected(int position) {
-
+                currentPage = position;
             }
 
             @Override
@@ -96,7 +104,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private ViewPagerAdapter adapter;
-    private Fragment toplistFragment;
+    private ToplistFragment toplistFragment;
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -133,10 +141,20 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     viewPager.setEnabledSwipe(false);
+                    ToplistFragment f = (ToplistFragment)getSupportFragmentManager().findFragmentById(R.id.toplist_top_container);
+                    f.disableFlip();
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                    fragmentTransaction.replace(R.id.toplist_top_container, f);
+
+
+
+                    fragmentTransaction.commit();
 
                 }else{
                     viewPager.setEnabledSwipe(true);
-                    menu.findItem(R.id.search).collapseActionView();
+
                 }
             }
         });
@@ -170,14 +188,14 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 bundle.putInt("Storlek", searchList.size());
 
-                Fragment newTopList = ToplistFragment.newInstance(bundle);
-
+                ToplistFragment newTopList = ToplistFragment.newInstance(bundle);
+                newTopList.enableFlip();
                 android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-                fragmentTransaction.replace(R.id.toplist_top_container, newTopList, "hej");
+                fragmentTransaction.replace(R.id.toplist_top_container, newTopList);
 
-                fragmentTransaction.addToBackStack("tag_toplist_fragment");
+
 
                 fragmentTransaction.commit();
                 searchView.clearFocus();
@@ -254,11 +272,14 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed(){
+        if(currentPage==1){
+            viewPager.setCurrentItem(0);
 
-        finish();
-        System.exit(0);
+        }else{
 
-
+            finish();
+            System.exit(0);
+        }
     }
 
 
