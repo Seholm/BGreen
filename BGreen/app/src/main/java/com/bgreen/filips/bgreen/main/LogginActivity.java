@@ -15,16 +15,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
-import com.bgreen.filips.bgreen.profile.IUser;
-import com.bgreen.filips.bgreen.profile.IUserHandler;
-import com.bgreen.filips.bgreen.profile.ProfileHolder;
-import com.bgreen.filips.bgreen.profile.ProfileService;
-import com.bgreen.filips.bgreen.profile.User;
-import com.bgreen.filips.bgreen.profile.UserHandler;
+import com.bgreen.filips.bgreen.buslogging.reciever.MinuteReciever;
+import com.bgreen.filips.bgreen.profile.model.IUser;
+import com.bgreen.filips.bgreen.profile.model.IUserHandler;
+import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
+import com.bgreen.filips.bgreen.profile.service.ProfileService;
+import com.bgreen.filips.bgreen.profile.model.User;
+import com.bgreen.filips.bgreen.profile.model.UserHandler;
+import com.bgreen.filips.bgreen.profile.utils.ErrorHandler;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,6 +32,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.parse.Parse;
+import com.parse.ParseException;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -65,6 +66,8 @@ public class LogginActivity extends AppCompatActivity implements
     private IUser user = User.getInstance();
     private boolean loadingDone = false;
 
+    private ErrorHandler errorHandler = new ErrorHandler(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -80,7 +83,9 @@ public class LogginActivity extends AppCompatActivity implements
         try {
             Parse.enableLocalDatastore(this);
             Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
-        }catch (Exception e){}
+        }catch (Exception e){
+            errorHandler.displayError(e.getMessage());
+        }
 
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -230,7 +235,7 @@ public class LogginActivity extends AppCompatActivity implements
             } else {
                 // Could not resolve the connection result, show the user an
                 // error dialog.
-                //TODO;showErrorDialog(connectionResult);
+                errorHandler.displayError("could not establish connection to Google+");
             }
         } else {
             //TODO;Show the signed-out UI
@@ -242,15 +247,27 @@ public class LogginActivity extends AppCompatActivity implements
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
 
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-            pService.fetchAllProfiles();
+            try {
+                pService.fetchAllProfiles();
+            } catch (ParseException e) {
+                errorHandler.displayError(e.getMessage());
+            }
             if(handler.getUserID() != null){
-                pService.startUpFetchOfUser(handler.getUserID(), handler);
+                try {
+                    pService.startUpFetchOfUser(handler.getUserID(), handler);
+                } catch (ParseException e) {
+                    errorHandler.displayError(e.getMessage());
+                }
             }else {
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
                         0, 0, currentPerson.getImage().getUrl());
-                pService.saveProfileIfNew(handler);
+                try {
+                    pService.saveProfileIfNew(handler);
+                } catch (ParseException e) {
+                    errorHandler.displayError(e.getMessage());
+                }
             }
             System.out.println(User.getInstance().getPlacement());
             if(loadingDone) {
@@ -262,21 +279,17 @@ public class LogginActivity extends AppCompatActivity implements
             }
 
         }else{
-
             System.out.println("****CURRENT PERSON IS NULL*****");
         }
     }
 
     private void checkPermissions(String permission){
-
         if (ContextCompat.checkSelfPermission(this,
                 permission)
                 != PackageManager.PERMISSION_GRANTED){
-
                 // request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{permission}, 0);
-
         }
 
     }
@@ -284,12 +297,10 @@ public class LogginActivity extends AppCompatActivity implements
     @Override
     public void update(Observable observable, Object data) {
         if(loadingDone) {
-            System.out.println("2");
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
             startActivity(tabActivityIntent);
             finish();
         }else {
-            System.out.println("1");
             loadingDone = true;
         }
     }

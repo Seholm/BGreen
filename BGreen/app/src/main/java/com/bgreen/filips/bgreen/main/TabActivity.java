@@ -6,7 +6,6 @@ import android.content.Context;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -17,7 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 
 import android.widget.FrameLayout;
@@ -25,13 +23,13 @@ import android.widget.FrameLayout;
 
 import android.widget.Toast;
 
-import com.bgreen.filips.bgreen.achievements.AchievementFragment;
-import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.achievements.presenter.AchievementFragment;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
 
-import com.bgreen.filips.bgreen.profile.ProfileFragment;
+import com.bgreen.filips.bgreen.profile.presenter.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
 
-import com.bgreen.filips.bgreen.profile.ProfileHolder;
+import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
 import com.bgreen.filips.bgreen.search.ISearchModel;
 import com.bgreen.filips.bgreen.search.SearchModel;
 import com.bgreen.filips.bgreen.toplist.ToplistFragment;
@@ -39,17 +37,16 @@ import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 
 
 
     private boolean popupAchivmentShow;
-
+    private int currentPage;
 
     private MyViewPager viewPager;
-    private Fragment originalTopList = new ToplistFragment();
+    private ToplistFragment originalTopList = new ToplistFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +69,20 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                if (position<1) {
+                if (position<1&&viewPager.getEnabledSwipe()==true) {
 
 
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    originalTopList.enableFlip();
+                    fragmentTransaction.replace(R.id.toplist_top_container, originalTopList);
+                    fragmentTransaction.addToBackStack(null);
 
+                    fragmentTransaction.commit();
+                }else if(position<1&& viewPager.getEnabledSwipe()==false){
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                    originalTopList.disableFlip();
                     fragmentTransaction.replace(R.id.toplist_top_container, originalTopList);
                     fragmentTransaction.addToBackStack(null);
 
@@ -87,7 +92,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
             @Override
             public void onPageSelected(int position) {
-
+                currentPage = position;
             }
 
             @Override
@@ -99,7 +104,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     }
 
     private ViewPagerAdapter adapter;
-    private Fragment toplistFragment;
+    private ToplistFragment toplistFragment;
     private void setupViewPager(ViewPager viewPager) {
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
@@ -136,10 +141,20 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
                     viewPager.setEnabledSwipe(false);
+                    ToplistFragment f = (ToplistFragment)getSupportFragmentManager().findFragmentById(R.id.toplist_top_container);
+                    f.disableFlip();
+                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                    android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
+                    fragmentTransaction.replace(R.id.toplist_top_container, f);
+
+
+
+                    fragmentTransaction.commit();
 
                 }else{
                     viewPager.setEnabledSwipe(true);
-                    menu.findItem(R.id.search).collapseActionView();
+
                 }
             }
         });
@@ -173,14 +188,14 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
                 }
                 bundle.putInt("Storlek", searchList.size());
 
-                Fragment newTopList = ToplistFragment.newInstance(bundle);
-
+                ToplistFragment newTopList = ToplistFragment.newInstance(bundle);
+                newTopList.enableFlip();
                 android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
 
-                fragmentTransaction.replace(R.id.toplist_top_container, newTopList, "hej");
+                fragmentTransaction.replace(R.id.toplist_top_container, newTopList);
 
-                fragmentTransaction.addToBackStack("tag_toplist_fragment");
+
 
                 fragmentTransaction.commit();
                 searchView.clearFocus();
@@ -257,11 +272,14 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed(){
+        if(currentPage==1){
+            viewPager.setCurrentItem(0);
 
-        finish();
-        System.exit(0);
+        }else{
 
-
+            finish();
+            System.exit(0);
+        }
     }
 
 
