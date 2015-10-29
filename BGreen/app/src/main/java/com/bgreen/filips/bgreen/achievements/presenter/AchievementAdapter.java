@@ -19,11 +19,16 @@ import java.util.Observable;
 import java.util.Observer;
 
 /**
+ * Adapter that creates imagesViews based on the
+ * list size of achievements from the database
+ *
  * Created by Albertsson on 15-10-26.
  */
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementHolder> implements Observer {
 
+    //List of Achievements
     private List<IAchievement> achievements;
+    //interface used to not have circulair dependencies
     IDisplayAchivment idisplayAchievement;
     IAchievmentRequirements achievmentRequirements;
     IProfile profile;
@@ -32,6 +37,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
     public void update(Observable observable, Object data) {
     }
 
+    //Class used to recive the component used for the view
     public class AchievementHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
 
@@ -57,9 +63,11 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         return vh;
     }
 
+    //creates the object in the view and sets a clickListner
     @Override
     public void onBindViewHolder(AchievementHolder holder, final int position) {
         holder.imageView.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 idisplayAchievement.displayAchievement(position);
@@ -73,6 +81,7 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         //image for locked achievement
         else{
             new ImageLoadTask(achievements.get(position).getImgURL(), holder.imageView).execute();
+            //Sets the opacity to 30 % on the imageView
             holder.imageView.setAlpha(0.3f);
         }
     }
