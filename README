@@ -11,7 +11,10 @@ SDK targets:
  -Target SDK: 23
 
 Building and installing:
-....Seholmo pls
+To install the application open the terminal and go to the location to where your \sdk\platform-tools\ 
+is located and run the command: adb -d install YOUR\PATH\TO\APK 
+
+YOUR\PATH\TO\APK = where in the project the app-realease.apk is located, in our case PATHTOPROJECT\BGreen\app\app-realease.apk
 
 Team members:
  -Isaac Gonzalez
