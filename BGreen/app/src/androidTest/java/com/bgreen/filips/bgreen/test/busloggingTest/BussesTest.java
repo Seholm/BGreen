@@ -16,6 +16,7 @@ public class BussesTest extends InstrumentationTestCase {
     IBusses busses;
 
     public void testDoesBusExist(){
+        //tests if the given bssid exists
         busses = new Busses();
         assertTrue(busses.doesBusExist("04:f0:21:10:09:e8"));
         assertTrue(busses.doesBusExist("04:f0:21:10:09:53"));
@@ -29,6 +30,7 @@ public class BussesTest extends InstrumentationTestCase {
 
     }
     public void testDoesBusExistList(){
+        //tests if there exists a buss within a list of bssids
         busses = new Busses();
         List<String> busList= new ArrayList<>();
         busList.add("Test");
