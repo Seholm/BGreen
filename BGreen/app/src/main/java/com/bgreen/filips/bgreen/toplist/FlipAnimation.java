@@ -11,6 +11,9 @@ import android.view.animation.Transformation;
  * Created by Filips on 10/3/2015.
  */
 public class FlipAnimation extends Animation {
+    //A class that changes a view from one view to another, with an animation that rotates the card 180 degrees (flips it)
+    //taken from github
+
     private Camera camera;
 
     private View fromView;
@@ -25,7 +28,7 @@ public class FlipAnimation extends Animation {
         this.fromView = fromView;
         this.toView = toView;
 
-        setDuration(200);
+        setDuration(200); //sets the speed of the flip animation
         setFillAfter(false);
         setInterpolator(new AccelerateDecelerateInterpolator());
     }
