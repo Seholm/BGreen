@@ -3,10 +3,12 @@ package com.bgreen.filips.bgreen.achievements.model;
 import com.bgreen.filips.bgreen.profile.model.IProfile;
 
 /**
+ * Class that checks if a user has completed the requirements for an Achievement.
  * Created by Filips on 10/26/2015.
  */
 public class AchievmentRequirements implements IAchievmentRequirements {
 
+    //gets the
     public boolean checkAchivment(IProfile profile,IAchievement achievement){
         if(achievement.getCategory() == AchievementCategory.DISTANCE){
             if(profile.getTotalDistance()>=achievement.getRequirement()){
@@ -25,6 +27,7 @@ public class AchievmentRequirements implements IAchievmentRequirements {
         return false;
     }
 
+    //gets progress in percentage
     public double checkAchivmentProgress(IProfile profile,IAchievement achievement) {
         if (achievement.getCategory() == AchievementCategory.DISTANCE) {
             if (profile.getTotalDistance() < achievement.getRequirement()) {
