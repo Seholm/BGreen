@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Observable;
 
 /**
+ * Singleton class that contains all Profiles.
  * Created by medioloco on 2015-10-02.
  */
 public class ProfileHolder extends Observable {
@@ -29,16 +30,10 @@ public class ProfileHolder extends Observable {
         profiles.clear();
         profiles.addAll(list);
         sortTopList();
-        for (IProfile profile : profiles) {
-            if (User.getInstance().getEmail().equals(profile.getEmail())){
-                User.getInstance().setUser(profile.getFirstName(), profile.getLastName(),
-                        profile.getEmail(), profile.getTotalDistance(), profile.getBusTrips(),
-                        profile.getImageURL());
-            }
-        }
-        System.out.println(User.getInstance().getPlacement());
+
+        //if this is the first time this method has been called, then notify
+        //our observer (LogginActivity).
         if(startUp){
-            System.out.println("STARTUP");
             setChanged();
             notifyObservers();
             startUp = false;
@@ -49,6 +44,7 @@ public class ProfileHolder extends Observable {
         return this.profiles;
     }
 
+    //sort the list of profiles on distance descending
     public void sortTopList(){
 
         Collections.sort(profiles, new Comparator<IProfile>() {
@@ -60,6 +56,7 @@ public class ProfileHolder extends Observable {
         });
 
         int i = 1;
+        //sets the right placement for the user
         for(IProfile p: profiles){
             if(p.getParseID().equals(User.getInstance().getParseID())){
                 User.getInstance().setPlacement(i);

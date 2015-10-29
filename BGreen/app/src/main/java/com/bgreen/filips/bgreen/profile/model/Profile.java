@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
+ * Model class for Profile
  * Created by medioloco on 2015-09-28.
  */
 public class Profile implements IProfile {
@@ -111,8 +112,8 @@ public class Profile implements IProfile {
     }
 
 
-
-
+    //following methods is required to make Profile be able to be
+    // sent between Activities or fragments
 
     protected Profile(Parcel in) {
         firstName = in.readString();

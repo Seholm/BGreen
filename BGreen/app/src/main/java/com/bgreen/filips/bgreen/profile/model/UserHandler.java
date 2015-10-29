@@ -11,7 +11,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 /**
- * this class is intended to save a users ID as a string to a .txt file
+ * this class is intended to save a users ID as a string to a .txt file.
+ * The ID is a unique String given by our DB when we save an Object.
+ * By having the ID of a user already on startup we can easily fetch it from our DB.
  * Created by medioloco on 2015-09-22.
  */
 public class UserHandler implements IUserHandler {

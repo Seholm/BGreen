@@ -17,11 +17,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Here all the communication (concerning Profiles) with Parse DB is handled
  * Created by medioloco on 2015-09-22.
  */
 public class ProfileService implements IProfileService {
 
-    private IUser user = User.getInstance();
+    private IUser user;
+    //constant "key" Strings
     private final String FIRST_NAME = "FirstName";
     private final String LAST_NAME = "LastName";
     private final String EMAIL = "Email";
@@ -30,20 +32,25 @@ public class ProfileService implements IProfileService {
     private final String IMAGE_URL = "ImageURL";
     private final String USER = "User";
 
+    //Saves a new Profile as an Object in Parse DB
+    //Creates a ParseObject and makes it similar to a User
     private void saveNewProfile(IUserHandler handler) throws ParseException{
         ParseObject parseProfile = new ParseObject(USER);
         setParseProfile(user, parseProfile);
         uploadToParse(parseProfile, handler);
     }
 
+    //Checks if user exists in DB, and then uses it. Else saves a new user.
+    //this method is made to prevent duplicated Users.
     @Override
-    public void saveProfileIfNew(final IUserHandler handler) throws ParseException{
+    public void saveProfileIfNew(final IUserHandler handler, final IUser user) throws ParseException{
+        this.user = user;
         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(USER);
         query.whereEqualTo(EMAIL, user.getEmail());
         try {
             ParseObject p = query.getFirst();
             if(p != null){
-                startUpFetchOfUser(p.getObjectId(), handler);
+                startUpFetchOfUser(p.getObjectId(), handler, user);
             }
         } catch (ParseException e) {
             if(e.getCode() == ParseException.OBJECT_NOT_FOUND)
@@ -80,6 +87,7 @@ public class ProfileService implements IProfileService {
         });
     }
 
+    //fetch a specific user given an ID. In Parse each ParseObject has its own specific ObjectID
     @Override
     public void fetchProfileOfUser(final String ID, final IUserHandler handler)
             throws ParseException{
@@ -94,6 +102,7 @@ public class ProfileService implements IProfileService {
         });
     }
 
+    //Fetch all existing profiles
     @Override
     public void fetchAllProfiles() throws ParseException{
         ParseQuery<ParseObject> query = ParseQuery.getQuery(USER);
@@ -118,11 +127,15 @@ public class ProfileService implements IProfileService {
         });
     }
 
-    public void startUpFetchOfUser(final String ID, IUserHandler handler) throws ParseException{
+    @Override
+    public void startUpFetchOfUser(final String ID, IUserHandler handler, IUser user)
+            throws ParseException{
+        this.user = user;
         ParseQuery<ParseObject> query = ParseQuery.getQuery(USER);
         writeToUser(query.get(ID), handler);
     }
 
+    //writes fetched user-data to user.
     private void writeToUser(ParseObject parseObject, IUserHandler handler) {
         user.setUser(parseObject.getString(FIRST_NAME),
                 parseObject.getString(LAST_NAME),
@@ -131,6 +144,7 @@ public class ProfileService implements IProfileService {
                 parseObject.getInt(BUS_TRIPS),
                 parseObject.getString(IMAGE_URL));
         user.setParseID(parseObject.getObjectId());
+        //needs to be written to file for next login
         handler.writeToFile(user.getParseID());
     }
 

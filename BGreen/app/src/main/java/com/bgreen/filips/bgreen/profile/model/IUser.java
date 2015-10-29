@@ -3,6 +3,7 @@ package com.bgreen.filips.bgreen.profile.model;
 import com.bgreen.filips.bgreen.profile.model.IProfile;
 
 /**
+ * interface for User
  * Created by Filips on 10/26/2015.
  */
 public interface IUser extends IProfile {

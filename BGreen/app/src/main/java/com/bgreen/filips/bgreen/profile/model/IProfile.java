@@ -3,6 +3,8 @@ package com.bgreen.filips.bgreen.profile.model;
 import android.os.Parcelable;
 
 /**
+ * interface for Profile. Extends Parcelable to make it able to be sent
+ * from one activity to another or to a fragment.
  * Created by medioloco on 2015-09-29.
  */
 public interface IProfile extends Parcelable{
