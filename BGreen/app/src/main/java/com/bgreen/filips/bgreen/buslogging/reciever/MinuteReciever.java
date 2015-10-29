@@ -24,17 +24,16 @@ public class MinuteReciever extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         WifiManager wifiManager=(WifiManager)context.getSystemService(Context.WIFI_SERVICE);
         List<ScanResult> wifiScanList = wifiManager.getScanResults();
-        System.out.println(wifiScanList.toString());
-        List<String> bssid= new ArrayList<>(); // A list containing mac-adresses
-        IBusses busses = new Busses();
+        List<String> bssid= new ArrayList<>(); // A list containing BSSIDS
+        IBusses busses = new Busses(); //Represents info about the busses
 
         for (ScanResult result:wifiScanList  ){
-            //creates a list of all the MAC-adresses in the area
+            //creates a list of all the BSSIDS in the area
             bssid.add(result.BSSID);
         }
 
         if(busses.doesBusExist(bssid)){
-            // if any of the MAC-adresses is a Electrycity MAC-adress, start service
+            // if any of the BSSIDS is a Electrycity BSSID, start service
             Intent serviceIntent = new Intent(context,IdentifyTravelService.class);
             context.startService(serviceIntent);
         }

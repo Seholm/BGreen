@@ -27,6 +27,7 @@ public class RetrieveBusData extends AsyncTask <String,Void,String> {
                     .openConnection();
             con.setRequestMethod("GET");
             con.setRequestProperty("Authorization", key);
+            //Creates a URL connection towards the Electrycity API
 
             BufferedReader in = new BufferedReader(new InputStreamReader(
                     con.getInputStream()));
@@ -37,17 +38,15 @@ public class RetrieveBusData extends AsyncTask <String,Void,String> {
                 response.append(inputLine);
                 //adds all the resonpses to one string
             }
-            in.close();
+            in.close(); //closes the inputReader
             return parseRespnos(response.toString());
         }catch(IOException e ){
-            //TODO ISACS ERROR HANDLE DELUX PRO
-            e.printStackTrace();
+            return null; //null return is handled in class using this class
         }
-        return null;
     }
 
     private String getURL(String vin, String sensorSpec){
-        //builds the url with different vin and sensorspec
+        //builds the url with different vin(to identify which buss) and sensorspec (what value to ask for)
         long t2 = System.currentTimeMillis();
         long t1 = t2 - (1000 * 30);
         String url = "https://ece01.ericsson.net:4443/ecity?dgw=Ericsson$"+vin+"&sensorSpec=Ericsson$"+sensorSpec+"&t1="

@@ -22,15 +22,24 @@ import com.parse.Parse;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Created by Filips on 10/3/2015.
+ */
+
 public class IdentifyTravelService extends Service {
+
+    // a class that loops every 10 second when the user is on a buss, feeds data to a algorithm and sends data to the database
 
     private IBusses busses;
     private Handler handler;
-    private Runnable onBusTask;
-    private ICalculateTravelModel calculator;
+    private Runnable onBusTask; //runnable that loops every 10 second
+    private ICalculateTravelModel calculator; //algorithm that calculates the distance travelled
     private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
     private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
-    private IUserHandler userhandler;
+    private IUserHandler userhandler; //used to get the current user
+    private String nextStop;
+    private String rutt;
+    private boolean shouldILoop; //keeps track if this runnable should keep on running or not
 
     public IdentifyTravelService() {
     }
@@ -41,14 +50,14 @@ public class IdentifyTravelService extends Service {
         try {
             Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
         }catch (Exception e){
-            //Parse already initialized
+            //Parse already initialized, nothing should happen in that case
         }
 
         busses = new Busses();
         calculator = new CalculateTravelModel();
         userhandler = new UserHandler(this);
 
-        runTask();
+        runTask(); // starts the runnable that loops every 10 second when on a buss
 
     }
 
@@ -69,64 +78,51 @@ public class IdentifyTravelService extends Service {
 
             @Override
             public void run() {
-                boolean shouldILoop = true;
+                shouldILoop = true;
                 List<String> macAdresses = getBSSID(((WifiManager)getSystemService(Context.WIFI_SERVICE)).getScanResults());
+                // A list of all the BSSIDs in the area
                 if (busses.doesBusExist(macAdresses)) {
                     //if there is a ElectriCity bus in the area feed data to calculator and loop
-                    String nextStop = null;
-                    String rutt = null;
                     IDatabaseService service = new DatabaseService();
-                    try {
-                        nextStop =new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Next_Stop").get();
-                    }catch (Exception e){}
-                    try {
-                        rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
-                    }catch (Exception e){}
-                    System.out.println("rutt:" + rutt);
+                    setNextStopAndRoute(macAdresses);
                     if(rutt!=null) {
-                        if (rutt.equals("Ej i trafik")) {
-                            System.out.println("III EJ I TRAFIK");
-                            calculator.main(nextStop, rutt);
-                            System.out.println("FINAL RESULT ÄR:" +"  "+ calculator.getFinalResult());
-                            if(calculator.getFinalResult() >0) {
-                                System.out.println("III EJ I TRAFIK, SKA SPARA" + calculator.getFinalResult() + "PÅ DATABAS");
-                                service.saveBusTrip(calculator.getFinalResult(), userhandler.getUserID());
-                                calculator.clear();
-                                shouldILoop = false;
-                            }
-                        } else {
-                            System.out.println(nextStop);
-                            System.out.println(rutt);
-                            calculator.main(nextStop, rutt);
+                        if (rutt.equals("Ej i trafik")) { //this is a special case which happens rarely
+                            specialCaseOccured(service);
+                        } else { //This is the normal flow
+                            calculator.main(nextStop, rutt); //feeds data to the algorithm that calculates the distance
                         }
                     }
                     if(shouldILoop) {
-                        handler.postDelayed(this, 10000); //loops run method every 10 seconds
+                        handler.postDelayed(this, 10000); //tells the runnable to run again in 10 seconds
                     }else{
-                        stopSelf();
+                        stopSelf(); //kills the service if it shouldn't loop
                     }
-                } else { //if there is no busWifi nearby the process is done and data is sent to
-                    String nextStop = null;
-                    String rutt = null;
-                    try {
-                        nextStop =new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Next_Stop").get();
-                    }catch (Exception e){}
-                    try {
-                        rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
-                    }catch (Exception e){}
-                    System.out.println(nextStop);
-                    calculator.main(nextStop,rutt);
-                    System.out.println("DET ÄR OMÖJLIGT:" +calculator.getFinalResult());
+                } else { //if there is no busWifi nearby the process is done and data is sent to the database
+                    setNextStopAndRoute(macAdresses);
+                    calculator.main(nextStop,rutt); //feeds data to the algorithm that calculates
                     DatabaseService service = new DatabaseService();
                     service.saveBusTrip(calculator.getFinalResult(),userhandler.getUserID());
                     calculator.clear();
                     stopSelf();
+                    //saves data and kills the service
                 }
             }
         };
 
         handler = new Handler();
         handler.post(onBusTask);
+
+    }
+
+    private void setNextStopAndRoute(List<String> macAdresses){
+        try {
+            //get info from Electrycity API. about next stop
+            this.nextStop =new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Next_Stop").get();
+        }catch (Exception e){} //Nothing should happen since the service allways runs in the background whithout possibility to turn off
+        try {
+            //gets info from Electrycity API. about current route
+            this.rutt = new RetrieveBusData().execute(busses.getCurrentBus(macAdresses), "Journey_Info").get();
+        }catch (Exception e){} //Nothing should happen since the service allways runs in the background whithout possibility to turn off
 
     }
 
@@ -139,5 +135,17 @@ public class IdentifyTravelService extends Service {
             bssid.add(result.BSSID);
         }
         return bssid;
+    }
+
+    private void specialCaseOccured(IDatabaseService service){
+        //this happens when the buss changes route from lindholmen to chalmers or vice versa
+        calculator.main(nextStop, rutt); //feeds data to the algorithm that calculates the distance
+        if(calculator.getFinalResult() >0) {
+            service.saveBusTrip(calculator.getFinalResult(), userhandler.getUserID());
+            calculator.clear();
+            shouldILoop = false;
+            //saves to database and clears the algorithm and turns off the looping
+        }
+
     }
 }

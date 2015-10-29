@@ -1,0 +1,22 @@
+Dependecies:
+ -Parse SDK (our database service)
+ -Electricity API
+ -Google+ API
+ -Java 8 SE Development kit
+ -Android SDK
+
+SDK targets:
+ -Minimum SDK: 17
+ -Target SDK: 23
+
+Building and installing:
+....Seholmo pls
+
+Team members:
+ -Isaac Gonzalez
+ -Filip Slottner Seholm
+ -Carl Albertsson
+ -Filip Larsson
+ -Herman Carlström
+
+
