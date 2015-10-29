@@ -28,7 +28,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
     private List<IProfile> profiles;
     private Context context;
     private ValueTransformer transformer;
-    private IFlipcard flipper;
+    private IFlipcard flipper; //The Fragment this class should flip when pressed
 
     @Override
     public void update(Observable observable, Object data) {
@@ -77,13 +77,14 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
         holder.cvtest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                flipper.flipCard(position);
+                flipper.flipCard(position); //flips the card from the position given from the click
             }
         });
         holder.personName.setText(profiles.get(position).getFirstName() + " " +
                 profiles.get(position).getLastName());
         holder.personDistance.setText((transformer.distanceTransformer(profiles.get(position).
                 getTotalDistance())));
+        //uses the picasso dependencie to load image into the profile picture imageview
         Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
         holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));
     }

@@ -33,10 +33,10 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
     private ITransformer transformer;                   //value transformer for CO2 and meters
-    private boolean flipEnabled = true;
+    private boolean flipEnabled = true; // allows click on the toplist
     private List<IProfile> profiles = new ArrayList<>();
-    View cardBack;
-    View cardFace;
+    View cardBack; // represents the Layout not currently showing out of toplist and targetprofile
+    View cardFace; // represents the Layout currently showing out of toplist and targetprofile
 
     public ToplistFragment() {
         profiles = new ArrayList<>();
@@ -57,7 +57,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
         Bundle bundle = getArguments();
         int size=0;
         try{
-            size = bundle.getInt("Storlek");
+            size = bundle.getInt("Storlek"); //Incase bundle == null, do nothing
         }catch(java.lang.NullPointerException e){
         }
 
@@ -95,7 +95,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
     @Override
     public void flipCard(int position) {
         if(flipEnabled==true){
-            if(position>=0) {
+            if(position>=0) { //if there is a click from the toplist
                 TextView targetProfileName = (TextView) myInflatedView.findViewById
                         (R.id.targetprofile_name_textView);
                 TextView targetProfileDistance = (TextView) myInflatedView.findViewById
@@ -107,28 +107,29 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
 
                 Picasso.with(getContext()).load(changeSizeOnURLImage(profiles.get(position).
                         getImageURL())).into(targetProfilePicture);
+                //uses the picasso dependencie to load image into the profile picture imageview
                 targetProfileDistance.setText("#" + profiles.get(position).getPlacement() +
                         "  "+"Distans: " + transformer.distanceTransformer(profiles.get(position).getTotalDistance()));
                 targetProfileName.setText(profiles.get(position).getFirstName() + " " +
                         profiles.get(position).getLastName());
                 targetProfileCarbonCalc.setText(transformer.calculateSpill(profiles.
                         get(position).getTotalDistance()));
-                mswipeRefresh.setEnabled(false);
+                mswipeRefresh.setEnabled(false); // disables the refresh so it isn't actice on the target profile view
             }
 
             View rootLayout = getActivity().findViewById(R.id.toplist_top_container);
             cardFace= myInflatedView.findViewById(R.id.toplist_fragment1);
-            //cardFace = getActivity().findViewById(R.id.toplist_fragment1);
             cardBack = myInflatedView.findViewById(R.id.targetprofile_framelayout);
-            //cardBack = getActivity().findViewById(R.id.targetprofile_framelayout);
             cardBack.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //sets onclicklistner on the profile view when it's showing, sends values -1 to set up toplist next click
                     flipCard(-1);
-                    mswipeRefresh.setEnabled(true);
+                    mswipeRefresh.setEnabled(true); //enables the swipe when the toplist is about to show
                 }
             });
 
+            //does the flip animation
             FlipAnimation flipAnimation = new FlipAnimation(cardFace, cardBack);
             if (cardFace.getVisibility() == View.GONE)
             {
@@ -147,8 +148,8 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
             Fragment newTopList = new ToplistFragment();
             android.support.v4.app.FragmentManager fm = getActivity().getSupportFragmentManager();
             android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
-            fragmentTransaction.replace(R.id.toplist_top_container, newTopList,"hej");
-            fragmentTransaction.addToBackStack("tag_toplist_fragment");
+            fragmentTransaction.replace(R.id.toplist_top_container, newTopList);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
             mswipeRefresh.setRefreshing(false);
         }
