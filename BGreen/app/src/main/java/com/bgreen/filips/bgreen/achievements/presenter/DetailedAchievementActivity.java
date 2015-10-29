@@ -32,7 +32,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     private TextView setProgressPercentage;
     private Button getRewardButton;
     private int achievemntPosition;
-    
+
     private IAchievement achievement;
     private AchievementHolder achievementHolder = AchievementHolder.getInstance();
 

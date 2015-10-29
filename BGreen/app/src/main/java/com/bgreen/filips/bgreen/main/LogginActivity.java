@@ -37,6 +37,7 @@ import com.parse.ParseException;
 import java.util.Observable;
 import java.util.Observer;
 
+
 public class LogginActivity extends AppCompatActivity implements
         GoogleApiClient.ConnectionCallbacks,
         GoogleApiClient.OnConnectionFailedListener,

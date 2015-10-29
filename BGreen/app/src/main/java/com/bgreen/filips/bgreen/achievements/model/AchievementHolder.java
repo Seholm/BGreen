@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Singleton that holds all the Achievements fetched from our database.
  * Created by medioloco on 2015-10-27.
  */
 public class AchievementHolder {
@@ -18,7 +19,7 @@ public class AchievementHolder {
     }
 
     private AchievementHolder(){
-
+        //singleton
     }
 
     public void setAchievementList(List<IAchievement> list){

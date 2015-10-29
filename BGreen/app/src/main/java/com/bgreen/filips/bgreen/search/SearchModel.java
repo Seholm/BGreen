@@ -14,10 +14,10 @@ public class SearchModel implements ISearchModel {
     List<IProfile> resultList;
     List<IProfile> firstNameResultList;
     List<IProfile> lastNameResultList;
-    
+    private boolean searchDone = false;
 
     public List<IProfile> doSearch(String searchString, List<IProfile> profilesList){
-
+        searchDone=true;
         if(profilesList!=null){
 
             resultList = new ArrayList<IProfile>();
@@ -41,10 +41,10 @@ public class SearchModel implements ISearchModel {
             resultList = new ArrayList<>();
         }
 
-
+        //return a list with all searchresults
         return getResult();
     }
-
+    //Search through all firstnames
     private void searchFirstName(String[] searchString, List<IProfile> profilesList){
         firstNameResultList.clear();
         for(int i=0; i<searchString.length; i++){
@@ -60,7 +60,7 @@ public class SearchModel implements ISearchModel {
             }
         }
     }
-
+    //Search through all last names
     private void searchLastName(String[] searchString, List<IProfile> profilesList){
         lastNameResultList.clear();
         for (int i=0; i<searchString.length; i++){
@@ -111,5 +111,8 @@ public class SearchModel implements ISearchModel {
     private List<IProfile> getResult(){
         return resultList;
     }
-
+    //Method to see if searh has been done
+    public boolean isSearchDone(){
+        return searchDone;
+    }
 }

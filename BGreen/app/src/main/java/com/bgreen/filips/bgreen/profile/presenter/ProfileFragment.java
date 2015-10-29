@@ -40,6 +40,7 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
 
     }
 
+    //creates a profilefragment with an achievement fragment
     public static ProfileFragment newInstance(Fragment fragment){
 
         ProfileFragment newProfileFragment = new ProfileFragment();
@@ -61,17 +62,13 @@ public class ProfileFragment extends Fragment implements SwipeRefreshLayout.OnRe
         nameTextView = (TextView) myInflatedView.findViewById(R.id.profile_textView);
         profileCarbonCalc = (TextView) myInflatedView.findViewById(R.id.profile_carbondioxide_calculator);
 
-        //profileRefresh = (SwipeRefreshLayout) myInflatedView.findViewById(R.id.profile_swipe_refresh);
-        //profileRefresh.setOnRefreshListener(this);
-
-
-
+        //Adds the achievementfragment to the view
         if(achievementFragment!=null){
-
             FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
             transaction.add(R.id.achivement_fragment, achievementFragment).commit();
         }
 
+        //creates a swiperefresh
         profileRefresh = (SwipeRefreshLayout) myInflatedView.findViewById(R.id.profile_swipe_refresh1);
         profileRefresh.setOnRefreshListener(this);
         setProfileText();

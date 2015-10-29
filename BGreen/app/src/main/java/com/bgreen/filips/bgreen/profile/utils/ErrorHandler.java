@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 
 /**
- *
+ * makes an error dialog pop up to tell the user that something went wrong
  * Created by medioloco on 2015-10-27.
  */
 public class ErrorHandler {
