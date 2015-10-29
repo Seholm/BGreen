@@ -26,7 +26,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
     private List<IProfile> profiles;
     private Context context;
     private ValueTransformer transformer;
-    private IFlipcard flipper;
+    private IFlipcard flipper; 
 
     @Override
     public void update(Observable observable, Object data) {

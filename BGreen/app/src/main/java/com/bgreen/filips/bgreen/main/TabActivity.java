@@ -36,8 +36,6 @@ import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import java.util.ArrayList;
 import java.util.List;
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,7 +46,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     private final int POPUPACHIVMENT_SHOULD_NOT_SHOW = 10;
 
     private MyViewPager viewPager;
-    private ToplistFragment originalTopList = new ToplistFragment();
+    private ToplistFragment originalTopList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +55,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.tab_toolbar);
         setSupportActionBar(toolbar);
+        originalTopList = new ToplistFragment();
 
         final MyViewPager viewPager = (MyViewPager) findViewById(R.id.tab_viewpager);
 
