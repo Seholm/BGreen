@@ -15,16 +15,16 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.bgreen.filips.bgreen.R;
-import com.bgreen.filips.bgreen.buslogging.MinuteReciever;
-import com.bgreen.filips.bgreen.profile.IUser;
-import com.bgreen.filips.bgreen.profile.IUserHandler;
-import com.bgreen.filips.bgreen.profile.ProfileHolder;
-import com.bgreen.filips.bgreen.profile.ProfileService;
-import com.bgreen.filips.bgreen.profile.User;
-import com.bgreen.filips.bgreen.profile.UserHandler;
+import com.bgreen.filips.bgreen.buslogging.reciever.MinuteReciever;
+import com.bgreen.filips.bgreen.profile.model.IUser;
+import com.bgreen.filips.bgreen.profile.model.IUserHandler;
+import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
+import com.bgreen.filips.bgreen.profile.service.ProfileService;
+import com.bgreen.filips.bgreen.profile.model.User;
+import com.bgreen.filips.bgreen.profile.model.UserHandler;
+import com.bgreen.filips.bgreen.profile.utils.ErrorHandler;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -32,6 +32,7 @@ import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.plus.Plus;
 import com.google.android.gms.plus.model.people.Person;
 import com.parse.Parse;
+import com.parse.ParseException;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -41,6 +42,7 @@ public class LogginActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
         View.OnClickListener, Observer{
 
+    //Parse authentication keys
     private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
     private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
 
@@ -60,10 +62,16 @@ public class LogginActivity extends AppCompatActivity implements
     // case there is a delay in any of the dialogs being ready.
     private ProgressDialog mConnectionProgressDialog;
 
+    //needed to process user after login
     private ProfileService pService= new ProfileService();
     private IUserHandler handler = new UserHandler(LogginActivity.this);
     private IUser user = User.getInstance();
+
+    //boolean to check if our background process of fetching all profiles has completed
     private boolean loadingDone = false;
+
+    //where eventual error are displayed to the user
+    private ErrorHandler errorHandler = new ErrorHandler(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +88,9 @@ public class LogginActivity extends AppCompatActivity implements
         try {
             Parse.enableLocalDatastore(this);
             Parse.initialize(this, PARSE_APPLICATION_ID, PARSE_CLIENT_KEY);
-        }catch (Exception e){}
+        }catch (Exception e){
+            errorHandler.displayError(e.getMessage());
+        }
 
         //sets an alarm with 1 minute interval to run the snipplte code in MinuteReciever
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -106,6 +116,7 @@ public class LogginActivity extends AppCompatActivity implements
         mConnectionProgressDialog = new ProgressDialog(this);
         mConnectionProgressDialog.setMessage("Connecting...");
 
+        // gets notified when profiles has been fetched.
         ProfileHolder.getInstance().addObserver(this);
     }
 
@@ -230,29 +241,46 @@ public class LogginActivity extends AppCompatActivity implements
             } else {
                 // Could not resolve the connection result, show the user an
                 // error dialog.
-                //TODO;showErrorDialog(connectionResult);
+                errorHandler.displayError("could not establish connection to Google+");
             }
         } else {
-            //TODO;Show the signed-out UI
+            //Here is where signed-out gui should be. But we have not implemented the functionality.
+            //Therefore we'll never get here.
         }
     }
 
     //Gets the profileIno and put it on the TabActivity
     private void getProfileInformation(){
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-            pService.fetchAllProfiles();
+            try {
+                //this starts the background fetch of all Profiles. To be displayed in the TopList
+                pService.fetchAllProfiles();
+            } catch (ParseException e) {
+                errorHandler.displayError(e.getMessage());
+            }
+            //If we have some data in our .txt file, then it will be the ObjectID of our User,
+            //and our user hass logged in previously on the same installation of the app.
             if(handler.getUserID() != null){
-                pService.startUpFetchOfUser(handler.getUserID(), handler);
+                try {
+                    pService.startUpFetchOfUser(handler.getUserID(), handler, User.getInstance());
+                } catch (ParseException e) {
+                    errorHandler.displayError(e.getMessage());
+                }
+                //Probably the User has just installed the app. And it's the first time loggnig in
+                //at that installation.
             }else {
                 user.setUser(currentPerson.getName().getGivenName(),
                         currentPerson.getName().getFamilyName(),
                         Plus.AccountApi.getAccountName(mGoogleApiClient),
                         0, 0, currentPerson.getImage().getUrl());
-                pService.saveProfileIfNew(handler);
+                try {
+                    pService.saveProfileIfNew(handler, user);
+                } catch (ParseException e) {
+                    errorHandler.displayError(e.getMessage());
+                }
             }
-            System.out.println(User.getInstance().getPlacement());
+            //if all profiles has been fetched then proceed with next part of the GUI
             if(loadingDone) {
                 Intent tabActivityIntent = new Intent(this, TabActivity.class);
                 startActivity(tabActivityIntent);
@@ -262,34 +290,30 @@ public class LogginActivity extends AppCompatActivity implements
             }
 
         }else{
-
-            System.out.println("****CURRENT PERSON IS NULL*****");
+            errorHandler.displayError("Google couldn't find account");
         }
     }
 
+    //Only used for android 6.0 or higher
     private void checkPermissions(String permission){
-
         if (ContextCompat.checkSelfPermission(this,
                 permission)
                 != PackageManager.PERMISSION_GRANTED){
-
                 // request the permission.
                 ActivityCompat.requestPermissions(this,
                         new String[]{permission}, 0);
-
         }
 
     }
 
+    //when Background fetching of Profiles is done this gets updated
     @Override
     public void update(Observable observable, Object data) {
         if(loadingDone) {
-            System.out.println("2");
             Intent tabActivityIntent = new Intent(this, TabActivity.class);
             startActivity(tabActivityIntent);
             finish();
         }else {
-            System.out.println("1");
             loadingDone = true;
         }
     }

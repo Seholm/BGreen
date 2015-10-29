@@ -1,6 +1,8 @@
 package com.bgreen.filips.bgreen.achievements.model;
 
 /**
+ * Achievement Model. Each Achievement has a category which
+ * allows us to know how the requirement is going to be interpreted later on.
  * Created by medioloco on 15-10-26.
  */
 public class Achievement implements IAchievement {

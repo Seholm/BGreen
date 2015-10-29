@@ -1,6 +1,7 @@
 package com.bgreen.filips.bgreen.achievements.model;
 
 /**
+ * Interface for Achievement Model
  * Created by Albertsson on 15-10-26.
  */
 public interface IAchievement {

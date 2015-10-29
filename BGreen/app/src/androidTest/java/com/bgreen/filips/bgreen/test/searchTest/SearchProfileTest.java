@@ -2,7 +2,7 @@ package com.bgreen.filips.bgreen.test.searchTest;
 
 import android.test.InstrumentationTestCase;
 
-import com.bgreen.filips.bgreen.profile.IProfile;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
 import com.bgreen.filips.bgreen.search.SearchModel;
 
 import java.util.ArrayList;
@@ -13,6 +13,7 @@ public class SearchProfileTest extends InstrumentationTestCase {
     private List<IProfile> profiles = new ArrayList<>();
     private SearchModel searchModel = new SearchModel();
 
+    //Test if search works for one person.
     public void testOnePersonSearch() {
         IProfile profile = new MockProfile();
         profile.setFirstName("TestPerson");
@@ -23,6 +24,7 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() == 1);
     }
 
+    //Test if search works for non-existing person
     public void testNoPersonSearch() {
         IProfile profile = new MockProfile();
         profile.setFirstName("TestPerson");
@@ -33,6 +35,7 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() == 0);
     }
 
+    //Test if all persons come up when search for nothing.
     public void testSearchForNoName() {
         IProfile profile = new MockProfile();
         profile.setFirstName("testPerson");
@@ -43,6 +46,7 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() != 0);
     }
 
+    //Test if two persons with the same name come up when search for similarities.
     public void testSearchForSameName() {
         IProfile profile1 = new MockProfile();
         IProfile profile2 = new MockProfile();
@@ -57,6 +61,7 @@ public class SearchProfileTest extends InstrumentationTestCase {
         assertTrue(resultList.size() == 2);
     }
 
+    //Test if there is no profile list.
     public void testEmptyListSearch() {
         List<IProfile> tempList = null;
         List<IProfile> resultList = searchModel.doSearch("", tempList);

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.achievements.model.AchievementHolder;
 import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 import com.bgreen.filips.bgreen.achievements.service.AchievementService;
 import com.bgreen.filips.bgreen.achievements.service.IAchievementService;
@@ -24,12 +25,12 @@ import java.util.List;
 public class AchievementFragment extends Fragment implements IDisplayAchivment {
 
     private View myInflatedView;
-    private List<IAchievement> achievementList = new ArrayList<>();
     private IAchievementService achievementService = new AchievementService();
 
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView recyclerView;
     private AchievementAdapter adapter;
+    private AchievementHolder achievementHolder = AchievementHolder.getInstance();
 
     public AchievementFragment() {
         // Required empty public constructor
@@ -42,12 +43,16 @@ public class AchievementFragment extends Fragment implements IDisplayAchivment {
 
         myInflatedView = inflater.inflate(R.layout.fragment_achievement, container, false);
 
-        achievementList = achievementService.getAllAchievements();
+        try {
+            achievementHolder.setAchievementList(achievementService.getAllAchievements());
+        }catch (Exception e){
+
+        }
 
         layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView = (RecyclerView) myInflatedView.findViewById(R.id.recycler_view_achievement);
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new AchievementAdapter(achievementList, this);
+        adapter = new AchievementAdapter(achievementHolder.getAchievementList(), this);
         recyclerView.setAdapter(adapter);
 
         return myInflatedView;

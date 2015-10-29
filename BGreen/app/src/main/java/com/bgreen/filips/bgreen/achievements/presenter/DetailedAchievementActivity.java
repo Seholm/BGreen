@@ -11,13 +11,15 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bgreen.filips.bgreen.R;
+import com.bgreen.filips.bgreen.achievements.model.AchievementHolder;
 import com.bgreen.filips.bgreen.achievements.model.AchievmentRequirements;
 import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
 import com.bgreen.filips.bgreen.achievements.service.AchievementService;
 import com.bgreen.filips.bgreen.achievements.service.IAchievementService;
-import com.bgreen.filips.bgreen.profile.IProfile;
-import com.bgreen.filips.bgreen.profile.User;
+import com.bgreen.filips.bgreen.profile.model.IProfile;
+import com.bgreen.filips.bgreen.profile.model.User;
+import com.bgreen.filips.bgreen.profile.utils.ErrorHandler;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,20 +32,19 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     private TextView setProgressPercentage;
     private Button getRewardButton;
     private int achievemntPosition;
-
-    private List<IAchievement> achievementList = new ArrayList<>();
-    private IAchievementService achievementService = new AchievementService();
+    
     private IAchievement achievement;
+    private AchievementHolder achievementHolder = AchievementHolder.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_achievement);
 
+        achievementHolder.getAchievementList();
         bundle = getIntent().getExtras();
-        achievementList = achievementService.getAllAchievements();
         achievemntPosition = bundle.getInt("ACHIEVMENT");
-        achievement = achievementList.get(achievemntPosition);
+        achievement = achievementHolder.getAchievementList().get(achievemntPosition);
 
         displayAchievmentDetails();
     }
@@ -53,6 +54,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         IProfile profile = User.getInstance();
         IAchievmentRequirements achievmentRequirements = new AchievmentRequirements();
 
+        //Assign all text-fields to corresponding values
         TextView setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         TextView setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
         imageView = (ImageView) findViewById(R.id.achievment_detailed_image);
@@ -60,7 +62,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         setProgressPercentage = (TextView) findViewById(R.id.achievment_progressbar_percentage);
         getRewardButton = (Button) findViewById(R.id.achievment_reward_button);
 
-
+        //Set the correct text for the achievments to each text-field.
         setAchievementHeadline.setText(achievement.getTitle());
         setAchievmentDescText.setText(achievement.getDescription());
         System.out.println(profile.getBusTrips() + " " + achievement.getRequirement());

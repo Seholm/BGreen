@@ -5,7 +5,7 @@
     android:id="@+id/profile_framelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.bgreen.filips.bgreen.profile.ProfileFragment"
+    tools:context="com.bgreen.filips.bgreen.profile.presenter.ProfileFragment"
     android:background="@drawable/ecodriving03">
 
     <android.support.v4.widget.SwipeRefreshLayout
