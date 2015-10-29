@@ -42,6 +42,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
         profiles = new ArrayList<>();
     }
 
+    //Creates a new instance of the fragment with a new list in the bundle
     public static ToplistFragment newInstance(Bundle bundle){
         ToplistFragment newTopListFragment= new ToplistFragment();
         newTopListFragment.setArguments(bundle);
@@ -59,6 +60,8 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
             size = bundle.getInt("Storlek");
         }catch(java.lang.NullPointerException e){
         }
+
+        //Creates list depending on if list has been sent when new instance
         if(size != 0){
             profiles.clear();
             List<IProfile> profileList = new ArrayList<IProfile>();
@@ -158,9 +161,11 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
         return temp;
     }
 
+    //disables flipCard
     public void disableFlip(){
         flipEnabled = false;
     }
+    //enables flipCard
     public void enableFlip(){
         flipEnabled = true;
     }
