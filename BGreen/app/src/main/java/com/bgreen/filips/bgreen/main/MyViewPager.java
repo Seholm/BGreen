@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 /**
  * Created by flarssonn on 2015-10-15.
  */
+
+//Class that is exactly like ViewPager but added method that can disable/enable swipe between pages
 public class MyViewPager extends ViewPager {
     private boolean mIsEnabledSwipe = true;
 

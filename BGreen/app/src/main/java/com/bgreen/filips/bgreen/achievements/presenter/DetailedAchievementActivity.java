@@ -15,21 +15,17 @@ import com.bgreen.filips.bgreen.achievements.model.AchievementHolder;
 import com.bgreen.filips.bgreen.achievements.model.AchievmentRequirements;
 import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 import com.bgreen.filips.bgreen.achievements.model.IAchievmentRequirements;
-import com.bgreen.filips.bgreen.achievements.service.AchievementService;
-import com.bgreen.filips.bgreen.achievements.service.IAchievementService;
 import com.bgreen.filips.bgreen.profile.model.IProfile;
 import com.bgreen.filips.bgreen.profile.model.User;
-import com.bgreen.filips.bgreen.profile.utils.ErrorHandler;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class DetailedAchievementActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView imageView;
     private Bundle bundle;
     private ProgressBar detailedAchievementPBar;
     private TextView setProgressPercentage;
+    //Button created for future implementation
     private Button getRewardButton;
     private int achievemntPosition;
 
@@ -49,6 +45,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         displayAchievmentDetails();
     }
 
+    //Sets all the fields with a specific achivements text and progres
     public void displayAchievmentDetails() {
 
         IProfile profile = User.getInstance();
@@ -65,21 +62,20 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         //Set the correct text for the achievments to each text-field.
         setAchievementHeadline.setText(achievement.getTitle());
         setAchievmentDescText.setText(achievement.getDescription());
-        System.out.println(profile.getBusTrips() + " " + achievement.getRequirement());
 
         double progres = achievmentRequirements.checkAchivmentProgress(profile, achievement);
-        System.out.println(progres);
         int progress = (int)Math.round(achievmentRequirements.checkAchivmentProgress(profile, achievement));
 
         detailedAchievementPBar.setProgress(progress);
         setProgressPercentage.setText((Integer.toString(progress)) + "%");
+        //Loads the image using the Picasso dependency
         Picasso.with(this).load(achievement.getImgURL()).into(imageView);
+        //Used for future implementations
         getRewardButton.setVisibility(View.GONE);
 
     }
 
     public void getAchievementReward (View view) {
-        System.out.println("Display possible rewards");
         //made for the availability to get possible rewards;
         //not yet implemented as it needs cooperation with interested
         //financiers.

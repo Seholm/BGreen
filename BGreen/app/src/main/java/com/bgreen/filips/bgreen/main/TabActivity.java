@@ -150,7 +150,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
                     ToplistFragment newToplistFragment = (ToplistFragment)getSupportFragmentManager().findFragmentById(R.id.toplist_top_container);
                     //Should not be able to flip card while searching
                     newToplistFragment.disableFlip();
-
+                    //Sets the flipdisabled fragment as the fragment
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     fragmentTransaction.replace(R.id.toplist_top_container, newToplistFragment);
@@ -168,7 +168,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
                         ToplistFragment newToplistFragment = (ToplistFragment)getSupportFragmentManager().findFragmentById(R.id.toplist_top_container);
                         //Should not be able to flip card while searching
                         newToplistFragment.enableFlip();
-
+                        //sets the flipable fragment att the toplisttab fragment
                         android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                         android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
                         fragmentTransaction.replace(R.id.toplist_top_container, newToplistFragment);
@@ -206,7 +206,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
                 }
                 bundle.putInt("Storlek", searchList.size());
-
+                //Creates new toplistfragment with new list
                 ToplistFragment newTopList = ToplistFragment.newInstance(bundle);
                 newTopList.enableFlip();
 
@@ -281,6 +281,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed(){
+        //If toplist tab is selected then set viewpager to profile tab
         if(currentPage==1){
             viewPager.setCurrentItem(0);
         }else{

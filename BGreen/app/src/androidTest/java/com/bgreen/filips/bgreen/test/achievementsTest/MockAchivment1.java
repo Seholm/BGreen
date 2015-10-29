@@ -6,6 +6,7 @@ import com.bgreen.filips.bgreen.achievements.model.IAchievement;
 /**
  * Created by Filips on 10/27/2015.
  */
+//A mockachievment so that tests on achievement can be done with a fake achievement
 public class MockAchivment1 implements IAchievement {
 
     private AchievementCategory achievementCategory;

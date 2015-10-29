@@ -19,6 +19,8 @@ import java.util.Observer;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
+ * An adapter based on the XML layout fragment_toplist_profile
+ *
  * Created by paki on 02/10/15.
  */
 public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListHolder> implements Observer {
@@ -26,7 +28,7 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
     private List<IProfile> profiles;
     private Context context;
     private ValueTransformer transformer;
-    private IFlipcard flipper; 
+    private IFlipcard flipper; //The Fragment this class should flip when pressed
 
     @Override
     public void update(Observable observable, Object data) {
@@ -58,29 +60,31 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
         this.flipper = flipper;
     }
 
+    //Creates the view for the specific layout
     @Override
     public TopListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_toplist_profile,
-                parent, false); //sista som var tom
+                parent, false);
         TopListHolder vh = new TopListHolder(v);
         context = parent.getContext();
         transformer = new ValueTransformer();
         return vh;
     }
 
+    //Creates the the components for the topList view and sets an clickListner for the flip animation
     @Override
     public void onBindViewHolder(TopListHolder holder, final int position) {
         holder.cvtest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("hejhej ********************" + Integer.toString(position));
-                flipper.flipCard(position);
+                flipper.flipCard(position); //flips the card from the position given from the click
             }
         });
         holder.personName.setText(profiles.get(position).getFirstName() + " " +
                 profiles.get(position).getLastName());
         holder.personDistance.setText((transformer.distanceTransformer(profiles.get(position).
                 getTotalDistance())));
+        //uses the picasso dependencie to load image into the profile picture imageview
         Picasso.with(context).load(profiles.get(position).getImageURL()).into(holder.personPicture);
         holder.personPlacement.setText("#" + Integer.toString(profiles.get(position).getPlacement()));
     }
