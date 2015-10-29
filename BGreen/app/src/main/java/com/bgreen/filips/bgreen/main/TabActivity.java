@@ -37,6 +37,7 @@ import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 public class TabActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -69,17 +70,22 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //If scrolling away from toplist, the toplist should be the original toplist
+
                 if (position<1&&viewPager.getEnabledSwipe()==true) {
-
-
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+
                     originalTopList.enableFlip();
+
                     fragmentTransaction.replace(R.id.toplist_top_container, originalTopList);
                     fragmentTransaction.addToBackStack(null);
-
                     fragmentTransaction.commit();
-                }else if(position<1&& viewPager.getEnabledSwipe()==false){
+
+                }
+                //If scrolling away from toplist, the toplist should be the original toplist
+                //If the pageswipe is disabled then enable it
+                else if(position<1&& viewPager.getEnabledSwipe()==false){
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
                     originalTopList.disableFlip();
@@ -89,7 +95,8 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
                     fragmentTransaction.commit();
                 }
             }
-
+            //make sure that when onBackPressed is called we make sure the currentpage is profile
+            //so that onBackPressed don't exit application when current page is toplist
             @Override
             public void onPageSelected(int position) {
                 currentPage = position;
@@ -109,8 +116,8 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         toplistFragment = new ToplistFragment();
-
         Fragment aFragment = new AchievementFragment();
+        //Creates a profilefragment with a achievementfragment in it
         ProfileFragment profileFragment = ProfileFragment.newInstance(aFragment);
 
         //addFrag sets a new fragment to the Tab
@@ -129,10 +136,7 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         inflater.inflate(R.menu.options_menu, menu);
 
 
-        // Associate searchable configuration with the SearchView
-        final SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         final ISearchModel sModel = new SearchModel();
 
@@ -140,21 +144,36 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus){
+                    //When doing a search, the viewpager swipe should be disabled
                     viewPager.setEnabledSwipe(false);
-                    ToplistFragment f = (ToplistFragment)getSupportFragmentManager().findFragmentById(R.id.toplist_top_container);
-                    f.disableFlip();
+                    //Get the fragment that is displayed in toplist tab and disable flip
+                    ToplistFragment newToplistFragment = (ToplistFragment)getSupportFragmentManager().findFragmentById(R.id.toplist_top_container);
+                    //Should not be able to flip card while searching
+                    newToplistFragment.disableFlip();
+
                     android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                     android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
-                    fragmentTransaction.replace(R.id.toplist_top_container, f);
-
-
-
+                    fragmentTransaction.replace(R.id.toplist_top_container, newToplistFragment);
                     fragmentTransaction.commit();
 
                 }else{
+                    //if search is canceled, swipe should be available again
                     viewPager.setEnabledSwipe(true);
+                    //if search is calceled, collapse the action view
+                    menu.findItem(R.id.search).collapseActionView();
 
+                    //if no search has been done the original list will be shown with flip enabled
+                    if(sModel.isSearchDone()==false){
+                        //Get the fragment that is displayed in toplisttab and enable flip
+                        ToplistFragment newToplistFragment = (ToplistFragment)getSupportFragmentManager().findFragmentById(R.id.toplist_top_container);
+                        //Should not be able to flip card while searching
+                        newToplistFragment.enableFlip();
+
+                        android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                        android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
+                        fragmentTransaction.replace(R.id.toplist_top_container, newToplistFragment);
+                        fragmentTransaction.commit();
+                    }
                 }
             }
         });
@@ -162,25 +181,25 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         searchView.setOnSearchClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 viewPager.setCurrentItem(1);
-                //viewPager.setEnabledSwipe(false);
             }
         });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            //If someone presses the searchbutton then a search is made
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                //retrives all profiles and executes a search with the query
                 List<IProfile> profiles = ProfileHolder.getInstance().getProfiles();
                 List<IProfile> searchList = sModel.doSearch(query, profiles);
 
+                //if no result show a toast
                 if (searchList.size() == 0) {
                     Toast.makeText(getApplicationContext(), "Din sökning gav inga träffar",
                             Toast.LENGTH_LONG).show();
 
 
                 }
+                //Creates a new list with the result from the search
                 Bundle bundle = new Bundle();
                 for (int i = 0; i < searchList.size(); i++) {
                     bundle.putParcelable(i + "", searchList.get(i));
@@ -190,33 +209,22 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
                 ToplistFragment newTopList = ToplistFragment.newInstance(bundle);
                 newTopList.enableFlip();
+
                 android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
                 android.support.v4.app.FragmentTransaction fragmentTransaction = fm.beginTransaction();
-
                 fragmentTransaction.replace(R.id.toplist_top_container, newTopList);
-
-
-
                 fragmentTransaction.commit();
+
                 searchView.clearFocus();
                 searchView.setQuery("", true);
 
-
-
-                //TODO: Fixa så gamla vyn inte syns
-                //Varför i själva fan försvinner inte det gamla fragmentet?!?!?!?!
-                //Jag hatar fragments av hela mitt hjärta!
-
                 return true;
-
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-
                 return false;
             }
-
 
         });
         return true;
@@ -274,7 +282,6 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
     public void onBackPressed(){
         if(currentPage==1){
             viewPager.setCurrentItem(0);
-
         }else{
 
             finish();

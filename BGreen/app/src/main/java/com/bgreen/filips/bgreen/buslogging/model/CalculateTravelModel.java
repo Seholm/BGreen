@@ -14,6 +14,7 @@ public class CalculateTravelModel implements ICalculateTravelModel {
     private List<String> tripStops = new ArrayList<>();
     private int totDistance=0;
 
+    //Method called by IdentifyTravelService
     public void main(String nextStop, String route){
         //If busStoplist is empty, set list for which route you are on
         if(busStops.size()==0 && route !=null){
@@ -31,6 +32,7 @@ public class CalculateTravelModel implements ICalculateTravelModel {
 
     }
 
+    //Method that adds next stop to the list of total stops aswell as the distance to the next stop
     private void addToList(String nextStop){
         //If nextStop isn't already in list and nextStop is a stop on your route add nextStop to tripStops
         if(!tripStops.contains(nextStop)&&busStops.contains(nextStop)){
@@ -53,6 +55,7 @@ public class CalculateTravelModel implements ICalculateTravelModel {
         return tripStops;
     }
 
+    //Method for setting bus stops if route is Chalmers-Lindholmen
     private void setBusStopsNorthRoute(){
         busStops.clear();
 
