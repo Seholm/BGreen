@@ -32,7 +32,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private View myInflatedView;
-    private ITransformer transformer;
+    private ITransformer transformer;                   //value transformer for CO2 and meters
     private boolean flipEnabled = true;
     private List<IProfile> profiles = new ArrayList<>();
     View cardBack;
@@ -80,7 +80,7 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
         myInflatedView = inflater.inflate(R.layout.fragment_toplist, container, false);
         mRecyclerView = (RecyclerView) myInflatedView.findViewById(R.id.toplist_fragment1);
         mRecyclerView.setLayoutManager(mLayoutManager);
-        mAdapter = new ToplistAdapter(profiles,this);
+        mAdapter = new ToplistAdapter(profiles,this); //creates a new adapter for the toplist
         mRecyclerView.setAdapter(mAdapter);
         mswipeRefresh = (SwipeRefreshLayout) myInflatedView.findViewById
                 (R.id.toplist_swipe_refresh);
@@ -136,6 +136,8 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
 
     }
 
+    //Make refresh on swipe possible, and reload the fragment with the latest
+    //profile values from the database.
     @Override
     public void onRefresh() {
         if ( getActivity().findViewById(R.id.toplist_fragment1).getVisibility() == View.VISIBLE) {

@@ -41,7 +41,6 @@ public class ValueTransformer implements ITransformer {
         } return temp;
     }
 
-
     private String checkValue(double i) {
         //Returns the integer in String format, to check for decimals.
         String tempValue = "" + i;
@@ -50,7 +49,7 @@ public class ValueTransformer implements ITransformer {
     }
 
     private int checkDecimal(String s) {
-        //Checks the position of the . in the string, and adds 1 decimal.
+        //Checks the position of the . in the string, and returns in + 1.
         for (int i = 0; i<s.length(); i++) {
             if (s.charAt(i) == '.') {
                 return i+1;
