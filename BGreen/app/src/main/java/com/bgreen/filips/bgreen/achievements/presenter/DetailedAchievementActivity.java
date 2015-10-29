@@ -62,10 +62,8 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         //Set the correct text for the achievments to each text-field.
         setAchievementHeadline.setText(achievement.getTitle());
         setAchievmentDescText.setText(achievement.getDescription());
-        System.out.println(profile.getBusTrips() + " " + achievement.getRequirement());
 
         double progres = achievmentRequirements.checkAchivmentProgress(profile, achievement);
-        System.out.println(progres);
         int progress = (int)Math.round(achievmentRequirements.checkAchivmentProgress(profile, achievement));
 
         detailedAchievementPBar.setProgress(progress);
@@ -78,7 +76,6 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     }
 
     public void getAchievementReward (View view) {
-        System.out.println("Display possible rewards");
         //made for the availability to get possible rewards;
         //not yet implemented as it needs cooperation with interested
         //financiers.

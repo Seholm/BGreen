@@ -19,6 +19,8 @@ import java.util.Observer;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
+ * An adapter based on the XML layout fragment_toplist_profile
+ *
  * Created by paki on 02/10/15.
  */
 public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListHolder> implements Observer {
@@ -58,22 +60,23 @@ public class ToplistAdapter extends RecyclerView.Adapter<ToplistAdapter.TopListH
         this.flipper = flipper;
     }
 
+    //Creates the view for the specific layout
     @Override
     public TopListHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_toplist_profile,
-                parent, false); //sista som var tom
+                parent, false);
         TopListHolder vh = new TopListHolder(v);
         context = parent.getContext();
         transformer = new ValueTransformer();
         return vh;
     }
 
+    //Creates the the components for the topList view and sets an clickListner for the flip animation
     @Override
     public void onBindViewHolder(TopListHolder holder, final int position) {
         holder.cvtest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("hejhej ********************" + Integer.toString(position));
                 flipper.flipCard(position);
             }
         });
