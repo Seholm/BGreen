@@ -10,8 +10,9 @@ import java.util.Map;
  * Created by Filips on 9/15/2015.
  */
 public class Busses implements IBusses {
+    //A class representing the busses, used to identify busses from BSSID
 
-    Map<String,String> busses;
+    Map<String,String> busses; // A Map that holds all the physical busses that we got BSSID for
     public Busses() {
 
         busses = new HashMap<String, String>();
@@ -28,7 +29,7 @@ public class Busses implements IBusses {
 
     @Override
     public String getCurrentBus(List<String> bssids) {
-        //gets the busses id from a BSSID
+        //returns the first ID for the buss from a list of bssids
         for (String bssid : bssids){
             if(busses.containsKey(bssid)){
                 return busses.get(bssid);
