@@ -32,8 +32,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     private TextView setProgressPercentage;
     private Button getRewardButton;
     private int achievemntPosition;
-
-    private IAchievementService achievementService = new AchievementService();
+    
     private IAchievement achievement;
     private AchievementHolder achievementHolder = AchievementHolder.getInstance();
 
@@ -41,14 +40,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_achievement);
-        if (achievementHolder.getAchievementList().size() == 0 ||
-                achievementHolder.getAchievementList() == null){
-            try{
-                achievementHolder.setAchievementList(achievementService.getAllAchievements());
-            }catch (Exception e){
-                new ErrorHandler(this).displayError(e.getMessage());
-            }
-        }
+
         achievementHolder.getAchievementList();
         bundle = getIntent().getExtras();
         achievemntPosition = bundle.getInt("ACHIEVMENT");
