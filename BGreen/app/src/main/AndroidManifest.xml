@@ -34,7 +34,7 @@
         </service>
 
         <activity
-            android:name=".main.TabActivity"
+            android:name=".main.presenter.TabActivity"
 
             android:label="@string/title_activity_tab"
             android:screenOrientation="portrait">
@@ -52,7 +52,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".main.LogginActivity"
+            android:name=".main.presenter.LogginActivity"
             android:label="Sparbussa"
             android:screenOrientation="portrait">
             <intent-filter>

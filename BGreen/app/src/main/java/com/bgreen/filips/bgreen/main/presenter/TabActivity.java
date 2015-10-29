@@ -1,8 +1,5 @@
-package com.bgreen.filips.bgreen.main;
+package com.bgreen.filips.bgreen.main.presenter;
 
-
-import android.app.SearchManager;
-import android.content.Context;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,14 +21,14 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.bgreen.filips.bgreen.achievements.presenter.AchievementFragment;
+import com.bgreen.filips.bgreen.main.model.ISearchModel;
+import com.bgreen.filips.bgreen.main.model.SearchModel;
 import com.bgreen.filips.bgreen.profile.model.IProfile;
 
 import com.bgreen.filips.bgreen.profile.presenter.ProfileFragment;
 import com.bgreen.filips.bgreen.R;
 
 import com.bgreen.filips.bgreen.profile.model.ProfileHolder;
-import com.bgreen.filips.bgreen.search.ISearchModel;
-import com.bgreen.filips.bgreen.search.SearchModel;
 import com.bgreen.filips.bgreen.toplist.ToplistFragment;
 
 

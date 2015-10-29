@@ -36,13 +36,13 @@
 
 
 
-    <com.bgreen.filips.bgreen.main.MyViewPager
+    <com.bgreen.filips.bgreen.main.presenter.MyViewPager
         android:id="@+id/tab_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    </com.bgreen.filips.bgreen.main.MyViewPager>
+    </com.bgreen.filips.bgreen.main.presenter.MyViewPager>
 
 
 </android.support.design.widget.CoordinatorLayout>

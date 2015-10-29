@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.main;
+package com.bgreen.filips.bgreen.main.presenter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

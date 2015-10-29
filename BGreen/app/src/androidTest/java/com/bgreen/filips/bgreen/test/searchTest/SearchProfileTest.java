@@ -3,7 +3,7 @@ package com.bgreen.filips.bgreen.test.searchTest;
 import android.test.InstrumentationTestCase;
 
 import com.bgreen.filips.bgreen.profile.model.IProfile;
-import com.bgreen.filips.bgreen.search.SearchModel;
+import com.bgreen.filips.bgreen.main.model.SearchModel;
 
 import java.util.ArrayList;
 import java.util.List;

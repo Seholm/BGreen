@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.search;
+package com.bgreen.filips.bgreen.main.model;
 
 import com.bgreen.filips.bgreen.profile.model.IProfile;
 

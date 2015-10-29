@@ -1,4 +1,4 @@
-package com.bgreen.filips.bgreen.main;
+package com.bgreen.filips.bgreen.main.presenter;
 
 import android.Manifest;
 import android.app.AlarmManager;
