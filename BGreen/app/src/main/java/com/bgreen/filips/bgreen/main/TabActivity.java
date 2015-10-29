@@ -43,8 +43,9 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
 
 
-    private boolean popupAchivmentShow;
+    private boolean popupAchivmentShow; // A boolean representing if the popupAchivment should show or not
     private int currentPage;
+    private final int POPUPACHIVMENT_SHOULD_NOT_SHOW = 10;
 
     private MyViewPager viewPager;
     private ToplistFragment originalTopList = new ToplistFragment();
@@ -248,11 +249,12 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        if(v == findViewById(R.id.delete_button)){
+        if(v == findViewById(R.id.delete_button)){ // onclick to cancel the popupview that shows when you start the program
             FrameLayout achivmentContainer = (FrameLayout) findViewById(R.id.popup_achivments);
             achivmentContainer.setVisibility(View.GONE);
             CircleImageView button = (CircleImageView) findViewById(R.id.delete_button);
             button.setVisibility(View.GONE);
+            //hides the frame when the cancel button is clicked
         }
     }
 
@@ -261,18 +263,18 @@ public class TabActivity extends AppCompatActivity implements View.OnClickListen
         super.onResume();
         FrameLayout achivmentContainer = (FrameLayout) findViewById(R.id.popup_achivments);
         CircleImageView button = (CircleImageView) findViewById(R.id.delete_button);
-        if(popupAchivmentShow) {
+        if(popupAchivmentShow) {//happens when you resume the application after you have tabbed out of it
             achivmentContainer.setVisibility(View.VISIBLE);
             button.setVisibility(View.VISIBLE);
-        }else{
+        }else{//happens when u resume to this activity from another activity, the popup should not show
             popupAchivmentShow = true;
         }
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == 10) {
-            //happens when u click back from DetailedAchivmentActiity
+        if(resultCode == POPUPACHIVMENT_SHOULD_NOT_SHOW) {
+            //happens when u click back from DetailedAchivmentActivity, The popup should not show!
             popupAchivmentShow = false;
         }
     }
