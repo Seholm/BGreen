@@ -136,6 +136,8 @@ public class ToplistFragment extends Fragment implements IFlipcard, SwipeRefresh
 
     }
 
+    //Make refresh on swipe possible, and reload the fragment with the latest
+    //profile values from the database.
     @Override
     public void onRefresh() {
         if ( getActivity().findViewById(R.id.toplist_fragment1).getVisibility() == View.VISIBLE) {

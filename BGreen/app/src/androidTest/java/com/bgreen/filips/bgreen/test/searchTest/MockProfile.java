@@ -4,6 +4,8 @@ import android.os.Parcel;
 
 import com.bgreen.filips.bgreen.profile.model.IProfile;
 
+
+//A mock profile so the search test does not rely on the profile to work.
 public class MockProfile implements IProfile {
     String firstName;
     String lastName;

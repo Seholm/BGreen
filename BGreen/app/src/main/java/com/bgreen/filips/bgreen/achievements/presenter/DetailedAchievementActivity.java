@@ -62,6 +62,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         IProfile profile = User.getInstance();
         IAchievmentRequirements achievmentRequirements = new AchievmentRequirements();
 
+        //Assign all text-fields to corresponding values
         TextView setAchievementHeadline = (TextView) findViewById(R.id.detailedAchievmentHeadText);
         TextView setAchievmentDescText = (TextView) findViewById(R.id.detailedAchievmentText);
         imageView = (ImageView) findViewById(R.id.achievment_detailed_image);
@@ -69,7 +70,7 @@ public class DetailedAchievementActivity extends AppCompatActivity implements Vi
         setProgressPercentage = (TextView) findViewById(R.id.achievment_progressbar_percentage);
         getRewardButton = (Button) findViewById(R.id.achievment_reward_button);
 
-
+        //Set the correct text for the achievments to each text-field.
         setAchievementHeadline.setText(achievement.getTitle());
         setAchievmentDescText.setText(achievement.getDescription());
         System.out.println(profile.getBusTrips() + " " + achievement.getRequirement());
