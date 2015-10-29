@@ -4,6 +4,7 @@ Dependecies:
  -Google+ API
  -Java 8 SE Development kit
  -Android SDK
+ -Picasso (image downloading and caching library for Android)
 
 SDK targets:
  -Minimum SDK: 17
