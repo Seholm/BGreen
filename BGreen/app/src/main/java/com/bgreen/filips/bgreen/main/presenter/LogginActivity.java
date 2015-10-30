@@ -291,7 +291,7 @@ public class LogginActivity extends AppCompatActivity implements
             }
 
         }else{
-            errorHandler.displayError("Google couldn't find account");
+           // errorHandler.displayError("Google couldn't find account");
         }
     }
 
