@@ -6,9 +6,9 @@ Dependecies:
  -Android SDK
  -Picasso (image downloading and caching library for Android)
  
- important documentation is located in the docs folder.
- sprint retrospectives and notes from meetings are located in the meeting_agenda folder. 
- images relevant to the project are located in the images folder
+ Important documentation is located in the docs folder.
+ Sprint retrospectives and notes from meetings are located in the meeting_agenda folder. 
+ Images relevant to the project are located in the images folder
 
 SDK targets:
  -Minimum SDK: 17
