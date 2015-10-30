@@ -20,6 +20,10 @@ is located and run the command: adb -d install YOUR\PATH\TO\APK or .\adb -d inst
 
 YOUR\PATH\TO\APK = where in the project the app-realease.apk is located, in our case PATHTOPROJECT\BGreen\app\app-realease.apk
 
+URL to youtube videos from the Electricity Challenge
+Concept: https://www.youtube.com/watch?v=q_Gf3fiq_2E
+Product film: https://www.youtube.com/watch?v=3ma2Zcnpgf8
+
 Team members:
  -Isaac Gonzalez
  -Filip Slottner Seholm
