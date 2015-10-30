@@ -252,6 +252,7 @@ public class LogginActivity extends AppCompatActivity implements
 
     //Gets the profileIno and put it on the TabActivity
     private void getProfileInformation(){
+
         if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
             Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
             try {
@@ -291,7 +292,7 @@ public class LogginActivity extends AppCompatActivity implements
             }
 
         }else{
-           // errorHandler.displayError("Google couldn't find account");
+            errorHandler.displayError("Google couldn't find account");
         }
     }
 
