@@ -5,14 +5,18 @@ Dependecies:
  -Java 8 SE Development kit
  -Android SDK
  -Picasso (image downloading and caching library for Android)
+ 
+ important documentation is located in the docs folder.
+ sprint retrospectives and notes from meetings are located in the meeting_agenda folder. 
+ images relevant to the project are located in the images folder
 
 SDK targets:
  -Minimum SDK: 17
  -Target SDK: 23
 
 Building and installing:
-To install the application open the terminal and go to the location to where your \sdk\platform-tools\ 
-is located and run the command: adb -d install YOUR\PATH\TO\APK 
+To install the application on a device, open the terminal and go to the location to where your \sdk\platform-tools\ 
+is located and run the command: adb -d install YOUR\PATH\TO\APK or .\adb -d install YOUR\PATH\TO\APK
 
 YOUR\PATH\TO\APK = where in the project the app-realease.apk is located, in our case PATHTOPROJECT\BGreen\app\app-realease.apk
 
