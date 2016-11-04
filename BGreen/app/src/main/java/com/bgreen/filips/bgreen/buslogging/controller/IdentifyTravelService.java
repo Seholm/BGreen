@@ -34,8 +34,8 @@ public class IdentifyTravelService extends Service {
     private Handler handler;
     private Runnable onBusTask; //runnable that loops every 10 second
     private ICalculateTravelModel calculator; //algorithm that calculates the distance travelled
-    private final String PARSE_CLIENT_KEY = "0qM0pkPsSmWoEuhqbN4iKHbbSfmgXwLwEJy7ZUHV";
-    private final String PARSE_APPLICATION_ID = "Wi3ExMtOI5koRFc29GiaE3C4qmukjPokmETpcPQA";
+    private final String PARSE_CLIENT_KEY = "submit key";
+    private final String PARSE_APPLICATION_ID = "submit ID";
     private IUserHandler userhandler; //used to get the current user
     private String nextStop;
     private String rutt;
